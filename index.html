@@ -7,52 +7,45 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* 🤍 主頁背景：明亮純淨的白色到天空藍漸層 */
-        .gradient-bg { background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 40%, #e0f2fe 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.15); }
-        .screenshot-img { height: 500px; width: auto; object-fit: contain; border-radius: 2rem; }
+        .gradient-bg { background: linear-gradient(135deg, #ffffff 0%, #f1f8fe 40%, #e0f2fe 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(168, 85, 247, 0.12); }
+        .screenshot-img { height: 480px; width: auto; object-fit: contain; border-radius: 2rem; }
+        .content-img { width: 100%; max-width: 450px; height: auto; object-fit: cover; border-radius: 1.5rem; }
         
         /* 🔮 藍紫霓虹實體自訂捲軸 */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 9999px;
-        }
+        .custom-scrollbar::-webkit-scrollbar { height: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 9999px; }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: linear-gradient(to right, #a855f7, #6366f1); 
             border-radius: 9999px;
             border: 2px solid #ffffff;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(to right, #9333ea, #4f46e5);
-        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, #9333ea, #4f46e5); }
     </style>
 </head>
 <body class="gradient-bg text-slate-800 font-sans antialiased">
 
-    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-200/80 sticky top-0 z-50 backdrop-blur-md">
+    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-200/60 sticky top-0 z-50 backdrop-blur-md bg-white/40">
         <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Zenith Magic</div>
         <nav class="flex items-center space-x-6">
-            <button onclick="toggleLang()" id="langBtn" class="border border-purple-600 text-purple-600 px-3 py-1 rounded-full text-sm font-medium hover:bg-purple-600 hover:text-white transition">English</button>
-            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="hidden md:block bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition shadow-md">App Store</a>
+            <button onclick="toggleLang()" id="langBtn" class="border border-purple-600 text-purple-600 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-purple-600 hover:text-white transition">English</button>
+            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="hidden md:block bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-md">App Store</a>
         </nav>
     </header>
 
-    <section class="max-w-5xl mx-auto text-center px-6 py-20">
-        <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-slate-900">Zenith Magic</h1>
-        <p id="hero-desc" class="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。</p>
+    <section class="max-w-5xl mx-auto text-center px-6 pt-20 pb-12">
+        <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-slate-900 leading-tight">強大源於呼吸</h1>
+        <p id="hero-desc" class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完全清空。</p>
         
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
             <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" id="btn-download" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-purple-500/20 transition transform hover:-translate-y-1">立即下載 iOS 版</a>
             <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" id="btn-terms" class="w-full sm:w-auto bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4 rounded-2xl border border-purple-200/60 transition shadow-sm">服務條款</a>
             <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" id="btn-bio" class="w-full sm:w-auto bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4 rounded-2xl border border-purple-200/60 transition shadow-sm">臉部技術與生物特徵聲明</a>
         </div>
     </section>
 
-    <section class="py-10 px-4 max-w-7xl mx-auto">
+    <section class="py-6 px-4 max-w-7xl mx-auto">
         <div id="gallery-title" class="text-center text-2xl font-bold mb-8 text-purple-600">App 實機介面展示 | Interface Gallery</div>
-        
         <div class="flex overflow-x-auto gap-6 pb-6 px-4 custom-scrollbar">
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="察覺系統">
@@ -64,7 +57,7 @@
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.07.31.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
-                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="朝聖系統：意識交互" data-en="Pilgrimage System: Interaction">朝聖系統：意識交互</p>
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="健身計時器" data-en="Fitness Timer">健身計時器</p>
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.06.01.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
@@ -72,23 +65,23 @@
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.37.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
-                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="動態呼吸引導" data-en="Dynamic Breathing Guide">動態呼吸引導</p>
-            </div>
-            <div class="flex-none text-center mb-4">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.24.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
                 <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="ASMR 感官音效控制" data-en="ASMR Sensory Sound Control">ASMR 感官音效控制</p>
             </div>
             <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.24.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="健身流倒數計時器" data-en="Fitness Flow Countdown Timer">健身流倒數計時器</p>
+            </div>
+            <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.00.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
-                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="個人能量日誌" data-en="Personal Energy Journal">個人能量日誌</p>
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="動態呼吸引導" data-en="Dynamic Breathing Guide">動態呼吸引導</p>
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.04.09.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
-                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="抽卡系統：命運指引" data-en="Card System: Fate Guidance">抽卡系統：命運指引</p>
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="朝聖系統：祈禱文" data-en="Pilgrimage System: Prayers">朝聖系統：祈禱文</p>
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2001.22.21.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
-                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="訂閱方案管理" data-en="Subscription Management">訂閱方案管理</p>
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="呼吸應用時機與場景" data-en="Breathing Application Timing & Scenes">呼吸應用時機與場景</p>
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-09%20at%2019.11.40.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
@@ -96,12 +89,197 @@
             </div>
             <div class="flex-none text-center mb-4">
                 <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-08%20at%2014.35.19.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
-                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="設定與隱私聲明" data-en="Settings & Privacy">設定與隱私聲明</p>
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="7段自訂等化器(EQ)" data-en="7-Band Custom Equalizer (EQ)">7段自訂等化器(EQ)</p>
             </div>
         </div>
     </section>
 
-    <section class="py-16 px-6 max-w-7xl mx-auto">
+    <section class="py-16 px-6 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold text-purple-600 mb-2 lang-txt" data-zh="一、 核心特色：科技與美學的結晶" data-en="I. Core Features: Crystallization of Tech & Aesthetics">一、 核心特色：科技與美學的結晶</h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 mb-12 rounded-full"></div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+            <div class="space-y-6">
+                <div class="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-bold lang-txt" data-zh="🧠 大腦停不下來嗎？" data-en="🧠 Mind Racing Non-Stop?">🧠 大腦停不下來嗎？</div>
+                <h3 class="text-2xl font-bold text-slate-900 lang-txt" data-zh="把放鬆當成一種可以習得的技能" data-en="Treat Relaxation as a Learnable Skill">把放鬆當成一種可以習得的技能</h3>
+                <p class="text-slate-600 leading-relaxed lang-txt" 
+                   data-zh="每晚躺在床上，閉上眼睛，腦海中卻像放電影一樣不停閃現：未完成的工作、今天遇到的麻煩、甚至剛剛滑過的短影音片段…… 「Zenith」不只是一個簡單的鬧鐘或放鬆軟體。我們知道，睡前放鬆，本身就是一種需要被練習的技能。Zenith 是一個全方位的、個性化的身心重啟引擎，我們將聽覺療癒、呼吸練習、冥想和健身流無縫整合，幫助你重新建立與大腦的連結，掌握放鬆的能力，透過呼吸練習讓腦袋清空。" 
+                   data-en="Lying in bed each night, closing your eyes, yet your mind replays scenes like a movie: unfinished work, troubles from today, even short videos you just swiped past... Zenith is not just a simple alarm or relaxation app. We know that wind-down relaxation itself is a skill that needs practice. Zenith is a comprehensive, personalized body-mind reboot engine. We seamlessly integrate audio healing, breathing practices, meditation, and fitness flows to help you reconnect with your brain, master the art of letting go, and clear your head through targeted breathwork.">
+                   每晚躺在床上，閉上眼睛，腦海中卻像放電影一樣不停閃現：未完成的工作、今天遇到的麻煩、甚至剛剛滑過的短影音片段…… 「Zenith」不只是一個簡單的鬧鐘或放鬆軟體。我們知道，睡前放鬆，本身就是一種需要被練習的技能。Zenith 是一個全方位的、個性化的身心重啟引擎，我們將聽覺療癒、呼吸練習、冥想和健身流無縫整合，幫助你重新建立與大腦的連結，掌握放鬆的能力，透過呼吸練習讓腦袋清空。
+                </p>
+            </div>
+            <div class="flex justify-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E8%B6%95%E6%99%82%E9%96%93.jpg" class="content-img shadow-2xl border border-slate-200/80" alt="趕時間">
+            </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-8 md:p-12 mb-20 shadow-xl border border-purple-200/50">
+            <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-4 lang-txt" data-zh="「碎片時間的心靈聖殿」：通勤與趕時間中的靜心" data-en="&quot;Sanctuary for Fragmented Time&quot;: Meditating Amidst Commuting and Rushing">「碎片時間的心靈聖殿」：通勤與趕時間中的靜心</h3>
+            <p class="text-slate-600 leading-relaxed max-w-4xl lang-txt"
+               data-zh="在捷運的吵雜聲中、在趕路的心跳聲中，你依然可以擁有一座專屬的『感官聖殿』。Zenith 讓你的手機不再只是訊息的干擾源，而是通往內在平靜的入口。在「趕時間」的焦慮中，你能透過呼吸練習強行創造出一個屬於自己的「靜止時空」。"
+               data-en="Amidst the roar of the subway or the thumping heartbeat of rushing, you can still possess an exclusive 'Sensory Sanctuary.' Zenith transforms your phone from a source of constant disruption into a pure gateway for inner peace. In the midst of rushing anxiety, you can use structured breathing exercises to forcefully create a 'still dimension' of your very own.">
+               在捷運的吵雜聲中、在趕路的心跳聲中，你依然可以擁有一座專屬的『感官聖殿』。Zenith 讓你的手機不再只是訊息的干擾源，而是通往內在平靜的入口。在「趕時間」的焦慮中，你能透過呼吸練習強行創造出一個屬於自己的「靜止時空」。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+                <div class="text-purple-600 text-2xl mb-3">🎬</div>
+                <h4 class="text-lg font-bold mb-2 lang-txt" data-zh="電影級視覺饗宴" data-en="Cinematic Visual Feast">電影級視覺饗宴</h4>
+                <p class="text-sm text-slate-600 leading-relaxed lang-txt" data-zh="捨棄傳統平面的 UI，採用霓虹美學與動態深度效果，創造出極具現代感的「數位禪意」。" data-en="Moving away from traditional flat UI, we embrace neon aesthetics and dynamic depth effects to create a highly modern 'Digital Zen'.">捨棄傳統平面的 UI，採用霓虹美學與動態深度效果，創造出極具現代感的「數位禪意」。</p>
+            </div>
+            <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+                <div class="text-purple-600 text-2xl mb-3">📈</div>
+                <h4 class="text-lg font-bold mb-2 lang-txt" data-zh="定製貝茲曲線動畫" data-en="Custom Bézier Animation">定製貝茲曲線動畫</h4>
+                <p class="text-sm text-slate-600 leading-relaxed lang-txt" data-zh="視覺動態並非機械運作，而是透過精密的數學曲線模擬肺部擴張的流暢美感，讓視覺引導成為一種美的享受。" data-en="Visual dynamics are not mechanical; they mimic the fluid beauty of lung expansion via precise mathematical curves, making visual guidance a joyful art.">視覺動態並非機械運作，而是透過精密的數學曲線模擬肺部擴張的流暢美感，讓視覺引導成為一種美的享受。</p>
+            </div>
+            <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+                <div class="text-purple-600 text-2xl mb-3">⚙️</div>
+                <h4 class="text-lg font-bold mb-2 lang-txt" data-zh="精確狀態機引擎" data-en="Precise State Machine">精確狀態機引擎</h4>
+                <p class="text-sm text-slate-600 leading-relaxed lang-txt" data-zh="核心計時器精確控制「吸、屏、呼」的每一毫秒，提供高強度練習，助您在壓力下保持巔峰專注。" data-en="The core timer strictly tracks every millisecond of inhaling, holding, and exhaling, providing high-intensity practice to help you maintain peak focus under pressure.">核心計時器精確控制「吸、屏、呼」的每一毫秒，提供高強度練習，助您在壓力下保持巔峰專注。</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="flex justify-center order-2 md:order-1">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E6%98%9F%E8%BE%B0%E6%BC%82%E6%B5%AE%E5%91%BC%E5%90%B8.png" class="content-img shadow-2xl border border-slate-200/80" alt="星塵漂浮呼吸">
+            </div>
+            <div class="space-y-6 order-1 md:order-2">
+                <div class="inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-bold lang-txt" data-zh="✨ 最新功能特色" data-en="✨ Latest Feature Spotlight">✨ 最新功能特色</div>
+                <h3 class="text-2xl font-bold text-slate-900 lang-txt" data-zh="星塵漂浮呼吸 (Starry Drift Breathing)" data-en="Starry Drift Breathing">星塵漂浮呼吸 (Starry Drift Breathing)</h3>
+                <p class="text-slate-600 leading-relaxed lang-txt" 
+                   data-zh="這是專為創造「入眠氛圍」設計的最新視覺引導功能。透過星塵般的動態視覺與直觀的按鈕回饋，使用者能在極致的美感中重拾節奏，快速沉澱大腦干擾，滑入平穩舒適的專注或深層睡眠狀態。" 
+                   data-en="Specially designed to curate an exquisite 'atmosphere for sleep.' Through stardust-like visual flows and intuitive button feedback, users find their rhythm back within ultimate elegance, shielding the mind from cognitive interference to enter focus or deep rest.">
+                   這是專為創造「入眠氛圍」設計的最新視覺引導功能。透過星塵般的動態視覺與直觀的按鈕回饋，使用者能在極致的美感中重拾節奏，快速沉澱大腦干擾，滑入平穩舒適的專注或深層睡眠狀態。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white/50 backdrop-blur-sm border-y border-slate-200/60 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-purple-600 mb-2 lang-txt" id="occasions-title" data-zh="● 呼吸練習能夠運用的時機與各種情緒上" data-en="● Applicable Scenarios, Emotions & Life Moments">● 呼吸練習能夠運用的時機與各種情緒上</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 mx-auto mb-10 rounded-full"></div>
+            
+            <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto mb-12">
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="提高專注力" data-en="Boost Focus">提高專注力</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="找回放鬆感" data-en="Reclaim Relaxation">找回放鬆感</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="入眠氛圍" data-en="Sleep Atmosphere">入眠氛圍</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="伴侶見面時" data-en="Meeting Partners">伴侶見面時</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="深層放鬆" data-en="Deep Relaxation">深層放鬆</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="風暴後的寧靜" data-en="Calm After Storm">風暴後的寧靜</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="登山完" data-en="Post-Mountaineering">登山完</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="海潮後的節奏" data-en="Rhythm of the Tides">海潮後的節奏</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="日常靜心" data-en="Daily Meditation">日常靜心</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="身心沉澱" data-en="Somatic Grounding">身心沉澱</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="開會前" data-en="Before Meetings">開會前</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="考試前" data-en="Before Exams">考試前</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="面試前" data-en="Before Interviews">面試前</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="找回內在平衡" data-en="Find Inner Balance">找回內在平衡</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="過濾雜訊" data-en="Filter Out Noise">過濾雜訊</span>
+                <span class="bg-purple-50 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200/40 lang-txt" data-zh="找回呼吸的律動" data-en="Reclaim Breath Rhythm">找回呼吸的律動</span>
+            </div>
+            
+            <div class="flex justify-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%91%BC%E5%90%B8%E5%A0%B4%E6%99%AF%E6%87%89%E7%94%A8%E6%99%82%E6%A9%9F.png" class="w-full max-w-2xl rounded-2xl shadow-xl border border-slate-200" alt="呼吸場景應用時機">
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-purple-600 mb-2 lang-txt" data-zh="我們整合了 10 大功能，只為讓你找回平靜：" data-en="10 Integrated Core Functions Engineered for Absolute Serenity:">我們整合了 10 大功能，只為讓你找回平靜：</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start mb-12">
+            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="1. 動態呼吸引導引擎" data-en="1. Dynamic Breathing Engine">1. 動態呼吸引導引擎</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="根據你的狀態提供多種呼吸引導，動態調整節奏。" data-en="Delivers multiple custom breathwork pacing models tailored dynamically to your current energetic state.">根據你的狀態提供多種呼吸引導，動態調整節奏。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="2. ASMR 沉浸式播放器" data-en="2. Immersive ASMR Player">2. ASMR 沉浸式播放器</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="選擇你喜歡的環境聲音（飄雪、風聲、復古商店），營造放鬆空間。" data-en="Curate your ultimate zone with premium environmental frequencies (drifting snow, mountain wind, vintage shops).">選擇你喜歡的環境聲音（飄雪、風聲、復古商店），營造放鬆空間。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="3. 七段自訂等化器" data-en="3. 7-Band Custom EQ">3. 七段自訂等化器</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="高精密微調聲音頻率，直到它完美貼合你的大腦波動。" data-en="Finely recalibrate audio hertz and sound frequencies until they lock perfectly with your brainwave patterns.">高精密微調聲音頻率，直到它完美貼合你的大腦波動。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="4. 祈禱文系統" data-en="4. Soul Resonance Prayers">4. 祈禱文系統</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="帶有「玄學」色彩的心靈共振測試。透過20個關於存在、維度與能量的選擇，分析出最適合你當前靈魂頻率的「玄學祈禱語」。" data-en="A soulful cosmic alignment engine. Through 20 structural inquiries of dimensions and energy source, it analyzes your frequency to render tailored spiritual resonance scripts.">帶有「玄學」色彩的心靈共振測試。透過20個關於存在、維度與能量的選擇，分析出最適合你當前靈魂頻率的「玄學祈禱語」。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="5. 21天引導式冥想" data-en="5. 21-Day Guided Meditation">5. 21天引導式冥想</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="從「壓力清理」到「吵雜中的平靜」，協助建立每日的正念習慣。" data-en="From 'Stress Clearance' to 'Serenity in Chaos,' incrementally forging your daily mindfulness routines.">從「壓力清理」到「吵雜中的平靜」，協助建立每日的正念習慣。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="6. 健身流倒數計時器" data-en="6. Fitness Flow Timer">6. 健身流倒數計時器</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="能夠高效運動，同時能精確掌握時間，確保身體安全地放鬆。" data-en="Empowers high-efficiency performance tracking while ensuring safe pacing for full body decompression.">能夠高效運動，同時能精確掌握時間，確保身體安全地放鬆。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="7. 每日正念名言卡片" data-en="7. Daily Mindfulness Cards">7. 每日正念名言卡片</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="每日抽取一張卡片，獲取來自字裡行間的智慧與深度安慰。" data-en="Draw a dynamic daily card to reveal profound wisdom and psychological comfort from textual space.">每日抽取一張卡片，獲取來自字裡行間的智慧與深度安慰。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="8. 多重抽卡片系統" data-en="8. Multi-Dimensional Drawing">8. 多重抽卡片系統</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="從不同精神維度獲取宏觀建議，提供最個性化的放鬆指引。" data-en="Acquire macro-guidance across different mental frameworks for highly responsive personal wind-down tracking.">從不同精神維度獲取宏觀建議，提供最個性化的放鬆指引。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="9. 各國語言翻譯" data-en="9. Seamless Multi-Language">9. 各國語言翻譯</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="打破語言屏障，內建多國語系本土化，讓正念拓展無國界。" data-en="Dissolves borders. Built-in global localizations bring mindfulness to a worldwide scale without frictions.">打破語言屏障，內建多國語系本土化，讓正念拓展無國界。</p>
+                </div>
+                <div class="p-5 glass-card rounded-2xl">
+                    <h3 class="font-bold text-purple-900 mb-2 lang-txt" data-zh="10. 察覺系統" data-en="10. Advanced Awareness System">10. 察覺系統</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed lang-txt" data-zh="偵測當下疲勞值是否過載，並解碼心情狀態（喜、怒、哀、樂、.....）。" data-en="Senses if fatigue is peaking and decodes instant somatic expressions (joy, sorrow, stress, bliss).">偵測當下疲勞值是否過載，並解碼心情狀態（喜、怒、哀、樂、.....）。</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%11%BC%E5%90%B8%E6%98%87%E8%8F%AF%E4%BA%AB%E5%8F%97%E8%97%9D%E8%A1%93%E7%9A%84%E5%8A%9B%E9%87%8F.png" class="content-img shadow-2xl border border-slate-200" alt="呼吸昇華享受藝術的力量">
+                <p class="text-xs text-slate-400 italic text-center lang-txt" data-zh="功能合一：體驗呼吸昇華藝術的力量" data-en="All-in-One: Experience the art of breath sublimation.">功能合一：體驗呼吸昇華藝術的力量</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-r from-slate-50 to-purple-50/40 border-y border-purple-100 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 lang-txt" data-zh="【察覺系統：映照心靈的濾鏡】" data-en="[Awareness System: Mirror of the Soul]">【察覺系統：映照心靈的濾鏡】</h2>
+                    <p class="text-slate-600 leading-relaxed font-medium lang-txt" data-zh="想知道你現在的「能量顏色」嗎？透過獨家的能量感測技術（*此非醫療檢測，而是一場與自己的趣味對話），Zenith 將透過以下機制協助你回歸正軌：" data-en="Want to decipher your current 'Energy Color'? Powered by our custom bio-sensing concepts (Note: Not for medical diagnostics, but an interactive soul dialogue), Zenith helps you ground yourself:">
+                        想知道你現在的「能量顏色」嗎？透過獨家的能量感測技術（*此非醫療檢測，而是一場與自己的趣味對話），Zenith 將透過以下機制協助你回歸正軌：
+                    </p>
+                    <ul class="space-y-4 text-sm text-slate-700">
+                        <li class="flex items-start gap-2"><span class="text-purple-600 font-bold">●</span> <p class="leading-relaxed"><strong class="lang-txt" data-zh="即時感應：" data-en="Real-Time Sensing: ">即時感應：</strong><span class="lang-txt" data-zh="透過鏡頭觀察面部細微的波長，捕捉你當下的心情氛圍。" data-en="Observes subtle facial color modulations via lens to extract immediate mood micro-waves.">透過鏡頭觀察面部細微的波長，捕捉你當下的心情氛圍。</span></p></li>
+                        <li class="flex items-start gap-2"><span class="text-purple-600 font-bold">●</span> <p class="leading-relaxed"><strong class="lang-txt" data-zh="能量特徵：" data-en="Energy Profiling: ">能量特徵：</strong><span class="lang-txt" data-zh="無論是熾熱的「火之氣息」還是平靜的「雲端波動」，系統會將你的表情轉化為直觀的視覺能量條。" data-en="Whether it's a burning 'Breath of Fire' or tranquil 'Cloud Waves', expressions are instantly translated into visual energy metrics.">無論是熾熱的「火之氣息」還是平靜的「雲端波動」，系統會將你的表情轉化為直觀的視覺能量條。</span></p></li>
+                        <li class="flex items-start gap-2"><span class="text-purple-600 font-bold">●</span> <p class="leading-relaxed"><strong class="lang-txt" data-zh="專屬引導：" data-en="Bespoke Navigation: ">專屬引導：</strong><span class="lang-txt" data-zh="根據察覺到的狀態，自動解鎖最適合你當下頻率的呼吸法，助你快速找回內在平衡。" data-en="Dynamically unlocks the optimal breathing frequency mapped to your current profile, allowing for instant recalibration.">根據察覺到的狀態，自動解鎖最適合你當下頻率的呼吸法，助你快速找回內在平衡。</span></p></li>
+                    </ul>
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="content-img shadow-2xl border border-slate-200" alt="察覺系統">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 max-w-5xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-purple-600 mb-2 lang-txt" data-zh="二、 創作理念：真正的強大，從掌控呼吸開始" data-en="II. Creation Concept: True Strength Begins with Mastering Your Breath">二、 創作理念：真正的強大，從掌控呼吸開始</h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 mx-auto mb-10 rounded-full"></div>
+        
+        <p class="text-slate-700 leading-relaxed max-w-4xl mx-auto mb-12 text-base md:text-lg lang-txt"
+           data-zh="「變強」不只是體能的堆疊，更是對內在節奏的絕對掌控。Zenith 誕生的使命，是將枯燥的呼吸練習轉化為一場視覺與聽覺的藝術盛宴。我們認為，當練習變成一種享受時，進步將無聲無息地發生。透過如電影般深邃的「彩色鑲嵌玻璃」視覺藝術，我們在數位世界中為您築起一座修煉強大的聖殿。在這裡，每一次吸氣都是能量的累積，每一次吐氣都是對極限的擴張，是一款高品質的舒壓藝術品。"
+           data-en="&quot;Becoming stronger&quot; isn't merely stacking physical stamina; it's absolute control over your inner rhythm. Zenith's mission is transforming dry breathing drills into a visual and auditory masterpiece. When training becomes a sheer joy, transformation evolves implicitly. Through deep, cinematic 'Stained Glass' visual artistry, we build an architecture of strength in the digital realm. Every inhalation accumulates power; every exhalation expands limits. A premium stress-relief artwork.">
+           「變強」不只是體能的堆疊，更是對內在節奏的絕對掌控。Zenith 誕生的使命，是將枯燥的呼吸練習轉化為一場視覺與聽覺的藝術盛宴。我們認為，當練習變成一種享受時，進步將無聲無息地發生。透過如電影般深邃的「彩色鑲嵌玻璃」視覺藝術，我們在數位世界中為您築起一座修煉強大的聖殿。在這裡，每一次吸氣都是能量的累積，每一次吐氣都是對極限的擴張，是一款高品質的舒壓藝術品。
+        </p>
+
+        <div class="flex justify-center mb-6">
+            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E6%9C%80%E5%BC%B7%E5%11%BC%E5%90%B8.png" class="w-full max-w-3xl rounded-2xl shadow-2xl border border-slate-200" alt="最強呼吸">
+        </div>
+    </section>
+
+    <section class="py-16 px-6 max-w-7xl mx-auto border-t border-slate-200/80">
         <h2 id="pricing-title" class="text-3xl font-bold text-center mb-12 text-purple-600">定價方案 | Pricing Plans</h2>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 items-stretch">
@@ -109,8 +287,9 @@
             <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition">
                 <div>
                     <h3 class="text-lg font-bold text-slate-800 lang-txt" data-zh="週訂閱" data-en="Weekly Plan">週訂閱</h3>
-                    <div class="text-3xl font-extrabold text-purple-600 my-4">$5.00 <span class="text-xs font-normal text-slate-500">/ week</span></div>
-                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="靈活無負擔，即時開啟一整週的靈性覺察能量場。" data-en="Flexible access to power up your spiritual awareness for a full week.">靈活無負擔，即時開啟一整週的靈性覺察能量場。</p>
+                    <div class="text-2xl font-extrabold text-purple-600 mt-4">$5.00 <span class="text-xs font-normal text-slate-400">USD</span></div>
+                    <div class="text-xl font-bold text-slate-500 mb-4">NT$ 150</div>
+                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="靈活無負擔，即時開啟一整週的覺察與身心強化能量場。" data-en="Flexible access to power up your focus and body-mind optimization for a full week.">靈活無負擔，即時開啟一整週的覺察與身心強化能量場。</p>
                 </div>
                 <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="mt-6 block text-center bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition">Subscribe</a>
             </div>
@@ -119,8 +298,9 @@
                 <div>
                     <div class="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mb-2 lang-txt" data-zh="3天免費試用" data-en="3-Day Free Trial">3天免費試用</div>
                     <h3 class="text-lg font-bold text-slate-800 lang-txt" data-zh="月費方案" data-en="Monthly Plan">月費方案</h3>
-                    <div class="text-3xl font-extrabold text-purple-600 my-4">$12.99 <span class="text-xs font-normal text-slate-500">/ month</span></div>
-                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="包含 3 天免費試用。深度建立每日呼吸與冥想習慣。" data-en="Includes 3-day free trial. Perfect for building daily breathing and meditation habits.">包含 3 天免費試用。深度建立每日呼吸與冥想習慣。</p>
+                    <div class="text-2xl font-extrabold text-purple-600 mt-2">$12.99 <span class="text-xs font-normal text-slate-400">USD</span></div>
+                    <div class="text-xl font-bold text-slate-500 mb-4">NT$ 390</div>
+                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="包含 3 天免費試用。深度建立每日呼吸練習與大腦清空習慣。" data-en="Includes 3-day free trial. Deeply plant daily breathing and mind clearing habits.">包含 3 天免費試用。深度建立每日呼吸練習與大腦清空習慣。</p>
                 </div>
                 <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="mt-6 block text-center bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition">Subscribe</a>
             </div>
@@ -129,8 +309,9 @@
                 <div>
                     <div class="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mb-2 lang-txt" data-zh="7天免費試用" data-en="7-Day Free Trial">7天免費試用</div>
                     <h3 class="text-lg font-bold text-slate-800 lang-txt" data-zh="半年方案" data-en="6-Month Plan">半年方案</h3>
-                    <div class="text-3xl font-extrabold text-purple-600 my-4">$44.99 <span class="text-xs font-normal text-slate-500">/ 6 mos</span></div>
-                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="包含 7 天免費試用。高性價比的中週期修煉與命運抽卡探索。" data-en="Includes 7-day free trial. High value option for mid-term self-discovery and destiny card readings.">包含 7 天免費試用。高性價比的中週期修煉與命運抽卡探索。</p>
+                    <div class="text-2xl font-extrabold text-purple-600 mt-2">$44.99 <span class="text-xs font-normal text-slate-400">USD</span></div>
+                    <div class="text-xl font-bold text-slate-500 mb-4">NT$ 1490</div>
+                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="包含 7 天免費試用。高性價比的中週期身心重啟與等化器解鎖。" data-en="Includes 7-day free trial. Great value option for mid-term somatic reboots and full EQ unlocking.">包含 7 天免費試用。高性價比的中週期身心重啟與等化器解鎖。</p>
                 </div>
                 <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="mt-6 block text-center bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition">Subscribe</a>
             </div>
@@ -139,18 +320,20 @@
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider lang-txt" data-zh="熱門首選・7天試用" data-en="Best Popular・7-Day Trial">熱門首選・7天試用</div>
                 <div class="pt-2">
                     <h3 class="text-lg font-bold text-purple-900 lang-txt" data-zh="年費方案" data-en="Yearly Plan">年費方案</h3>
-                    <div class="text-3xl font-extrabold text-purple-600 my-4">$70.00 <span class="text-xs font-normal text-slate-500">/ year</span></div>
-                    <p class="text-xs text-purple-950 font-medium leading-relaxed lang-txt" data-zh="包含 7 天免費試用。全面解鎖 Face-Flow 與高級祈禱文系統。" data-en="Includes 7-day free trial. Fully unlock Face-Flow and advanced prayer manifestation systems.">包含 7 天免費試用。全面解鎖 Face-Flow 與高級祈禱文系統。</p>
+                    <div class="text-2xl font-extrabold text-purple-600 mt-2">$70.00 <span class="text-xs font-normal text-slate-400">USD</span></div>
+                    <div class="text-xl font-bold text-slate-500 mb-4">NT$ 2290</div>
+                    <p class="text-xs text-purple-950 font-medium leading-relaxed lang-txt" data-zh="包含 7 天免費試用。全面沉浸感官聖殿與頂級狀態機引擎。" data-en="Includes 7-day free trial. Seamless immersion into the Sensory Sanctuary and premium state engines.">包含 7 天免費試用。全面沉浸感官聖殿與頂級狀態機引擎。</p>
                 </div>
-                <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="mt-6 block text-center bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-lg shadow-purple-500/20 hover:opacity-90 transition transform hover:scale-[1.02]">Subscribe</a>
+                <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="mt-6 block text-center bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-lg shadow-purple-500/20 hover:opacity-90 transition transform scale-[1.02]">Subscribe</a>
             </div>
 
             <div class="glass-card border-2 border-fuchsia-400/60 rounded-3xl p-6 flex flex-col justify-between shadow-md relative">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-fuchsia-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider lang-txt" data-zh="終身買斷" data-en="Lifetime Value">終身買斷</div>
                 <div class="pt-2">
                     <h3 class="text-lg font-bold text-slate-800 lang-txt" data-zh="終身特惠 Lifetime" data-en="Lifetime Buyout">終身特惠 Lifetime</h3>
-                    <div class="text-3xl font-extrabold text-fuchsia-600 my-4">$199.99</div>
-                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="一次付費，終身享用。未來所有高級功能更新皆可免費解鎖。" data-en="Pay once, own forever. Instantly unlock all current and future premium enhancements.">一次付費，終身享用。未來所有高級功能更新皆可免費解鎖。</p>
+                    <div class="text-2xl font-extrabold text-fuchsia-600 mt-2">$199.99 <span class="text-xs font-normal text-slate-400">USD</span></div>
+                    <div class="text-xl font-bold text-slate-500 mb-4">NT$ 6990</div>
+                    <p class="text-xs text-slate-500 leading-relaxed lang-txt" data-zh="一次付費，終身享用。未來所有高級功能更新皆可免費永久解鎖。" data-en="Pay once, own forever. Instantly and permanently unlock all premium expansions and upcoming features.">一次付費，終身享用。未來所有高級功能更新皆可免費永久解鎖。</p>
                 </div>
                 <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="mt-6 block text-center bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition">Get Lifetime</a>
             </div>
@@ -180,8 +363,8 @@
         let currentLang = 'zh';
         const trans = {
             zh: {
-                title: "Zenith Magic",
-                desc: "動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。",
+                title: "強大源於呼吸",
+                desc: "結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完全清空。",
                 download: "立即下載 iOS 版",
                 terms: "服務條款",
                 bio: "臉部技術與生物特徵聲明",
@@ -191,8 +374,8 @@
                 langBtn: "English"
             },
             en: {
-                title: "Zenith Magic",
-                desc: "Dynamic Breathing, Face-Flow Energy Sensing, and Sacred Pilgrimage. Open a deep dialogue with your inner self.",
+                title: "Strength Originates from Breath",
+                desc: "Combining exquisite craftsmanship with dynamic aesthetics to unlock the 'Sensory Sanctuary' for body and mind elevation. Breathing exercises forcefully interrupt the chain reaction of negative emotions, stress, and fatigue in seconds, completely clearing your mind.",
                 download: "Download on App Store",
                 terms: "Terms of Service",
                 bio: "Biometric Data Privacy Statement",
