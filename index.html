@@ -3,142 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith Magic 官方網站</title>
+    <title>Zenith Magic - 官方網站 | Official Website</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .gradient-bg { background: linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #0f172a 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .screenshot-img { height: 500px; width: auto; object-fit: contain; border-radius: 2rem; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="gradient-bg text-gray-100 font-sans antialiased">
+<body class="gradient-bg text-gray-100 font-sans antialiased hide-scroll">
 
-    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-gray-800">
+    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-white/10 sticky top-0 z-50 backdrop-blur-md">
         <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Zenith Magic</div>
-        <nav class="flex space-x-4">
-            <a href="https://jksummerx8-hub.github.io/Privacy-Policy-.md/" target="_blank" class="hover:text-indigo-400 transition text-sm pt-2">隱私權政策</a>
-            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-full text-sm font-semibold transition">App Store 下載</a>
+        <nav class="flex items-center space-x-6">
+            <button onclick="toggleLang()" id="langBtn" class="border border-indigo-400 text-indigo-400 px-3 py-1 rounded-full text-sm font-medium hover:bg-indigo-400 hover:text-white transition">English</button>
+            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="hidden md:block bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-full text-sm font-semibold transition">App Store</a>
         </nav>
     </header>
 
     <section class="max-w-5xl mx-auto text-center px-6 py-20">
-        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">Zenith Magic</h1>
-        <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。</p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition transform hover:-translate-y-1">立即下載 iOS 版</a>
-            <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold px-8 py-4 rounded-xl transition">服務條款</a>
-        </div>
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">Zenith Magic</h1>
+        <p id="hero-desc" class="text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。</p>
         
-        <div class="mt-16 bg-gray-900/50 border border-gray-800 rounded-2xl p-4 aspect-video max-w-3xl mx-auto flex items-center justify-center shadow-2xl">
-            <p class="text-gray-500">探索 Zenith Magic 的神祕力量 (預留宣傳影片/App截圖區)</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" id="btn-download" class="w-full sm:w-auto bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition transform hover:-translate-y-1">立即下載 iOS 版</a>
+            <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" id="btn-terms" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-gray-200 font-semibold px-8 py-4 rounded-2xl transition">服務條款</a>
+            <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" id="btn-bio" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-gray-200 font-semibold px-8 py-4 rounded-2xl transition">臉部技術與生物特徵聲明</a>
         </div>
     </section>
 
-    <hr class="border-gray-800 max-w-7xl mx-auto">
+    <section class="py-10 px-4">
+        <div id="gallery-title" class="text-center text-2xl font-bold mb-8 text-indigo-300">App 實機介面展示 | Interface Gallery</div>
+        <div class="flex overflow-x-auto gap-6 pb-10 px-4 hide-scroll">
+            
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="screenshot-img shadow-2xl border border-white/20" alt="察覺系統">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="察覺系統：映照心靈的濾鏡" data-en="Awareness System: Mirror of the Soul">察覺系統：映照心靈的濾鏡</p>
+            </div>
 
-    <section class="max-w-6xl mx-auto px-6 py-20">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-indigo-400 mb-4">映照心靈的察覺系統</h2>
-            <p class="text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                想知道你現在的「能量顏色」嗎？透過獨家 <span class="text-pink-400 font-semibold">Face-Flow 能量感測技術</span>，鏡頭將捕捉面部細微波長，將當下表情轉化為直觀的視覺能量條，自動解鎖最適合你當下頻率的呼吸法。
-            </p>
-            <p class="text-xs text-gray-500 mt-4 max-w-2xl mx-auto">
-                ※ 本技術非醫療檢測，數據僅供參考。在使用本應用及做出醫療決定前，請諮詢專業醫師。臉部技術與隱私聲明請參閱官網底端。
-            </p>
-        </div>
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Zenith.png" class="screenshot-img shadow-2xl border border-white/20" alt="Zenith">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="Zenith Magic 核心介面" data-en="Zenith Magic Core Interface">Zenith Magic 核心介面</p>
+            </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-gray-900/40 p-8 rounded-2xl border border-gray-800/80">
-                <h3 class="text-xl font-bold mb-3 text-purple-300">動態呼吸與健身倒數</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">四階段呼吸週期（吸、屏、吐、再次屏）搭配自訂均衡器。健身流程啟動時支援「即時活動」功能，反白最高效的訓練模式。</p>
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.07.31.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="朝聖系統：意識交互" data-en="Pilgrimage System: Interaction">朝聖系統：意識交互</p>
             </div>
-            <div class="bg-gray-900/40 p-8 rounded-2xl border border-gray-800/80">
-                <h3 class="text-xl font-bold mb-3 text-purple-300">朝聖系統：神聖祈禱文</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">精準測量意識與能量場，為靈魂留個出口。在喧囂的世界中，顯化最契合你當下頻率的專屬祈禱文。</p>
-            </div>
-            <div class="bg-gray-900/40 p-8 rounded-2xl border border-gray-800/80">
-                <h3 class="text-xl font-bold mb-3 text-purple-300">3D ASMR 與冥想課程</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">精心調校的森林雨聲與自然呼吸聲，搭配專業語音引導冥想。無論清晨喚醒或睡前放鬆，輕鬆享受低門檻的深度療癒。</p>
-            </div>
-        </div>
-    </section>
 
-    <section class="bg-black/20 py-20">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-indigo-400 mb-2">解決方案</h2>
-                <p class="text-gray-400">在喧囂中找到屬於你的靜謐角落。Zenith Magic 幫助您快速放鬆、提升專注。</p>
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.06.01.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="引導冥想課程" data-en="Guided Meditation Course">引導冥想課程</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="p-6 bg-gray-900/20 rounded-xl border border-gray-800"><h4 class="font-bold mb-2">1. 沉浸式多媒體播放器</h4><p class="text-gray-400 text-sm">兼具視覺吸引力與專業音訊控制，完美融合高品質高低頻環境音效。</p></div>
-                <div class="p-6 bg-gray-900/20 rounded-xl border border-gray-800"><h4 class="font-bold mb-2">2. 雙層級命運抽卡系統</h4><p class="text-gray-400 text-sm">隨機抽取精美卡片。訂閱用戶可由 3 張升級開啟 30 張高級專業卡牌池。</p></div>
-                <div class="p-6 bg-gray-900/20 rounded-xl border border-gray-800"><h4 class="font-bold mb-2">3. 即時活動 (Live Activities)</h4><p class="text-gray-400 text-sm">健身倒數系統完美整合 iOS 系統功能，鎖定畫面與動態島即時追蹤。</p></div>
-                <div class="p-6 bg-gray-900/20 rounded-xl border border-gray-800"><h4 class="font-bold mb-2">4. 自訂高級均衡器</h4><p class="text-gray-400 text-sm">ASMR 與多媒體播放皆支援聲音自訂，調配最適合您耳道的舒適頻率。</p></div>
-                <div class="p-6 bg-gray-900/20 rounded-xl border border-gray-800"><h4 class="font-bold mb-2">5. 引導式場景冥想</h4><p class="text-gray-400 text-sm">針對減壓、專注、療癒設計專屬語音，成為每天最期待的自我對話時刻。</p></div>
-                <div class="p-6 bg-gray-900/20 rounded-xl border border-gray-800"><h4 class="font-bold mb-2">6. 嚴格的隱私安全保障</h4><p class="text-gray-400 text-sm">臉部感測技術嚴格遵循生物特徵隱私聲明，數據絕不外洩，安全可靠。</p></div>
-            </div>
-        </div>
-    </section>
 
-    <section class="max-w-6xl mx-auto px-6 py-20">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-indigo-400 mb-2">訂閱方案</h2>
-            <p class="text-gray-400">選擇最適合您的修煉週期，解鎖 30 張進階抽卡與完整多媒體冥想功能。</p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-8 items-start">
-            <div class="bg-gray-900/50 p-8 rounded-2xl border border-gray-800 text-center">
-                <h3 class="text-xl font-bold mb-2">基礎入門</h3>
-                <div class="text-2xl font-bold text-indigo-400 mb-6">NT$ 150 <span class="text-sm font-normal text-gray-400">/週</span></div>
-                <ul class="text-gray-400 text-sm space-y-3 mb-8 text-left">
-                    <li>✓ 動態呼吸法引導</li>
-                    <li>✓ 3張基礎隨機抽卡</li>
-                    <li>✓ Face-Flow 能量感應</li>
-                    <li>✓ 基礎 ASMR 音效</li>
-                </ul>
-                <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="block bg-gray-800 hover:bg-gray-700 py-2 rounded-xl font-semibold transition">立即訂閱</a>
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.37.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="動態呼吸引導" data-en="Dynamic Breathing Guide">動態呼吸引導</p>
             </div>
-            <div class="bg-gradient-to-b from-indigo-900/50 to-gray-900/50 p-8 rounded-2xl border-2 border-indigo-500 text-center relative transform md:-translate-y-4 shadow-xl">
-                <div class="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-indigo-500 text-white text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">熱門</div>
-                <h3 class="text-xl font-bold mb-2">精進核心</h3>
-                <div class="text-3xl font-bold text-indigo-300 mb-1">NT$ 390 <span class="text-sm font-normal text-gray-400">/月</span></div>
-                <div class="text-xs text-indigo-400 mb-6">（半年費特惠價 NT$1490）</div>
-                <ul class="text-gray-300 text-sm space-y-3 mb-8 text-left">
-                    <li>✓ 解鎖 30 張高級抽卡池</li>
-                    <li>✓ 完整引導冥想課程</li>
-                    <li>✓ 進階即時活動健身倒數</li>
-                    <li>✓ 自訂音樂均衡器控制</li>
-                </ul>
-                <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="block bg-indigo-600 hover:bg-indigo-700 py-2 rounded-xl font-semibold transition">立即訂閱</a>
+
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.24.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="ASMR 感官音效控制" data-en="ASMR Sensory Sound Control">ASMR 感官音效控制</p>
             </div>
-            <div class="bg-gray-900/50 p-8 rounded-2xl border border-gray-800 text-center">
-                <h3 class="text-xl font-bold mb-2">終身/年度 顯化</h3>
-                <div class="text-2xl font-bold text-indigo-400 mb-1">NT$ 2,290 <span class="text-sm font-normal text-gray-400">/年</span></div>
-                <div class="text-xs text-purple-400 mb-6">（終身買斷制 NT$6,990）</div>
-                <ul class="text-gray-400 text-sm space-y-3 mb-8 text-left">
-                    <li>✓ 未來所有高級主題免費升級</li>
-                    <li>✓ 玄學祈禱文演算法無限使用</li>
-                    <li>✓ 優先權重面部能量感應</li>
-                    <li>✓ VIP 專屬客服信箱支援</li>
-                </ul>
-                <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="block bg-gray-800 hover:bg-gray-700 py-2 rounded-xl font-semibold transition">終身/年度 訂閱</a>
+
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.00.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="個人能量日誌" data-en="Personal Energy Journal">個人能量日誌</p>
             </div>
+
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.04.09.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="抽卡系統：命運指引" data-en="Card System: Fate Guidance">抽卡系統：命運指引</p>
+            </div>
+
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2001.22.21.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="訂閱方案管理" data-en="Subscription Management">訂閱方案管理</p>
+            </div>
+
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-09%20at%2019.11.40.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="神聖祈禱文顯化" data-en="Sacred Prayer Manifestation">神聖祈禱文顯化</p>
+            </div>
+
+            <div class="flex-none text-center">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-08%20at%2014.35.19.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
+                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="設定與隱私聲明" data-en="Settings & Privacy">設定與隱私聲明</p>
+            </div>
+
         </div>
     </section>
 
-    <footer class="bg-black/40 text-gray-500 text-xs py-12 border-t border-gray-900">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
-                <p class="mb-2">「當你讀出 these 文字，你便是在重新建構你的現實。」</p>
-                <p>&copy; 2026 Zenith Magic. All rights reserved. 語言：繁體中文 / English</p>
+    <footer class="bg-black/40 text-gray-500 text-xs py-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div>
+                <p id="footer-quote" class="mb-2 text-gray-400 italic">「當你讀出這些文字，你便是在重新建構你的現實。」</p>
+                <p>&copy; 2026 Zenith Magic. All rights reserved. </p>
+                <p class="mt-2" id="footer-disclaimer">※ 本技術非醫療檢測，數據僅供參考。在使用及做出醫療決定前，請諮詢專業醫師。</p>
             </div>
-            <div class="flex flex-col text-center md:text-right gap-2">
-                <p>客服聯絡：<a href="mailto:xrknight7@yahoo.com" class="text-gray-400 hover:underline">xrknight7@yahoo.com</a></p>
-                <div class="space-x-3">
-                    <a href="https://jksummerx8-hub.github.io/Privacy-Policy-.md/" target="_blank" class="hover:underline">隱私權政策</a>
-                    <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" class="hover:underline">服務條款</a>
-                    <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" class="hover:underline">臉部技術與生物特徵聲明</a>
+            <div class="flex flex-col gap-3 md:text-right">
+                <p id="footer-contact">客服聯絡：<a href="mailto:xrknight7@yahoo.com" class="text-indigo-400 hover:underline">xrknight7@yahoo.com</a></p>
+                <div class="flex flex-wrap justify-center md:justify-end gap-4">
+                    <a href="https://jksummerx8-hub.github.io/Privacy-Policy-.md/" target="_blank" class="hover:text-gray-300 underline">Privacy Policy</a>
+                    <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" class="hover:text-gray-300 underline">Terms</a>
+                    <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" class="hover:text-gray-300 underline">Biometric Statement</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script>
+        let currentLang = 'zh';
+        const trans = {
+            zh: {
+                title: "Zenith Magic",
+                desc: "動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。",
+                download: "立即下載 iOS 版",
+                terms: "服務條款",
+                bio: "臉部技術與生物特徵聲明",
+                quote: "「當你讀出這些文字，你便是在重新建構你的現實。」",
+                disclaimer: "※ 本技術非醫療檢測，數據僅供參考。在使用及做出醫療決定前，請諮詢專業醫師。",
+                contact: "客服聯絡：",
+                gallery: "App 實機介面展示",
+                langBtn: "English"
+            },
+            en: {
+                title: "Zenith Magic",
+                desc: "Dynamic Breathing, Face-Flow Energy Sensing, and Sacred Pilgrimage. Open a deep dialogue with your inner self.",
+                download: "Download on App Store",
+                terms: "Terms of Service",
+                bio: "Biometric Data Privacy Statement",
+                quote: "\"When you speak these words, you are reconstructing your reality.\"",
+                disclaimer: "* This technology is not for medical diagnosis. Consult a physician before making medical decisions.",
+                contact: "Support: ",
+                gallery: "App Interface Gallery",
+                langBtn: "繁體中文"
+            }
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            const l = trans[currentLang];
+            
+            document.getElementById('hero-title').innerText = l.title;
+            document.getElementById('hero-desc').innerText = l.desc;
+            document.getElementById('btn-download').innerText = l.download;
+            document.getElementById('btn-terms').innerText = l.terms;
+            document.getElementById('btn-bio').innerText = l.bio;
+            document.getElementById('footer-quote').innerText = l.quote;
+            document.getElementById('footer-disclaimer').innerText = l.disclaimer;
+            document.getElementById('footer-contact').firstChild.textContent = l.contact;
+            document.getElementById('gallery-title').innerText = currentLang === 'zh' ? "App 實機介面展示 | Interface Gallery" : "App Interface Gallery | 實機介面展示";
+            document.getElementById('langBtn').innerText = l.langBtn;
+
+            // 更新圖片下方標籤
+            document.querySelectorAll('.gallery-label').forEach(label => {
+                label.innerText = label.getAttribute('data-' + currentLang);
+            });
+        }
+    </script>
 </body>
 </html>
