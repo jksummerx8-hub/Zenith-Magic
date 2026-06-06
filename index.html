@@ -6,108 +6,125 @@
     <title>Zenith Magic - 官方網站 | Official Website</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #0f172a 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        /* 🤍 調整為主頁背景：白色到明亮漸層藍 */
+        .gradient-bg { background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 40%, #e0f2fe 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0, 0, 0, 0.05); }
         .screenshot-img { height: 500px; width: auto; object-fit: contain; border-radius: 2rem; }
-        .hide-scroll::-webkit-scrollbar { display: none; }
+        
+        /* 🔮 精美藍紫霓虹自訂捲軸 */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(to right, #a855f7, #6366f1); 
+            border-radius: 9999px;
+            border: 2px solid #ffffff;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to right, #9333ea, #4f46e5);
+        }
     </style>
 </head>
-<body class="gradient-bg text-gray-100 font-sans antialiased hide-scroll">
-
-    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-white/10 sticky top-0 z-50 backdrop-blur-md">
-        <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Zenith Magic</div>
+<body class="gradient-bg text-slate-800 font-sans antialiased"> <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-200/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Zenith Magic</div>
         <nav class="flex items-center space-x-6">
-            <button onclick="toggleLang()" id="langBtn" class="border border-indigo-400 text-indigo-400 px-3 py-1 rounded-full text-sm font-medium hover:bg-indigo-400 hover:text-white transition">English</button>
-            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="hidden md:block bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-full text-sm font-semibold transition">App Store</a>
+            <button onclick="toggleLang()" id="langBtn" class="border border-purple-600 text-purple-600 px-3 py-1 rounded-full text-sm font-medium hover:bg-purple-600 hover:text-white transition">English</button>
+            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" class="hidden md:block bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition shadow-md">App Store</a>
         </nav>
     </header>
 
     <section class="max-w-5xl mx-auto text-center px-6 py-20">
-        <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">Zenith Magic</h1>
-        <p id="hero-desc" class="text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。</p>
+        <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-slate-900">Zenith Magic</h1>
+        <p id="hero-desc" class="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">動態呼吸、Face-Flow 能量感測與靈性朝聖，開啟與內在自我的深層對話。</p>
         
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" id="btn-download" class="w-full sm:w-auto bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition transform hover:-translate-y-1">立即下載 iOS 版</a>
-            <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" id="btn-terms" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-gray-200 font-semibold px-8 py-4 rounded-2xl transition">服務條款</a>
-            <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" id="btn-bio" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-gray-200 font-semibold px-8 py-4 rounded-2xl transition">臉部技術與生物特徵聲明</a>
-        </div>
-    </section>
-
-    <section class="py-10 px-4">
-        <div id="gallery-title" class="text-center text-2xl font-bold mb-8 text-indigo-300">App 實機介面展示 | Interface Gallery</div>
-        <div class="flex overflow-x-auto gap-6 pb-10 px-4 hide-scroll">
+            <a href="https://apps.apple.com/tw/app/zenith-magic/id6758757008" target="_blank" id="btn-download" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-purple-500/20 transition transform hover:-translate-y-1">立即下載 iOS 版</a>
             
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="screenshot-img shadow-2xl border border-white/20" alt="察覺系統">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="察覺系統：映照心靈的濾鏡" data-en="Awareness System: Mirror of the Soul">察覺系統：映照心靈的濾鏡</p>
+            <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" id="btn-terms" class="w-full sm:w-auto bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4 rounded-2xl border border-purple-200/60 transition shadow-sm">服務條款</a>
+            <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" id="btn-bio" class="w-full sm:w-auto bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4 rounded-2xl border border-purple-200/60 transition shadow-sm">臉部技術與生物特徵聲明</a>
+        </div>
+    </section>
+
+    <section class="py-10 px-4 max-w-7xl mx-auto">
+        <div id="gallery-title" class="text-center text-2xl font-bold mb-8 text-purple-600">App 實機介面展示 | Interface Gallery</div>
+        
+        <div class="flex overflow-x-auto gap-6 pb-6 px-4 custom-scrollbar">
+            
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="察覺系統">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="察覺系統：映照心靈的濾鏡" data-en="Awareness System: Mirror of the Soul">察覺系統：映照心靈的濾鏡</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Zenith.png" class="screenshot-img shadow-2xl border border-white/20" alt="Zenith">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="Zenith Magic 核心介面" data-en="Zenith Magic Core Interface">Zenith Magic 核心介面</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Zenith.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Zenith">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="Zenith Magic 核心介面" data-en="Zenith Magic Core Interface">Zenith Magic 核心介面</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.07.31.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="朝聖系統：意識交互" data-en="Pilgrimage System: Interaction">朝聖系統：意識交互</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.07.31.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="朝聖系統：意識交互" data-en="Pilgrimage System: Interaction">朝聖系統：意識交互</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.06.01.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="引導冥想課程" data-en="Guided Meditation Course">引導冥想課程</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.06.01.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="引導冥想課程" data-en="Guided Meditation Course">引導冥想課程</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.37.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="動態呼吸引導" data-en="Dynamic Breathing Guide">動態呼吸引導</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.37.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="動態呼吸引導" data-en="Dynamic Breathing Guide">動態呼吸引導</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.24.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="ASMR 感官音效控制" data-en="ASMR Sensory Sound Control">ASMR 感官音效控制</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.24.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="ASMR 感官音效控制" data-en="ASMR Sensory Sound Control">ASMR 感官音效控制</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.00.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="個人能量日誌" data-en="Personal Energy Journal">個人能量日誌</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.00.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="個人能量日誌" data-en="Personal Energy Journal">個人能量日誌</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.04.09.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="抽卡系統：命運指引" data-en="Card System: Fate Guidance">抽卡系統：命運指引</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.04.09.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="抽卡系統：命運指引" data-en="Card System: Fate Guidance">抽卡系統：命運指引</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2001.22.21.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="訂閱方案管理" data-en="Subscription Management">訂閱方案管理</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2001.22.21.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="訂閱方案管理" data-en="Subscription Management">訂閱方案管理</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-09%20at%2019.11.40.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="神聖祈禱文顯化" data-en="Sacred Prayer Manifestation">神聖祈禱文顯化</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-09%20at%2019.11.40.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="神聖祈禱文顯化" data-en="Sacred Prayer Manifestation">神聖祈禱文顯化</p>
             </div>
 
-            <div class="flex-none text-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-08%20at%2014.35.19.png" class="screenshot-img shadow-2xl border border-white/20" alt="Screenshot">
-                <p class="mt-4 font-medium text-indigo-200 gallery-label" data-zh="設定與隱私聲明" data-en="Settings & Privacy">設定與隱私聲明</p>
+            <div class="flex-none text-center mb-4">
+                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-08%20at%2014.35.19.png" class="screenshot-img shadow-xl border border-slate-200/60" alt="Screenshot">
+                <p class="mt-4 font-semibold text-slate-700 gallery-label" data-zh="設定與隱私聲明" data-en="Settings & Privacy">設定與隱私聲明</p>
             </div>
 
         </div>
     </section>
 
-    <footer class="bg-black/40 text-gray-500 text-xs py-12 border-t border-white/5">
+    <footer class="bg-slate-50 text-slate-500 text-xs py-12 border-t border-slate-200">
         <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <div>
-                <p id="footer-quote" class="mb-2 text-gray-400 italic">「當你讀出這些文字，你便是在重新建構你的現實。」</p>
+                <p id="footer-quote" class="mb-2 text-slate-600 italic">「當你讀出這些文字，你便是在重新建構你的現實。」</p>
                 <p>&copy; 2026 Zenith Magic. All rights reserved. </p>
-                <p class="mt-2" id="footer-disclaimer">※ 本技術非醫療檢測，數據僅供參考。在使用及做出醫療決定前，請諮詢專業醫師。</p>
+                <p class="mt-2 text-slate-400" id="footer-disclaimer">※ 本技術非醫療檢測，數據僅供參考。在使用及做出醫療決定前，請諮詢專業醫師。</p>
             </div>
             <div class="flex flex-col gap-3 md:text-right">
-                <p id="footer-contact">客服聯絡：<a href="mailto:xrknight7@yahoo.com" class="text-indigo-400 hover:underline">xrknight7@yahoo.com</a></p>
+                <p id="footer-contact">客服聯絡：<a href="mailto:xrknight7@yahoo.com" class="text-purple-600 hover:underline font-medium">xrknight7@yahoo.com</a></p>
                 <div class="flex flex-wrap justify-center md:justify-end gap-4">
-                    <a href="https://jksummerx8-hub.github.io/Privacy-Policy-.md/" target="_blank" class="hover:text-gray-300 underline">Privacy Policy</a>
-                    <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" class="hover:text-gray-300 underline">Terms</a>
-                    <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" class="hover:text-gray-300 underline">Biometric Statement</a>
+                    <a href="https://jksummerx8-hub.github.io/Privacy-Policy-.md/" target="_blank" class="text-slate-500 hover:text-slate-800 underline">Privacy Policy</a>
+                    <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" class="text-slate-500 hover:text-slate-800 underline">Terms</a>
+                    <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" class="text-slate-500 hover:text-slate-800 underline">Biometric Statement</a>
                 </div>
             </div>
         </div>
@@ -125,7 +142,6 @@
                 quote: "「當你讀出這些文字，你便是在重新建構你的現實。」",
                 disclaimer: "※ 本技術非醫療檢測，數據僅供參考。在使用及做出醫療決定前，請諮詢專業醫師。",
                 contact: "客服聯絡：",
-                gallery: "App 實機介面展示",
                 langBtn: "English"
             },
             en: {
@@ -137,7 +153,6 @@
                 quote: "\"When you speak these words, you are reconstructing your reality.\"",
                 disclaimer: "* This technology is not for medical diagnosis. Consult a physician before making medical decisions.",
                 contact: "Support: ",
-                gallery: "App Interface Gallery",
                 langBtn: "繁體中文"
             }
         };
@@ -157,7 +172,7 @@
             document.getElementById('gallery-title').innerText = currentLang === 'zh' ? "App 實機介面展示 | Interface Gallery" : "App Interface Gallery | 實機介面展示";
             document.getElementById('langBtn').innerText = l.langBtn;
 
-            // 更新圖片下方標籤
+            // 切換圖片下方個別中英文標籤
             document.querySelectorAll('.gallery-label').forEach(label => {
                 label.innerText = label.getAttribute('data-' + currentLang);
             });
