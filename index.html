@@ -1,6 +1,185 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith Magic - 官方網站</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* 讓網頁有點基礎背景，方便辨識 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #121214;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    /* ========================================================
+       位置設定：將登入控制區塊固定在【網頁最上面中間】
+       ======================================================== -->
+    #auth-container {
+      position: fixed;
+      top: 20px;          /* 距離頂部 20 像素 */
+      left: 50%;          /* 置中對齊基準點 */
+      transform: translateX(-50%); /* 真正水平置中 */
+      z-index: 9999;      /* 確保永遠浮在網頁最上層 */
+      
+      /* 樣式美化（帶有一點點透明科技感） */
+      background: rgba(28, 28, 30, 0.9);
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* 按鈕美化 */
+    .auth-btn {
+      background-color: #24292e; /* GitHub 經典黑 */
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .auth-btn:hover {
+      background-color: #444d56;
+    }
+    .signout-btn {
+      background-color: #ea4335; /* 登出紅色 */
+    }
+    .signout-btn:hover {
+      background-color: #c53023;
+    }
+
+    /* 使用者大頭貼與名字樣式 */
+    #user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #34d399; /* 綠色安全線上框 */
+    }
+    #user-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="auth-container">
+    <div id="logged-out-view">
+      <button class="auth-btn" onclick="loginWithGitHub()">
+        使用 GitHub 登入 Zenith Magic
+      </button>
+    </div>
+
+    <div id="logged-in-view" style="display: none;">
+      <div id="user-info">
+        <img id="user-avatar" src="" alt="Avatar">
+        <span id="user-name">載入中...</span>
+        <button class="auth-btn signout-btn" onclick="logout()">登出</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-top: 120px; text-align: center;">
+    <h1>🔮 Zenith Magic </h1>
+    <p>歡迎來到你的魔法世界，帳號系統已就緒。</p>
+  </div>
+
+
+  <script>
+    // --------------------------------------------------------
+    // 功能 2：初始化 Supabase 用戶端
+    // --------------------------------------------------------
+    // 請將下方的 URL 保持不變，並把 Anon Key 替換成你剛剛在 API Keys 頁面複製的那長串密鑰
+    const supabaseUrl = 'https://jyghcpwnrsisdqjoxvfu.supabase.co'
+    const supabaseAnonKey = '在這裡貼上你的_anon_public_key'
+    
+    // 初始化產生全域的 supabaseClient
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
+
+    // --------------------------------------------------------
+    // 功能 3：實作「GitHub 登入」與「登出」點擊事件
+    // --------------------------------------------------------
+    async function loginWithGitHub() {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          // 登入授權成功後，自動導回你的正式官網
+          redirectTo: 'https://jksummerx8-hub.github.io/Zenith-Magic/'
+        }
+      })
+      
+      if (error) {
+        alert('登入失敗：' + error.message)
+      }
+    }
+
+    async function logout() {
+      const { error } = await supabaseClient.auth.signOut()
+      if (error) {
+        alert('登出失敗：' + error.message)
+      }
+    }
+
+    // --------------------------------------------------------
+    // 功能 4：監聽登入狀態與自動獲取使用者資料
+    // --------------------------------------------------------
+    //不論使用者是第一次進來，還是剛從 GitHub 授權完被導回來，這個監聽器都會自動觸發！
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      const loggedOutView = document.getElementById('logged-out-view')
+      const loggedInView = document.getElementById('logged-in-view')
+      
+      if (session && session.user) {
+        // 【使用者已登入】
+        const user = session.user
+        
+        // 1. 從 GitHub 回傳的元資料 (metadata) 中抓取名稱與大頭貼
+        const fullName = user.user_metadata.full_name || user.email
+        const avatarUrl = user.user_metadata.avatar_url
+        
+        // 2. 將資料渲染到網頁畫面上
+        document.getElementById('user-name').innerText = fullName
+        document.getElementById('user-avatar').src = avatarUrl
+        
+        // 3. 切換介面顯示
+        loggedOutView.style.display = 'none'
+        loggedInView.style.display = 'block'
+        
+        console.log('目前登入的使用者詳細資料：', user)
+      } else {
+        // 【使用者未登入 或 已登出】
+        loggedOutView.style.display = 'block'
+        loggedInView.style.display = 'none'
+      }
+    })
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zenith Magic - 官方網站 | Official Website</title>
@@ -444,42 +623,3 @@
     </script>
 </body>
 </html>
-npm install @supabase/supabase-js
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = '填入你的_SUPABASE_URL'
-const supabaseAnonKey = '填入你的_SUPABASE_ANON_KEY'
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-import { supabase } from './supabaseClient'
-
-async function signInWithGitHub() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
-    options: {
-      // 登入成功後，要把使用者導回前端的哪一個頁面
-      redirectTo: window.location.origin // 例如 http://localhost:3000
-    }
-  })
-
-  if (error) {
-    console.error('GitHub 登入發生錯誤:', error.message)
-  }
-}
-// 監聽登入狀態轉變
-supabase.auth.onAuthStateChange((event, session) => {
-  if (session) {
-    console.log('目前登入的使用者資訊：', session.user)
-    // 你可以從 session.user.user_metadata 中拿到使用者的 GitHub 大頭貼與名稱
-    // 例如：session.user.user_metadata.avatar_url
-    // 例如：session.user.user_metadata.full_name
-  } else {
-    console.log('目前沒有使用者登入')
-  }
-})
-
-// 登出功能
-async function handleSignOut() {
-  const { error } = await supabase.auth.signOut()
-  if (error) console.error('登出失敗:', error.message)
-}
