@@ -1,4 +1,101 @@
-<!DOCTYPE html> <html lang="zh-TW"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Zenith Magic - 官方網站 | Official Website</title> <script src="https://cdn.tailwindcss.com"></script> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <style> /* 🤍 主頁背景：明亮純淨的白色到天空藍漸層 */ .gradient-bg { background: linear-gradient(135deg, #ffffff 0%, #f1f8fe 40%, #e0f2fe 100%); } /* 🔮 藍紫霓虹體自訂捲軸 */ .custom-scrollbar::-webkit-scrollbar { height: 10px; } .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 9999px; } .custom-scrollbar::-webkit-scrollbar-thumb { background: linear-gradient(to right, #a855f7, #6366f1); border-radius: 9999px; border: 2px solid #ffffff; } .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, #9333ea, #4f46e5); } </style> </head> <body class="gradient-bg text-slate-800 font-sans antialiased min-height-vh"> <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-200/80 sticky top-0 backdrop-blur-md bg-white/40 z-50"> <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600"> Zenith Magic </div> <nav class="flex items-center space-x-6"> <button onclick="toggleLang()" id="langBtn" class="border border-purple-600 text-purple-600 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-purple-600 hover:text-white transition"> English </button> <button onclick="handleDownload(false)" class="hidden md:block bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-md hover:opacity-90"> App Store </button> </nav> </header> <section class="max-w-5xl mx-auto text-center px-6 py-20 relative"> <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none"></div> <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-slate-900 leading-tight"> 強大源於呼吸 </h1> <p id="hero-desc" class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed font-medium"> 結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完全清空。 </p> <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12"> <button onclick="handleDownload(false)" id="btn-download" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-purple-500/20 transition transform hover:-translate-y-1"> 立即下載 iOS 版 </button> <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html/-refs/heads/main/Terms" target="_blank" id="btn-terms" class="w-full sm:w-auto bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4 rounded-2xl border border-purple-200/60 transition shadow-sm text-center"> 服務條款 </a> <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" id="btn-bio" class="w-full sm:w-auto bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4 rounded-2xl border border-purple-200/60 transition shadow-sm text-center"> 臉部技術與生物特徵聲明 </a> </div> <div id="auth-container" class="max-w-md mx-auto mt-6 p-6 rounded-2xl border border-purple-100 bg-white/70 backdrop-blur-md shadow-md text-slate-800 text-left"> <div id="logged-out-view"> <div class="mb-3"> <input type="text" id="name-input" placeholder="請輸入姓名或暱稱 (註冊才需填寫)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 text-slate-800"> </div> <div class="mb-3"> <input type="email" id="email-input" placeholder="請輸入您的信箱 (Gmail/奇摩...)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 text-slate-800"> </div> <div class="mb-4"> <input type="password" id="password-input" placeholder="請輸入自訂密碼" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 text-slate-800"> </div> <div class="flex gap-3 mb-4"> <button class="flex-1 p-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-sm hover:opacity-90 transition" id="lbl-login" onclick="loginWithEmail()">登入</button> <button class="flex-1 p-3 text-sm font-semibold text-purple-600 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition" id="lbl-register" onclick="registerWithEmail()">註冊</button> </div> <div class="text-center mb-4 text-xs text-slate-400" id="lbl-or">或</div> <button class="w-full p-3 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl flex items-center justify-center gap-2 transition" id="lbl-github" onclick="loginWithGitHub()"> <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.04 1.71.15 2.5.43 1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg> 使用 GitHub 快速登入 </button> </div> <div id="logged-in-view" style="display: none;"> <div class="text-center"> <img id="user-avatar" src="" alt="Avatar" class="w-14 h-14 rounded-full border-2 border-purple-500 mx-auto mb-2"> <span id="user-name" class="block text-sm font-medium text-slate-700 mb-4">Loading...</span> <button class="w-full p-2.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-xl transition" id="lbl-signout" onclick="logout()">登出帳號</button> </div> </div> </div> </section> <section class="py-6 px-4 max-w-7xl mx-auto text-center"> <h2 class="text-purple-600 font-bold text-xl mb-4">App 實機介面展示 | Interface Gallery</h2> </section> <script> // 初始化 Supabase 用戶端 const supabaseUrl = 'https://jyghcpwnrsisdqjoxvfu.supabase.co'; const supabaseAnonKey = 'sb_publishable_v__Izse7jqVhf0jMj7-Uvw_V-qgNweC'; // const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey); // 多國語系字典 let currentLang = 'zh'; const i18n = { zh: { navLang: 'English', heroTitle: '強大源於呼吸', heroDesc: '結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完全清空。', btnDownload: '立即下載 iOS 版', btnTerms: '服務條款', btnBio: '臉部技術與生物特徵聲明', placeholderName: '請輸入姓名或暱稱 (註冊才需填寫)', placeholderEmail: '請輸入您的信箱 (Gmail/奇摩...)', placeholderPwd: '請輸入自訂密碼', login: '登入', register: '註冊', or: '或', github: '使用 GitHub 快速登入', signout: '登出帳號', alertMissing: '註冊新帳號時，姓名、信箱與密碼皆為必填項目！', alertMissingLogin: '請填寫信箱與密碼！', alertRegSuccess: '註冊成功！若您未關閉後台信箱確認功能，請先前往信箱點擊驗證信。', alertRegFail: '註冊失敗：', alertLoginFail: '登入失敗：', alertGitFail: 'GitHub 登入失敗：', alertOutFail: '登出失敗：' }, en: { navLang: '繁體中文', heroTitle: 'Strength Sourced from Breath', heroDesc: 'Combining ultimate craftsmanship with dynamic aesthetics, unlocking your "Sensory Sanctuary." Breathing practices "violently" interrupt negative emotions, stress, and fatigue within seconds, clearing your mind entirely.', btnDownload: 'Download on iOS', btnTerms: 'Terms of Service', btnBio: 'Facial Tech & Biometric Privacy', placeholderName: 'Name or Nickname (For registration)', placeholderEmail: 'Email Address (Gmail, Yahoo...)', placeholderPwd: 'Password', login: 'Log In', register: 'Sign Up', or: 'OR', github: 'Sign in with GitHub', signout: 'Sign Out', alertMissing: 'Name, Email, and Password are all required for registration!', alertMissingLogin: 'Please enter both email and password!', alertRegSuccess: 'Registration successful! If Email Confirmation is active, please check your inbox to verify.', alertRegFail: 'Registration failed: ', alertLoginFail: 'Login failed: ', alertGitFail: 'GitHub Login failed: ', alertOutFail: 'Logout failed: ' } }; // 動態重新渲染網頁文字 function updateInterfaceText() { const lang = i18n[currentLang]; // 1. 導覽列與網頁主視覺文字 if(document.getElementById('langBtn')) document.getElementById('langBtn').innerText = lang.navLang; if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = lang.heroTitle; if(document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = lang.heroDesc; if(document.getElementById('btn-download')) document.getElementById('btn-download').innerText = lang.btnDownload; if(document.getElementById('btn-terms')) document.getElementById('btn-terms').innerText = lang.btnTerms; if(document.getElementById('btn-bio')) document.getElementById('btn-bio').innerText = lang.btnBio; // 2. 帳號面板輸入框提示字 if(document.getElementById('name-input')) document.getElementById('name-input').placeholder = lang.placeholderName; if(document.getElementById('email-input')) document.getElementById('email-input').placeholder = lang.placeholderEmail; if(document.getElementById('password-input')) document.getElementById('password-input').placeholder = lang.placeholderPwd; // 3. 帳號面板按鈕文字 if(document.getElementById('lbl-login')) document.getElementById('lbl-login').innerText = lang.login; if(document.getElementById('lbl-register')) document.getElementById('lbl-register').innerText = lang.register; if(document.getElementById('lbl-or')) document.getElementById('lbl-or').innerText = lang.or; if(document.getElementById('lbl-github')) document.getElementById('lbl-github').innerText = lang.github; if(document.getElementById('lbl-signout')) document.getElementById('lbl-signout').innerText = lang.signout; } // 點擊導覽列 English 按鈕的事件 function toggleLang() { currentLang = currentLang === 'zh' ? 'en' : 'zh'; updateInterfaceText(); } // 假下載按鈕佔位函式 function handleDownload(isTest) { alert(currentLang === 'zh' ? 'App Store 連結準備中！' : 'App Store link coming soon!'); } // -------------------------------------------------------- // Supabase 認證邏輯 // -------------------------------------------------------- async function registerWithEmail() { const name = document.getElementById('name-input').value; const email = document.getElementById('email-input').value; const password = document.getElementById('password-input').value; if (!name || !email || !password) { alert(i18n[currentLang].alertMissing); return; } const { data, error } = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { full_name: name } } }); if (error) { alert(i18n[currentLang].alertRegFail + error.message); } else { alert(i18n[currentLang].alertRegSuccess); } } async function loginWithEmail() { const email = document.getElementById('email-input').value; const password = document.getElementById('password-input').value; if (!email || !password) { alert(i18n[currentLang].alertMissingLogin); return; } const { data, error } = await supabaseClient.auth.signInWithPassword({ email: email, password: password, }); if (error) { alert(i18n[currentLang].alertLoginFail + error.message); } } async function loginWithGitHub() { const { error } = await supabaseClient.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: 'https://jksummerx8-hub.github.io/Zenith-Magic/' } }); if (error) alert(i18n[currentLang].alertGitFail + error.message); } async function logout() { const { error } = await supabaseClient.auth.signOut(); if (error) alert(i18n[currentLang].alertOutFail + error.message); } // 全域動態監聽登入狀態並變更視圖 supabaseClient.auth.onAuthStateChange((event, session) => { const loggedOutView = document.getElementById('logged-out-view'); const loggedInView = document.getElementById('logged-in-view'); if (session && session.user) { const user = session.user; const displayName = user.user_metadata.full_name || user.email; const defaultAvatar = 'https://api.dicebear.com/7.x/identicon/svg?seed=' + user.id; const avatarUrl = user.user_metadata.avatar_url || defaultAvatar; if(document.getElementById('user-name')) document.getElementById('user-name').innerText = displayName; if(document.getElementById('user-avatar')) document.getElementById('user-avatar').src = avatarUrl; if(document.getElementById('name-input')) document.getElementById('name-input').value = ''; if(document.getElementById('email-input')) document.getElementById('email-input').value = ''; if(document.getElementById('password-input')) document.getElementById('password-input').value = ''; if(loggedOutView) loggedOutView.style.display = 'none'; if(loggedInView) loggedInView.style.display = 'block'; } else { if(loggedOutView) loggedOutView.style.display = 'block'; if(loggedInView) loggedInView.style.display = 'none'; } }); // 網頁載入時初始化文字語系 updateInterfaceText(); </script> </body>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+initial-scale=1.0">
+<title>Zenith Magic - 官方網站 | Official Website</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* 🤍 主頁背景：明亮純淨的白色到天空藍漸層 */
+.gradient-bg { background: linear-gradient(135deg, #ffffff
+0%, #f1f8fe 40%, #e0f2fe 100%); }
+.glass-card { background: rgba(255, 255, 255, 0.75);
+backdrop-filter: blur(12px); border: 1px solid rgba(168, 85, 247,
+0.15); }
+.screenshot-img { height: 480px; width: auto; object-fit:
+contain; border-radius: 2rem; }
+.content-img { width: 100%; max-width: 450px; height:
+auto; object-fit: cover; border-radius: 1.5rem; }
+/* 🔮 藍紫霓虹實體自訂捲軸 */
+.custom-scrollbar::-webkit-scrollbar { height: 10px; }
+.custom-scrollbar::-webkit-scrollbar-track { background:
+rgba(0, 0, 0, 0.05); border-radius: 9999px; }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+background: linear-gradient(to right, #a855f7, #6366f1);
+border-radius: 9999px;
+border: 2px solid #ffffff;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+background: linear-gradient(to right, #9333ea, #4f46e5); }
+</style>
+</head>
+<body class="gradient-bg text-slate-800 font-sans antialiased">
+<header class="max-w-7xl mx-auto px-6 py-4 flex
+justify-between items-center border-b border-slate-200/80
+sticky top-0 z-50 backdrop-blur-md bg-white/40">
+<div class="text-2xl font-bold text-transparent bg-clip-text
+bg-gradient-to-r from-purple-600 to-indigo-600">Zenith
+Magic</div>
+<nav class="flex items-center space-x-6">
+<button onclick="toggleLang()" id="langBtn"
+class="border border-purple-600 text-purple-600 px-4 py-1.5
+rounded-full text-sm font-semibold hover:bg-purple-600
+hover:text-white transition">English</button>
+<button onclick="handleDownload(false)" class="hidden
+md:block bg-gradient-to-r from-purple-600 to-indigo-600
+hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2
+rounded-full text-sm font-semibold transition shadow-md">App
+Store</button>
+</nav>
+</header>
+<section class="max-w-5xl mx-auto text-center px-6 py-20
+relative">
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2
+-translate-y-1/2 w-[500px] h-[500px] bg-purple-500/10
+blur-[120px] rounded-full pointer-events-none"></div>
+<h1 id="hero-title" class="text-4xl md:text-6xl
+font-extrabold tracking-tight mb-6 text-slate-900 leading-tight">
+強大源於呼吸</h1>
+<p id="hero-desc" class="text-lg md:text-xl text-slate-600
+max-w-3xl mx-auto mb-10 leading-relaxed font-medium">結合
+極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在
+幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完
+全清空。</p>
+<div class="flex flex-col sm:flex-row justify-center
+items-center gap-4 mb-12">
+<button onclick="handleDownload(false)"
+id="btn-download" class="w-full sm:w-auto bg-gradient-to-r
+from-purple-600 to-fuchsia-600 hover:from-purple-700
+hover:to-fuchsia-700 text-white font-bold px-8 py-4 rounded-2xl
+shadow-lg shadow-purple-500/20 transition transform
+hover:-translate-y-1">立即下載 iOS 版</button>
+<a
+href="https://raw.githubusercontent.com/jksummerx8-hub/Term
+s-index.html-/refs/heads/main/Terms" target="
+blank"
+_
+id="btn-terms" class="w-full sm:w-auto bg-gradient-to-r
+from-purple-50 to-indigo-50 hover:from-purple-100
+hover:to-indigo-100 text-purple-700 font-semibold px-8 py-4
+rounded-2xl border border-purple-200/60 transition shadow-sm
+text-center">服務條款</a>
+<a
+href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biomet
+ric-Data-Privacy-Statement/" target="
+blank" id="btn-bio"
+_
+class="w-full sm:w-auto bg-gradient-to-r from-purple-50
+to-indigo-50 hover:from-purple-100 hover:to-indigo-100
+text-purple-700 font-semibold px-8 py-4 rounded-2xl border
+border-purple-200/60 transition shadow-sm text-center">臉部技
+術與生物特徵聲明</a>
+</div>
+</section>
+<section class="py-6 px-4 max-w-7xl mx-auto">
+<div id="gallery-title" class="text-center text-2xl font-bold
+mb-8 text-purple-600">App 實機介面展示 | Interface
+Gallery</div>
 <div class="flex overflow-x-auto gap-6 pb-6 px-4
 custom-scrollbar">
 <div class="flex-none text-center mb-4">
@@ -27,7 +124,8 @@ src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith
 -Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPh
 one%2017%20Pro%20-%202026-05-31%20at%2002.07.31.pn
 g" class="screenshot-img shadow-xl border
-border-slate-200/60" alt="Screenshot"><p class="mt-4 font-semibold text-slate-700
+border-slate-200/60" alt="Screenshot">
+<p class="mt-4 font-semibold text-slate-700
 gallery-label" data-zh="健身計時器" data-en="Fitness Timer">健
 身計時器</p>
 </div>
@@ -59,7 +157,8 @@ src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith
 -Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPh
 one%2017%20Pro%20-%202026-05-31%20at%2002.05.24.pn
 g" class="screenshot-img shadow-xl border
-border-slate-200/60" alt="Screenshot"><p class="mt-4 font-semibold text-slate-700
+border-slate-200/60" alt="Screenshot">
+<p class="mt-4 font-semibold text-slate-700
 gallery-label" data-zh="健身流倒數計時器" data-en="Fitness
 Flow Countdown Timer">健身流倒數計時器</p>
 </div>
@@ -90,7 +189,8 @@ System: Prayers">朝聖系統：祈禱文</p>
 src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith
 -Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPh
 one%2017%20Pro%20-%202026-01-22%20at%2001.22.21.pn
-g"><p class="mt-4 font-semibold text-slate-700
+g">
+<p class="mt-4 font-semibold text-slate-700
 gallery-label" data-zh="呼吸應用時機與場景"
 data-en="Breathing Application Timing & Scenes">呼吸應用時
 機與場景</p>
@@ -123,7 +223,8 @@ Custom Equalizer (EQ)">7段自訂等化器(EQ)</p>
 <h2 class="text-3xl font-bold text-purple-600 mb-2
 lang-txt" data-zh="
 一
-、 核心特色：科技與美學的結晶" data-en="I.Core Features: Crystallization of Tech & Aesthetics">一
+、 核心特色：科技與美學的結晶" data-en="I.
+Core Features: Crystallization of Tech & Aesthetics">一
 、 核心
 特色：科技與美學的結晶</h2>
 <div class="w-20 h-1 bg-gradient-to-r from-purple-600
@@ -158,7 +259,8 @@ past... Zenith is not just a simple alarm or relaxation app. We
 know that wind-down relaxation itself is a skill that needs
 practice. Zenith is a comprehensive, personalized body-mind
 reboot engine. We seamlessly integrate audio healing,
-breathing practices, meditation, and fitness flows to help youreconnect with your brain, master the art of letting go, and clear
+breathing practices, meditation, and fitness flows to help you
+reconnect with your brain, master the art of letting go, and clear
 your head through targeted breathwork.
 ">
 每晚躺在床上，閉上眼睛，腦海中卻像放電影一樣不
@@ -192,7 +294,8 @@ data-zh="在捷運的吵雜聲中、在趕路的心跳聲中，你依
 然可以擁有一座專屬的『感官聖殿』。Zenith 讓你的手機不再只是
 訊息的干擾源，而是通往內在平靜的入口。在「趕時間」的焦慮中，
 你能透過呼吸練習強行創造出一個屬於自己的「靜止時空」。
-"data-en="Amidst the roar of the subway or the
+"
+data-en="Amidst the roar of the subway or the
 thumping heartbeat of rushing, you can still possess an
 exclusive 'Sensory Sanctuary.
 ' Zenith transforms your phone
@@ -227,7 +330,8 @@ dynamic depth effects to create a highly modern 'Digital Zen'
 </div>
 <div class="glass-card rounded-2xl p-6 shadow-sm
 hover:shadow-md transition">
-<div class="text-purple-600 text-2xl mb-3">📐</div><h4 class="text-lg font-bold mb-2 lang-txt" data-zh="
+<div class="text-purple-600 text-2xl mb-3">📐</div>
+<h4 class="text-lg font-bold mb-2 lang-txt" data-zh="
 定製貝茲曲線動畫" data-en="Custom Bézier Animation">定製貝
 茲曲線動畫</h4>
 <p class="text-sm text-slate-600 leading-relaxed
@@ -261,7 +365,8 @@ maintain peak focus under pressure.
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12
 items-center">
-<div class="flex justify-center order-2 md:order-1"><img
+<div class="flex justify-center order-2 md:order-1">
+<img
 src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith
 -Magic/refs/heads/main/%E6%98%9F%E8%BE%B0%E6%BC
 %82%E6%B5%AE%E5%91%BC%E5%90%B8.png"
@@ -296,7 +401,8 @@ interference to enter focus or deep rest.
 </p>
 </div>
 </div>
-</section><section class="py-16 bg-white/50 backdrop-blur-sm
+</section>
+<section class="py-16 bg-white/50 backdrop-blur-sm
 border-y border-slate-200/60 px-6">
 <div class="max-w-6xl mx-auto text-center">
 <h2 class="text-3xl font-bold text-purple-600 mb-2
@@ -326,7 +432,8 @@ lang-txt" data-zh="伴侶見面時" data-en="Meeting Partners">伴
 <span class="bg-purple-50 text-purple-700 px-4 py-2
 rounded-full text-sm font-medium border border-purple-200/40
 lang-txt" data-zh="深層放鬆" data-en="Deep Relaxation">深層
-放鬆</span><span class="bg-purple-50 text-purple-700 px-4 py-2
+放鬆</span>
+<span class="bg-purple-50 text-purple-700 px-4 py-2
 rounded-full text-sm font-medium border border-purple-200/40
 lang-txt" data-zh="風暴後的寧靜" data-en="Calm After Storm">
 風暴後的寧靜</span>
@@ -357,7 +464,8 @@ lang-txt" data-zh="考試前" data-en="Before Exams">考試前
 <span class="bg-purple-50 text-purple-700 px-4 py-2
 rounded-full text-sm font-medium border border-purple-200/40
 lang-txt" data-zh="面試前" data-en="Before Interviews">面試前
-</span><span class="bg-purple-50 text-purple-700 px-4 py-2
+</span>
+<span class="bg-purple-50 text-purple-700 px-4 py-2
 rounded-full text-sm font-medium border border-purple-200/40
 lang-txt" data-zh="找回內在平衡" data-en="Find Inner
 Balance">找回內在平衡</span>
@@ -388,7 +496,8 @@ data-en="10 Integrated Core Functions Engineered for
 Absolute Serenity:">我們整合了 10 大功能，只為讓你找回平靜：
 </h2>
 <div class="w-24 h-1 bg-gradient-to-r from-purple-600
-to-indigo-600 mx-auto rounded-full"></div></div>
+to-indigo-600 mx-auto rounded-full"></div>
+</div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12
 items-start mb-12">
 <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2
@@ -423,7 +532,8 @@ wind, vintage shops).
 data-zh="3. 七段自訂等化器" data-en="3. 7-Band Custom
 EQ">3. 七段自訂等化器</h3>
 <p class="text-xs text-slate-600 leading-relaxed
-lang-txt" data-zh="高精密微調聲音頻率，直到它完美貼合你的大腦波動。
+lang-txt" data-zh="高精密微調聲音頻率，直到它完美貼合你的大
+腦波動。
 " data-en="Finely recalibrate audio hertz and sound
 frequencies until they lock perfectly with your brainwave
 patterns.
@@ -460,7 +570,8 @@ routines.
 ">從「壓力清理」到「吵雜中的平靜」，協助建立每日的正念
 習慣。</p>
 </div>
-<div class="p-5 glass-card rounded-2xl"><h3 class="font-bold text-purple-900 mb-2 lang-txt"
+<div class="p-5 glass-card rounded-2xl">
+<h3 class="font-bold text-purple-900 mb-2 lang-txt"
 data-zh="6. 健身流倒數計時器" data-en="6. Fitness Flow
 Timer">6. 健身流倒數計時器</h3>
 <p class="text-xs text-slate-600 leading-relaxed
@@ -498,7 +609,8 @@ wind-down tracking.
 ">從不同精神維度獲取宏觀建議，提供最個性
 化的放鬆指引。</p>
 </div>
-<div class="p-5 glass-card rounded-2xl"><h3 class="font-bold text-purple-900 mb-2 lang-txt"
+<div class="p-5 glass-card rounded-2xl">
+<h3 class="font-bold text-purple-900 mb-2 lang-txt"
 data-zh="9. 各國語言翻譯" data-en="9. Seamless
 Multi-Language">9. 各國語言翻譯</h3>
 <p class="text-xs text-slate-600 leading-relaxed
@@ -532,7 +644,8 @@ src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith
 %87%E8%8F%AF%E4%BA%AB%E5%8F%97%E8%97%9D
 %E8%A1%93%E7%9A%84%E5%8A%9B%E9%87%8F.png">
 <p class="text-xs text-slate-400 italic text-center
-lang-txt" data-zh="功能合一：體驗呼吸昇華藝術的力量"data-en="All-in-One: Experience the art of breath
+lang-txt" data-zh="功能合一：體驗呼吸昇華藝術的力量"
+data-en="All-in-One: Experience the art of breath
 sublimation.
 ">功能合一：體驗呼吸昇華藝術的力量</p>
 </div>
@@ -566,7 +679,8 @@ ground yourself:">
 class="text-purple-600 font-bold">●</span> <p
 class="leading-relaxed"><strong class="lang-txt" data-zh="即時
 感應：
-" data-en="Real-Time Sensing: ">即時感應：</strong><span class="lang-txt" data-zh="透過鏡頭觀察面部細
+" data-en="Real-Time Sensing: ">即時感應：
+</strong><span class="lang-txt" data-zh="透過鏡頭觀察面部細
 微的波長，捕捉你當下的心情氛圍。
 " data-en="Observes subtle
 facial color modulations via lens to extract immediate mood
@@ -606,7 +720,8 @@ recalibration.
 <div class="flex justify-center">
 <img
 src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith
--Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="content-img shadow-2xl border
+-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3
+%BB%E7%B5%B1.png" class="content-img shadow-2xl border
 border-slate-200" alt="察覺系統">
 </div>
 </div>
@@ -636,7 +751,8 @@ rhythm. Zenith's mission is transforming dry breathing drills into
 a visual and auditory masterpiece. When training becomes a
 sheer joy, transformation evolves implicitly. Through deep,
 cinematic 'Stained Glass' visual artistry, we build an
-architecture of strength in the digital realm. Every inhalationaccumulates power; every exhalation expands limits. A
+architecture of strength in the digital realm. Every inhalation
+accumulates power; every exhalation expands limits. A
 premium stress-relief artwork.
 ">
 「變強」不只是體能的堆疊，更是對內在節奏的絕對掌控。
@@ -663,7 +779,8 @@ gap-6">
 <div class="glass-card rounded-3xl p-6 flex flex-col
 justify-between shadow-sm hover:shadow-md transition w-full
 sm:w-[225px]">
-<div><h3 class="text-base font-bold text-slate-800
+<div>
+<h3 class="text-base font-bold text-slate-800
 lang-txt" data-zh="週訂閱（自動續訂）" data-en="Weekly Plan
 (Auto-renewal)">週訂閱（自動續訂）</h3>
 <div class="text-2xl font-extrabold text-purple-600
@@ -696,7 +813,8 @@ lang-txt" data-zh="3天免費試用" data-en="3-Day Free Trial">3
 天免費試用</div>
 <h3 class="text-base font-bold text-slate-800
 lang-txt" data-zh="月費方案（自動續訂）" data-en="Monthly Plan
-(Auto-renewal)">月費方案（自動續訂）</h3><div class="text-2xl font-extrabold text-purple-600
+(Auto-renewal)">月費方案（自動續訂）</h3>
+<div class="text-2xl font-extrabold text-purple-600
 mt-2">$12.99 <span class="text-xs font-normal
 text-slate-400">USD</span></div>
 <div class="text-xl font-bold text-slate-500
@@ -729,7 +847,8 @@ lang-txt" data-zh="半年方案（自動續訂）" data-en="6-Month Plan
 (Auto-renewal)">半年方案（自動續訂）</h3>
 <div class="text-2xl font-extrabold text-purple-600
 mt-2">$44.99 <span class="text-xs font-normal
-text-slate-400">USD</span></div><div class="text-xl font-bold text-slate-500
+text-slate-400">USD</span></div>
+<div class="text-xl font-bold text-slate-500
 mb-4">NT$ 1490</div>
 <p class="text-xs text-slate-500 leading-relaxed
 lang-txt" data-zh="包含 7 天免費試用，隨後自動續訂。高性價比
@@ -762,7 +881,8 @@ lang-txt" data-zh="年費方案（自動續訂）" data-en="Yearly Plan
 (Auto-renewal)">年費方案（自動續訂）</h3>
 <div class="text-2xl font-extrabold text-purple-600
 mt-2">$70.00 <span class="text-xs font-normal
-text-slate-400">USD</span></div><div class="text-xl font-bold text-slate-500
+text-slate-400">USD</span></div>
+<div class="text-xl font-bold text-slate-500
 mb-4">NT$ 2290</div>
 <p class="text-xs text-purple-950 font-medium
 leading-relaxed lang-txt" data-zh="包含 7 天免費試用，隨後自動
@@ -795,7 +915,8 @@ lang-txt" data-zh="極致通行證（終身買斷）" data-en="Ultimate
 Pass (Lifetime)">極致通行證（終身買斷）</h3>
 <div class="text-2xl font-extrabold text-fuchsia-600
 mt-2">$199.99 <span class="text-xs font-normal
-text-slate-400">USD</span></div>mb-4">NT$ 6990</div>
+text-slate-400">USD</span></div>
+mb-4">NT$ 6990</div>
 <div class="text-xl font-bold text-slate-500
 <p class="text-xs text-slate-500 leading-relaxed
 lang-txt"
@@ -826,7 +947,8 @@ data-zh="取得極致通行證" data-en="Get Ultimate Pass">取得極
 </div>
 </section>
 <footer class="bg-slate-50 text-slate-500 text-xs py-12
-border-t border-slate-200"><div class="max-w-6xl mx-auto px-6 flex flex-col
+border-t border-slate-200">
+<div class="max-w-6xl mx-auto px-6 flex flex-col
 md:flex-row justify-between items-center gap-8 text-center
 md:text-left">
 <div>
@@ -865,7 +987,8 @@ ric-Data-Privacy-Statement/" target="
 blank"
 _
 class="text-slate-500 hover:text-slate-800 underline">Biometric
-Statement</a></div>
+Statement</a>
+</div>
 </div>
 </div>
 </footer>
@@ -913,7 +1036,8 @@ download: "Download on App Store"
 terms: "Terms of Service"
 ,
 bio: "Biometric Data Privacy Statement"
-,quote: "\"When you speak these words, you are
+,
+quote: "\"When you speak these words, you are
 reconstructing your reality.\""
 ,
 disclaimer: "* This technology is not for medical
@@ -946,7 +1070,8 @@ if (document.getElementById('contact-label'))
 document.getElementById('contact-label').innerText = l.contact;
 if (document.getElementById('langBtn'))
 document.getElementById('langBtn').innerText = l.langBtn;
-if (document.getElementById('gallery-title')) {document.getElementById('gallery-title').innerText =
+if (document.getElementById('gallery-title')) {
+document.getElementById('gallery-title').innerText =
 currentLang === 'zh' ? "App 實機介面展示 | Interface Gallery" :
 "App Interface Gallery | 實機介面展示";
 }
@@ -979,7 +1104,8 @@ if (isLifetime) {
 msg += "\n\n※ 極致通行證：方案保障使用期限為自
 購買日起算 1 年。期滿後，將以開發者贈送方式，提供無限制延長
 使用權益，用戶無需再次付費。
-";}
+";
+}
 alert(msg);
 } else {
 let msg = "Thank you for your support!\n\n" +
