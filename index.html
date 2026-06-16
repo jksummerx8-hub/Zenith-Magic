@@ -253,21 +253,24 @@
     function updateInterfaceText() {
       const lang = i18n[currentLang];
       
-      // 更新按鈕與提示字
+      // 1. 更新切換按鈕本身文字
       document.getElementById('lang-toggle-btn').innerText = lang.toggleBtn;
+      
+      // 2. 更新表單 placeholder 提示字
       document.getElementById('name-input').placeholder = lang.placeholderName;
       document.getElementById('email-input').placeholder = lang.placeholderEmail;
       document.getElementById('password-input').placeholder = lang.placeholderPwd;
+      
+      // 3. 更新按鈕與分隔線文字
       document.getElementById('lbl-login').innerText = lang.login;
       document.getElementById('lbl-register').innerText = lang.register;
       document.getElementById('lbl-or').innerText = lang.or;
       document.getElementById('lbl-github').innerText = lang.github;
       document.getElementById('lbl-signout').innerText = lang.signout;
+      
+      // 4. 更新網頁主畫面的標題與說明文字
       document.getElementById('lbl-main-title').innerText = lang.mainTitle;
       document.getElementById('lbl-main-desc').innerText = lang.mainDesc;
-
-      // 如果當前是登入狀態，且名稱是 Email，就不變動它
-      const user = supabaseClient.auth.getUser();
     }
 
     // 切換語言按鈕點擊事件
@@ -344,17 +347,13 @@
       if (session && session.user) {
         const user = session.user;
         
-        // 抓取姓名
         const displayName = user.user_metadata.full_name || user.email;
-        
-        // 頭像處理
         const defaultAvatar = 'https://api.dicebear.com/7.x/identicon/svg?seed=' + user.id;
         const avatarUrl = user.user_metadata.avatar_url || defaultAvatar
         
         document.getElementById('user-name').innerText = displayName;
         document.getElementById('user-avatar').src = avatarUrl;
         
-        // 清空輸入框
         document.getElementById('name-input').value = '';
         document.getElementById('email-input').value = '';
         document.getElementById('password-input').value = '';
