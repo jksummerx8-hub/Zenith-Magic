@@ -444,3 +444,26 @@
     </script>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // 2. 初始化 Supabase 用戶端 (這裡會自動產生一個全域的 supabase 物件)
+  const supabaseUrl = 'https://jyghcpwnrsisdqjoxvfu.supabase.co'
+  const supabaseAnonKey = '這裡貼上你的_anon_public_key'
+  
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
+
+  // 3. 呼叫 GitHub 登入的函式
+  async function loginWithGitHub() {
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: 'https://jksummerx8-hub.github.io/Zenith-Magic/'
+      }
+    })
+    
+    if (error) console.error('登入出錯:', error.message)
+  }
+</script>
+
+<button onclick="loginWithGitHub()">使用 GitHub 登入 Zenith Magic</button>
