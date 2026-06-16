@@ -4,6 +4,292 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,
 initial-scale=1.0">
+<title>Zenith Magic - 官方網站 (多功能帳號系統)</title>
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+<style>
+body {
+margin: 0;
+padding: 0;
+font-family: -apple-system, BlinkMacSystemFont,
+UI"
+, Roboto, sans-serif;
+background-color: #121214;
+color: #ffffff;
+min-height: 100vh;
+"Segoe
+}
+/*
+================================================
+========
+位置設定：將登入控制區塊固定在【網頁最上面中間】
+================================================
+======== -->
+#auth-container {
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 9999;
+background: rgba(28, 28, 30, 0.95);
+padding: 20px 24px;
+border-radius: 20px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+border: 1px solid rgba(255, 255, 255, 0.1);
+width: 320px;
+}
+/* 表單輸入框樣式 */
+.input-group {
+margin-bottom: 12px;
+}
+.input-group input {
+width: 100%;
+padding: 10px;
+box-sizing: border-box;
+background-color: #2c2c2e;
+border: 1px solid #444;
+border-radius: 8px;
+color: white;
+font-size: 14px;
+}
+.input-group input:focus {
+border-color: #34d399;
+outline: none;
+}
+/* 按鈕樣式群組 */
+.btn-container {
+display: flex;
+gap: 10px;
+margin-bottom: 15px;
+}
+.auth-btn {
+flex: 1;
+padding: 10px;
+font-size: 14px;
+font-weight: 600;
+border-radius: 8px;
+border: none;
+cursor: pointer;
+transition: background 0.2s;
+}
+.login-btn { background-color: #34d399; color: #121214; }
+.login-btn:hover { background-color: #22c55e; }
+.register-btn { background-color: #3a3a3c; color: white;
+border: 1px solid #555; }
+.register-btn:hover { background-color: #48484a; }
+.github-btn {
+width: 100%;
+background-color: #24292e;
+color: white;
+border: 1px solid #444;
+padding: 10px;
+font-size: 14px;
+font-weight: 600;
+border-radius: 8px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+.github-btn:hover { background-color: #444d56; }
+.signout-btn { background-color: #ea4335; color: white; width:
+100%; }
+.signout-btn:hover { background-color: #c53023; }
+/* 分隔線 */
+.divider {
+text-align: center;
+margin: 12px 0;
+font-size: 12px;
+color: #8e8e93;
+position: relative;
+}
+/* 使用者資訊樣式 */
+#user-info {
+text-align: center;
+}
+#user-avatar {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+border: 2px solid #34d399;
+margin-bottom: 8px;
+}
+#user-name {
+display: block;
+font-size: 14px;
+font-weight: 500;
+margin-bottom: 15px;
+word-break: break-all;
+}
+</style>
+</head>
+<body>
+<div id="auth-container">
+<div id="logged-out-view">
+<div class="input-group">
+<input type="email" id="email-input" placeholder="請輸入
+任何信箱 (Gmail/奇摩...)">
+</div>
+<div class="input-group">
+<input type="password" id="password-input"
+placeholder="請輸入自訂密碼">
+</div>
+<div class="btn-container">
+<button class="auth-btn login-btn"
+onclick="loginWithEmail()">登入</button>
+<button class="auth-btn register-btn"
+onclick="registerWithEmail()">註冊</button>
+</div>
+<div class="divider">或</div>
+<button class="github-btn" onclick="loginWithGitHub()">
+使用 GitHub 快速登入
+</button>
+</div>
+<div id="logged-in-view" style="display: none;">
+<div id="user-info">
+<img id="user-avatar" src="" alt="Avatar">
+<span id="user-name">載入中...
+</span>
+<button class="auth-btn signout-btn" onclick="logout()">登
+出帳號</button>
+</div>
+</div>
+</div>
+<div style="padding-top: 260px; text-align: center;">
+<h1>🔮 Zenith Magic</h1>
+<p>自訂信箱密碼系統已完美安裝，歡迎測試。</p>
+</div>
+<script>
+// 功能 2：初始化 Supabase 用戶端
+const supabaseUrl =
+'https://jyghcpwnrsisdqjoxvfu.supabase.co'
+const supabaseAnonKey =
+'sb
+_publishable
+v
+_
+__
+Izse7jqVhf0jMj7-Uvw
+_
+V-qgNweC'
+const supabaseClient = supabase.createClient(supabaseUrl,
+supabaseAnonKey)
+// --------------------------------------------------------
+// 新增功能：信箱密碼「註冊」事件
+// --------------------------------------------------------
+async function registerWithEmail() {
+const email = document.getElementById('email-input').value
+const password =
+document.getElementById('password-input').value
+if (!email || !password) {
+alert('請填寫完整信箱與密碼！')
+return
+}
+const { data, error } = await supabaseClient.auth.signUp({
+email: email,
+password: password,
+})
+if (error) {
+alert('註冊失敗：
+} else {
+' + error.message)
+alert('註冊成功！請檢查您的信箱是否收到驗證確認信。
+')
+}
+}
+// --------------------------------------------------------
+// 新增功能：信箱密碼「登入」事件
+// --------------------------------------------------------
+async function loginWithEmail() {
+const email = document.getElementById('email-input').value
+const password =
+document.getElementById('password-input').value
+if (!email || !password) {
+alert('請填寫信箱與密碼！')
+return
+}
+const { data, error } = await
+supabaseClient.auth.signInWithPassword({
+email: email,
+password: password,
+})
+if (error) {
+alert('登入失敗：
+}
+' + error.message)
+}
+// 功能 3：原有的 GitHub 登入與全域登出
+async function loginWithGitHub() {
+const { error } = await
+supabaseClient.auth.signInWithOAuth({
+provider: 'github'
+,
+options: { redirectTo:
+'https://jksummerx8-hub.github.io/Zenith-Magic/' }
+})
+if (error) alert('GitHub 登入失敗：
+' + error.message)
+}
+async function logout() {
+const { error } = await supabaseClient.auth.signOut()
+if (error) alert('登出失敗：
+' + error.message)
+}
+// --------------------------------------------------------
+// 功能 4：全域動態監聽登入狀態 (不論哪種方式登入都會自動
+捕捉)
+=> {
+// --------------------------------------------------------
+supabaseClient.auth.onAuthStateChange((event, session)
+const loggedOutView =
+document.getElementById('logged-out-view')
+const loggedInView =
+document.getElementById('logged-in-view')
+if (session && session.user) {
+const user = session.user
+// 判斷使用者名稱（GitHub 會有 full
+name，
+_
+直接顯示 Email 前綴或 Email）
+const displayName = user.user
+metadata.full
+_
+_
+user.email
+一般信箱註冊則
+name ||
+// 判斷大頭貼（GitHub 會有動態頭像，
+一般信箱給一個漂亮
+的預設魔幻魔法陣大頭貼）
+const defaultAvatar =
+'https://api.dicebear.com/7.x/identicon/svg?seed=' + user.id
+const avatarUrl = user.user
+metadata.avatar
+_
+_
+url ||
+defaultAvatar
+document.getElementById('user-name').innerText =
+displayName
+document.getElementById('user-avatar').src = avatarUrl
+loggedOutView.style.display = 'none'
+loggedInView.style.display = 'block'
+} else {
+loggedOutView.style.display = 'block'
+loggedInView.style.display = 'none'
+}
+})
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+initial-scale=1.0">
 <title>Zenith Magic - 官方網站 | Official Website</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
