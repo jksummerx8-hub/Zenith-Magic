@@ -444,26 +444,42 @@
     </script>
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+npm install @supabase/supabase-js
+import { createClient } from '@supabase/supabase-js'
 
-<script>
-  // 2. 初始化 Supabase 用戶端 (這裡會自動產生一個全域的 supabase 物件)
-  const supabaseUrl = 'https://jyghcpwnrsisdqjoxvfu.supabase.co'
-  const supabaseAnonKey = '這裡貼上你的_anon_public_key'
-  
-  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
+const supabaseUrl = '填入你的_SUPABASE_URL'
+const supabaseAnonKey = '填入你的_SUPABASE_ANON_KEY'
 
-  // 3. 呼叫 GitHub 登入的函式
-  async function loginWithGitHub() {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: 'https://jksummerx8-hub.github.io/Zenith-Magic/'
-      }
-    })
-    
-    if (error) console.error('登入出錯:', error.message)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+import { supabase } from './supabaseClient'
+
+async function signInWithGitHub() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      // 登入成功後，要把使用者導回前端的哪一個頁面
+      redirectTo: window.location.origin // 例如 http://localhost:3000
+    }
+  })
+
+  if (error) {
+    console.error('GitHub 登入發生錯誤:', error.message)
   }
-</script>
+}
+// 監聽登入狀態轉變
+supabase.auth.onAuthStateChange((event, session) => {
+  if (session) {
+    console.log('目前登入的使用者資訊：', session.user)
+    // 你可以從 session.user.user_metadata 中拿到使用者的 GitHub 大頭貼與名稱
+    // 例如：session.user.user_metadata.avatar_url
+    // 例如：session.user.user_metadata.full_name
+  } else {
+    console.log('目前沒有使用者登入')
+  }
+})
 
-<button onclick="loginWithGitHub()">使用 GitHub 登入 Zenith Magic</button>
+// 登出功能
+async function handleSignOut() {
+  const { error } = await supabase.auth.signOut()
+  if (error) console.error('登出失敗:', error.message)
+}
