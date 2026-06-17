@@ -1093,6 +1093,144 @@ required.
 alert(msg);
 }
 }
+<div id="downloadModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="glass-card bg-white/90 rounded-3xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl border border-purple-200/80 transform scale-95 transition-transform duration-300">
+        <div class="w-16 h-16 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/20 text-white text-2xl font-bold">
+            Z
+        </div>
+        <h3 id="modalTitle" class="text-xl font-bold text-slate-900 mb-2">感謝您的支持！</h3>
+        <p id="modalMsg" class="text-sm text-slate-600 leading-relaxed mb-6">
+            Zenith Magic 目前全面支援 iOS 系統。<br>請至 iPhone 的 App Store 下載安裝。
+        </p>
+        <button onclick="closeModal()" id="modalCloseBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl text-sm transition shadow-md">
+            我知道了
+        </button>
+    </div>
+</div>
+<script>
+// 1. 初始化全域變數
+let currentLang = 'zh';
+
+// 2. 語系對照表配置 (修復並補齊原本中英文對應文字)
+const trans = {
+    zh: {
+        title: "強大源於呼吸",
+        desc: "結合 極致工藝與動態美學,開啟身心強化的「感官聖殿」。呼吸練習能在 幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應,讓腦袋完 全清空。",
+        download: "立即下載 iOS 版",
+        quote: "「當你讀出 these 文字，你便是在重新建構你的現實。」",
+        disclaimer: "※ 本技術非醫療檢測，數據僅供參考。在使用及做出醫療決定前，請諮詢專業醫師。",
+        contact: "聯絡支援: ",
+        langBtn: "English",
+        // 彈窗文字對應
+        modalTitle: "感謝您的支持！",
+        modalMsg: "Zenith Magic 目前全面支援 iOS 系統。\n\n請至 iPhone 的 App Store 搜尋「Zenith Magic」下載並開通您選擇的定價方案。",
+        modalMsgLifetime: "感謝您的支持！\n\n您選擇的是終身永久方案。\nZenith Magic 目前全面支援 iOS 系統，請至 App Store 下載並開通您的永久權益。",
+        modalClose: "我知道了"
+    },
+    en: {
+        title: "Strength Flows From Breath",
+        desc: "Combining ultimate craftsmanship and dynamic aesthetics, unlock your somatic sanctuary. Breathwork contextually shutters stress, anxiety, and fatigue chains in seconds, fully clearing your mind.",
+        download: "Download for iOS",
+        quote: "\"When you speak these words, you are reconstructing your reality.\"",
+        disclaimer: "* This technology is not for medical diagnosis. Consult a physician before making medical decisions.",
+        contact: "Support: ",
+        langBtn: "繁體中文",
+        // 彈窗文字對應
+        modalTitle: "Thank you for your support!",
+        modalMsg: "Zenith Magic fully supports iOS systems.\n\nPlease proceed to the App Store on your iPhone to download 'Zenith Magic' and activate your subscription.",
+        modalMsgLifetime: "Thank you for your support!\n\nYou have selected the Lifetime Plan.\nZenith Magic fully supports iOS. Please proceed to the App Store to download and claim your lifetime access.",
+        modalClose: "Got it"
+    }
+};
+
+// 3. 安全語系切換機制 (修復原本毀損的 DOM 控制邏輯)
+function toggleLang() {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    const l = trans[currentLang];
+    
+    // 更新主要區塊文字
+    if (document.getElementById('hero-title')) document.getElementById('hero-title').innerText = l.title;
+    if (document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = l.desc;
+    if (document.getElementById('btn-download')) document.getElementById('btn-download').innerText = l.download;
+    if (document.getElementById('footer-quote')) document.getElementById('footer-quote').innerText = l.quote;
+    if (document.getElementById('footer-disclaimer')) document.getElementById('footer-disclaimer').innerText = l.disclaimer;
+    if (document.getElementById('langBtn')) document.getElementById('langBtn').innerText = l.langBtn;
+    
+    // 更新畫廊標題 (包含中英文並存邏輯)
+    if (document.getElementById('gallery-title')) {
+        document.getElementById('gallery-title').innerText = currentLang === 'zh' ? 
+            "App 實機介面展示 | Interface Gallery" : "App Interface Gallery | 實機介面展示";
+    }
+    
+    // 更新定價方案標題
+    if (document.getElementById('pricing-title')) {
+        document.getElementById('pricing-title').innerText = currentLang === 'zh' ? 
+            "定價方案 | Pricing Plans" : "Pricing Plans | 定價方案";
+    }
+
+    // 批次遍歷帶有特定屬性的標籤 (將卡片內文、按鈕等依語系動態切換)
+    document.querySelectorAll('.lang-txt').forEach(el => {
+        const zhTxt = el.getAttribute('data-zh');
+        const enTxt = el.getAttribute('data-en');
+        if (currentLang === 'zh' && zhTxt) {
+            el.innerText = zhTxt;
+        } else if (currentLang === 'en' && enTxt) {
+            el.innerText = enTxt;
+        }
+    });
+}
+
+// 4. 彈窗顯示邏輯 (修復 App Store / 立即下載 / 訂閱方案點擊後不回應的問題)
+function handleDownload(isLifetime = false) {
+    const modal = document.getElementById('downloadModal');
+    const titleEl = document.getElementById('modalTitle');
+    const msgEl = document.getElementById('modalMsg');
+    const closeBtnEl = document.getElementById('modalCloseBtn');
+    
+    if (!modal) return; // 防呆安全機制
+    
+    const l = trans[currentLang];
+    
+    // 設定語系對應的標題與關閉按鈕文字
+    titleEl.innerText = l.modalTitle;
+    closeBtnEl.innerText = l.modalClose;
+    
+    // 依據是否為終身方案 (handleDownload(true)) 派發不同的文字內容
+    if (isLifetime) {
+        msgEl.innerText = l.modalMsgLifetime;
+    } else {
+        msgEl.innerText = l.modalMsg;
+    }
+    
+    // 顯示彈窗並加上動畫外觀效果
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.querySelector('.glass-card').classList.remove('scale-95');
+        modal.querySelector('.glass-card').classList.add('scale-100');
+    }, 10);
+}
+
+// 5. 關閉彈窗功能
+function closeModal() {
+    const modal = document.getElementById('downloadModal');
+    if (!modal) return;
+    
+    modal.querySelector('.glass-card').classList.remove('scale-100');
+    modal.querySelector('.glass-card').classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 150);
+}
+
+// 點擊彈窗背景外圍也可以直接關閉
+window.onclick = function(event) {
+    const modal = document.getElementById('downloadModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+}
+</script>
+
 </script>
 </body>
 </html>
