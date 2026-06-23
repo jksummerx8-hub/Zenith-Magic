@@ -1,6 +1,355 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith Magic - 歡迎進入感官聖殿</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* 全域優雅極光漸層背景 */
+    .gradient-bg { 
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 40%, #e2e8f0 100%); 
+    }
+    /* 條款專用細緻滾動條 */
+    .terms-scrollbar::-webkit-scrollbar { width: 6px; }
+    .terms-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.03); border-radius: 10px; }
+    .terms-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  </style>
+</head>
+<body class="gradient-bg text-slate-800 font-sans antialiased min-h-screen relative">
+
+  <div id="page-1-auth" class="flex flex-col items-center justify-center min-h-screen px-4 py-12 relative z-50">
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-purple-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+    
+    <div class="w-full max-w-md flex justify-between items-center mb-6">
+      <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Zenith Magic</div>
+      <button onclick="toggleLang()" id="gateLangBtn" class="border border-slate-300 text-slate-600 px-4 py-1 rounded-full text-xs font-medium hover:border-purple-600 hover:text-purple-600 bg-white transition shadow-sm">
+        English
+      </button>
+    </div>
+
+    <div class="w-full max-w-md p-6 md:p-8 rounded-3xl border border-purple-100 bg-white/80 backdrop-blur-xl shadow-xl transition-all duration-300">
+      
+      <div id="view-auth-main">
+        <div class="flex border-b border-slate-200 mb-6 text-sm font-semibold">
+          <button id="tab-login" onclick="setAuthMode('login')" class="flex-1 pb-3 text-center border-b-2 border-purple-600 text-purple-600 transition">登入帳戶</button>
+          <button id="tab-register" onclick="setAuthMode('register')" class="flex-1 pb-3 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-600 transition">註冊會員</button>
+        </div>
+
+        <h2 id="gate-title" class="text-lg font-bold text-slate-900 mb-1 text-center">歡迎來到 Zenith Magic</h2>
+        <p id="gate-subtitle" class="text-xs text-slate-500 text-center mb-4">請先登入或註冊您的帳號，即可解鎖官網完整內容。</p>
+
+        <div class="space-y-3 mb-2">
+          <div id="wrapper-name" class="hidden">
+            <input type="text" id="name-input" placeholder="請輸入姓名或暱稱" class="w-full p-3 bg-slate-50/80 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 transition">
+          </div>
+          <div>
+            <input type="email" id="email-input" placeholder="請輸入您的信箱 (Gmail/奇摩...)" class="w-full p-3 bg-slate-50/80 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 transition">
+          </div>
+          <div>
+            <input type="password" id="password-input" placeholder="請輸入密碼" class="w-full p-3 bg-slate-50/80 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 transition">
+          </div>
+        </div>
+
+        <div id="wrapper-forgot-link" class="text-right mb-4">
+          <button onclick="switchGateView('forgot')" class="text-xs text-purple-600 hover:underline font-medium" id="lbl-forgot-link">忘記密碼？</button>
+        </div>
+
+        <div id="wrapper-terms" class="hidden mt-4 mb-3">
+          <div id="terms-box" class="terms-scrollbar max-h-32 overflow-y-auto text-[11px] p-3 bg-slate-100/90 border border-slate-200 rounded-xl text-slate-500 leading-relaxed space-y-2">
+            <div class="font-bold text-slate-800 text-xs mb-1">歡迎加入會員！註冊須知與條款</div>
+            <p>歡迎註冊成為我們的會員。為了保障您的個人權益及維護平台安全，在您填寫註冊資料前，請詳細閱讀以下注意事項。當您勾選「我同意會員服務條款」並完成註冊時，即視為您已充分了解並同意接受以下所有內容。</p>
+            <div class="font-bold text-slate-700 pt-1">一、 註冊會員注意事項</div>
+            <p><strong>• 資料真實性：</strong> 註冊時請務必提供真實、正確且最新的個人資料。若因資料填寫錯誤導致無法接收通知，本網站概不負責。</p>
+            <p><strong>• 法定年齡限制：</strong> 未滿 18 歲之未成年人，應於監護人了解並同意條款內容後，方得註冊並使用服務。</p>
+            <div class="font-bold text-slate-700 pt-1">二、 帳號（ID）注意事項</div>
+            <p><strong>• 格式規範：</strong> 一組 Email 僅能註冊一個會員帳號。長度須為 6 至 20 個字元，不可包含特殊符號或空格，建議直接以 Email 作為基本帳號。</p>
+            <div class="font-bold text-slate-700 pt-1">三、 密碼（Password）注意事項</div>
+            <p><strong>• 強度要求：</strong> 密碼長度須為 8 至 16 個字元。必須包含大寫字母、小寫字母、數字及特殊符號（如：!, @, #, $, %）之組合，請避免生日或手機號碼等弱密碼。</p>
+          </div>
+          <label class="flex items-center gap-2 mt-3 text-xs text-slate-600 font-medium cursor-pointer select-none">
+            <input type="checkbox" id="terms-checkbox" class="w-4 h-4 rounded text-purple-600 border-slate-300 focus:ring-purple-500">
+            <span id="lbl-agree-text">我同意會員服務條款</span>
+          </label>
+        </div>
+
+        <button id="btn-submit-main" onclick="handleAuthSubmit()" class="w-full p-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-md hover:opacity-95 transition">登入</button>
+        <div class="text-center my-4 text-xs text-slate-400" id="lbl-or">或</div>
+        <button class="w-full p-3 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl flex items-center justify-center gap-2 transition" id="lbl-github" onclick="loginWithGitHub()">
+          使用 GitHub 快速登入
+        </button>
+      </div>
+
+      <div id="view-auth-forgot" class="hidden">
+        <h2 class="text-xl font-bold text-slate-900 mb-2 text-center" id="lbl-forgot-title">找回您的密碼</h2>
+        <p class="text-sm text-slate-500 text-center mb-6" id="lbl-forgot-desc">請輸入您的註冊信箱，我們將向您發送密碼重設連結。</p>
+        <div class="mb-4">
+          <input type="email" id="forgot-email-input" placeholder="請輸入註冊時的信箱" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 transition">
+        </div>
+        <button class="w-full p-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-md hover:opacity-95 transition mb-3" id="lbl-send-reset" onclick="sendResetPasswordEmail()">發送重設驗證信</button>
+        <button onclick="switchGateView('main')" class="w-full text-center text-xs text-slate-500 hover:text-purple-600 transition font-medium" id="lbl-back-login">返回登入</button>
+      </div>
+
+      <div id="view-auth-reset-fields" class="hidden">
+        <h2 class="text-xl font-bold text-slate-900 mb-2 text-center" id="lbl-reset-title">設定全新密碼</h2>
+        <p class="text-sm text-slate-500 text-center mb-6" id="lbl-reset-desc">請在下方輸入您想變更的新密碼。</p>
+        <div class="mb-4">
+          <input type="password" id="new-password-input" placeholder="請輸入新密碼 (8-16位數且含符號)" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 transition">
+        </div>
+        <button class="w-full p-3 text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-md hover:opacity-95 transition" id="lbl-update-pwd" onclick="updateToNewPassword()">確認修改並登入</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="page-2-main" class="hidden">
+    
+    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-200/80 sticky top-0 backdrop-blur-md bg-white/40 z-50">
+      <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Zenith Magic</div>
+      <nav class="flex items-center space-x-4">
+        <button onclick="toggleLang()" id="mainLangBtn" class="border border-purple-600 text-purple-600 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-purple-600 hover:text-white transition">English</button>
+        <div class="flex items-center gap-2 border-l pl-4 border-slate-300">
+          <img id="user-avatar" src="" alt="Avatar" class="w-8 h-8 rounded-full border border-purple-400">
+          <button onclick="logout()" class="text-xs font-semibold text-red-500 hover:text-red-700 transition">登出</button>
+        </div>
+      </nav>
+    </header>
+
+    <section class="max-w-5xl mx-auto text-center px-6 py-16">
+      <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-slate-900 leading-tight">強大源於呼吸</h1>
+      <p id="hero-desc" class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 font-medium">結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。</p>
+      <div class="flex justify-center">
+        <button onclick="handleDownload()" id="btn-download" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition transform hover:-translate-y-1">立即下載 iOS 版</button>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-12 border-t border-slate-200/60">
+      <h2 id="product-title" class="text-2xl font-bold text-slate-900 text-center mb-8">官網精選產品介紹</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white/60 p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="text-purple-600 font-bold text-lg mb-2">察覺系統：映照心靈的濾鏡</div>
+          <p class="text-sm text-slate-600 leading-relaxed">透過獨家環境音效與 Gyroscope 陀螺儀動態景深技術，為您的每日冥想打造如電影沉浸式的精緻視覺景觀。</p>
+        </div>
+        <div class="bg-white/60 p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="text-indigo-600 font-bold text-lg mb-2">7 頻段極致音效調校</div>
+          <p class="text-sm text-slate-600 leading-relaxed">內建專為放鬆設計的白噪音與 ASMR 聲學環境，可自由微調各頻段，暴力中斷大腦疲勞連鎖反應。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-6 py-12 mb-20">
+      <h2 id="subscription-title" class="text-2xl font-bold text-slate-900 text-center mb-8">尊榮會員訂閱計劃</h2>
+      <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-3xl p-8 md:p-10 shadow-xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/20 blur-[80px] rounded-full"></div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div>
+            <span class="bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">限時早鳥方案</span>
+            <h3 class="text-2xl font-bold mt-3">Zenith Premium 全通包閱聽</h3>
+            <p class="text-slate-400 text-sm mt-2 max-w-md">解鎖全部高清場景、自訂音頻等完整功能。搶先預訂即可享有終身更新資格。</p>
+          </div>
+          <div class="text-left md:text-right w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-slate-800">
+            <div class="text-3xl font-black">NT$ 180 <span class="text-sm font-normal text-slate-400">/ 月</span></div>
+            <button onclick="alert('訂閱功能準備中！')" class="mt-4 w-full md:w-auto bg-white text-slate-900 hover:bg-slate-100 font-bold px-6 py-3 rounded-xl shadow-md transition transform hover:-translate-y-0.5">立即參與訂閱</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+
+  <script>
+    // 使用 DOMContentLoaded，即使整段 JS 被提到 HTML 頂部也能毫無錯誤地執行
+    window.addEventListener('DOMContentLoaded', () => {
+
+      const supabaseUrl = 'https://jyghcpwnrsisdqjoxvfu.supabase.co';
+      const supabaseAnonKey = 'sb_publishable_v__Izse7jqVhf0jMj7-Uvw_V-qgNweC'; // 
+      const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+      let currentLang = 'zh';
+      let currentAuthMode = 'login';
+
+      const i18n = {
+        zh: {
+          navLang: 'English', gateTitle: '歡迎來到 Zenith Magic', gateSubtitle: '請先登入或註冊您的帳號，即可解鎖官網完整內容。',
+          placeholderName: '請輸入姓名或暱稱', placeholderEmail: '請輸入您的信箱 (Gmail/奇摩...)', placeholderPwd: '請輸入密碼',
+          lblForgotLink: '忘記密碼？', tabLogin: '登入帳戶', tabRegister: '註冊會員', login: '登入', register: '註冊會員',
+          lblAgreeText: '我同意會員服務條款', or: '或', github: '使用 GitHub 快速登入',
+          forgotTitle: '找回您的密碼', forgotDesc: '請輸入您的註冊信箱，我們將向您發送密碼重設連結。', placeholderForgotEmail: '請輸入註冊時的信箱',
+          btnSendReset: '發送重設驗證信', btnBackLogin: '返回登入', resetTitle: '設定全新密碼', resetDesc: '請在下方輸入您想變更的新密碼。',
+          placeholderNewPwd: '請輸入新密碼 (8-16位數且含符號)', btnUpdatePwd: '確認修改並登入',
+          heroTitle: '強大源於呼吸', heroDesc: '結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。', btnDownload: '立即下載 iOS 版'
+        },
+        en: {
+          navLang: '繁體中文', gateTitle: 'Welcome to Zenith Magic', gateSubtitle: 'Please sign up or log in to unlock the full official website.',
+          placeholderName: 'Enter your name or nickname', placeholderEmail: 'Email Address', placeholderPwd: 'Password',
+          lblForgotLink: 'Forgot Password?', tabLogin: 'Sign In', tabRegister: 'Register', login: 'Log In', register: 'Sign Up',
+          lblAgreeText: 'I agree to the Terms of Service', or: 'OR', github: 'Sign in with GitHub',
+          forgotTitle: 'Recover Password', forgotDesc: 'Enter your email address to receive a reset link.', placeholderForgotEmail: 'Enter your registered email',
+          btnSendReset: 'Send Reset Email', btnBackLogin: 'Back to Login', resetTitle: 'Set New Password', resetDesc: 'Please enter your new password.',
+          placeholderNewPwd: 'New password (8-16 chars with symbols)', btnUpdatePwd: 'Update Password & Log In',
+          heroTitle: 'Strength Sourced from Breath', heroDesc: 'Combining ultimate craftsmanship with dynamic aesthetics.', btnDownload: 'Download on iOS'
+        }
+      };
+
+      window.updateInterfaceText = function() {
+        const lang = i18n[currentLang];
+        if(document.getElementById('gateLangBtn')) document.getElementById('gateLangBtn').innerText = lang.navLang;
+        if(document.getElementById('mainLangBtn')) document.getElementById('mainLangBtn').innerText = lang.navLang;
+        if(document.getElementById('gate-title')) document.getElementById('gate-title').innerText = lang.gateTitle;
+        if(document.getElementById('gate-subtitle')) document.getElementById('gate-subtitle').innerText = lang.gateSubtitle;
+        if(document.getElementById('name-input')) document.getElementById('name-input').placeholder = lang.placeholderName;
+        if(document.getElementById('email-input')) document.getElementById('email-input').placeholder = lang.placeholderEmail;
+        if(document.getElementById('password-input')) document.getElementById('password-input').placeholder = lang.placeholderPwd;
+        if(document.getElementById('lbl-forgot-link')) document.getElementById('lbl-forgot-link').innerText = lang.lblForgotLink;
+        if(document.getElementById('tab-login')) document.getElementById('tab-login').innerText = lang.tabLogin;
+        if(document.getElementById('tab-register')) document.getElementById('tab-register').innerText = lang.tabRegister;
+        if(document.getElementById('lbl-agree-text')) document.getElementById('lbl-agree-text').innerText = lang.lblAgreeText;
+        if(document.getElementById('btn-submit-main')) document.getElementById('btn-submit-main').innerText = (currentAuthMode === 'login' ? lang.login : lang.register);
+        if(document.getElementById('lbl-or')) document.getElementById('lbl-or').innerText = lang.or;
+        if(document.getElementById('lbl-github')) document.getElementById('lbl-github').innerText = lang.github;
+        if(document.getElementById('lbl-forgot-title')) document.getElementById('lbl-forgot-title').innerText = lang.forgotTitle;
+        if(document.getElementById('lbl-forgot-desc')) document.getElementById('lbl-forgot-desc').innerText = lang.forgotDesc;
+        if(document.getElementById('forgot-email-input')) document.getElementById('forgot-email-input').placeholder = lang.placeholderForgotEmail;
+        if(document.getElementById('lbl-send-reset')) document.getElementById('lbl-send-reset').innerText = lang.btnSendReset;
+        if(document.getElementById('lbl-back-login')) document.getElementById('lbl-back-login').innerText = lang.btnBackLogin;
+        if(document.getElementById('lbl-reset-title')) document.getElementById('lbl-reset-title').innerText = lang.resetTitle;
+        if(document.getElementById('lbl-reset-desc')) document.getElementById('lbl-reset-desc').innerText = lang.resetDesc;
+        if(document.getElementById('new-password-input')) document.getElementById('new-password-input').placeholder = lang.placeholderNewPwd;
+        if(document.getElementById('lbl-update-pwd')) document.getElementById('lbl-update-pwd').innerText = lang.btnUpdatePwd;
+        if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = lang.heroTitle;
+        if(document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = lang.heroDesc;
+        if(document.getElementById('btn-download')) document.getElementById('btn-download').innerText = lang.btnDownload;
+      };
+
+      window.toggleLang = function() { currentLang = currentLang === 'zh' ? 'en' : 'zh'; window.updateInterfaceText(); };
+      window.handleDownload = function() { alert(currentLang === 'zh' ? '連結準備中！' : 'Link coming soon!'); };
+
+      window.setAuthMode = function(mode) {
+        currentAuthMode = mode;
+        const tabLogin = document.getElementById('tab-login');
+        const tabRegister = document.getElementById('tab-register');
+        if (mode === 'login') {
+          tabLogin.className = "flex-1 pb-3 text-center border-b-2 border-purple-600 text-purple-600 transition";
+          tabRegister.className = "flex-1 pb-3 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-600 transition";
+          document.getElementById('wrapper-name').classList.add('hidden');
+          document.getElementById('wrapper-forgot-link').classList.remove('hidden');
+          document.getElementById('wrapper-terms').classList.add('hidden');
+        } else {
+          tabLogin.className = "flex-1 pb-3 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-600 transition";
+          tabRegister.className = "flex-1 pb-3 text-center border-b-2 border-purple-600 text-purple-600 transition";
+          document.getElementById('wrapper-name').classList.remove('hidden');
+          document.getElementById('wrapper-forgot-link').classList.add('hidden');
+          document.getElementById('wrapper-terms').classList.remove('hidden');
+        }
+        window.updateInterfaceText();
+      };
+
+      window.switchGateView = function(target) {
+        document.getElementById('view-auth-main').classList.add('hidden');
+        document.getElementById('view-auth-forgot').classList.add('hidden');
+        document.getElementById('view-auth-reset-fields').classList.add('hidden');
+        if(target === 'main') document.getElementById('view-auth-main').classList.remove('hidden');
+        if(target === 'forgot') document.getElementById('view-auth-forgot').classList.remove('hidden');
+        if(target === 'reset') document.getElementById('view-auth-reset-fields').classList.remove('hidden');
+      };
+
+      function validatePasswordStrength(pwd) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{8,16}$/.test(pwd);
+      }
+
+      window.handleAuthSubmit = function() {
+        if (currentAuthMode === 'login') { loginWithEmail(); } else { registerWithEmail(); }
+      };
+
+      async function registerWithEmail() {
+        const name = document.getElementById('name-input').value.trim();
+        const email = document.getElementById('email-input').value.trim();
+        const password = document.getElementById('password-input').value;
+        const isAgreed = document.getElementById('terms-checkbox').checked;
+
+        if (!name || !email || !password) { alert('請填寫完整的註冊資料！'); return; }
+        if (!isAgreed) { alert('您必須勾選同意會員服務條款才能完成註冊！'); return; }
+        if (!validatePasswordStrength(password)) {
+          alert('密碼強度不足！長度須 8-16 位，且內含大小寫英數字及特殊符號（!, @, #, $, %）。');
+          return;
+        }
+
+        const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
+        if (error) alert(error.message); else alert('註冊成功！請前往信箱點擊確認信驗證。');
+      }
+
+      async function loginWithEmail() {
+        const email = document.getElementById('email-input').value.trim();
+        const password = document.getElementById('password-input').value;
+        if (!email || !password) return;
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) alert('登入失敗：信箱或密碼有誤。');
+      }
+
+      window.sendResetPasswordEmail = async function() {
+        const email = document.getElementById('forgot-email-input').value.trim();
+        if (!email) return;
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+        if (error) alert(error.message); else { alert('重設信已寄出！'); window.switchGateView('main'); }
+      };
+
+      window.updateToNewPassword = async function() {
+        const newPassword = document.getElementById('new-password-input').value;
+        if (!validatePasswordStrength(newPassword)) { alert('新密碼強度不足！'); return; }
+        const { error } = await supabaseClient.auth.updateUser({ password: newPassword });
+        if (error) alert(error.message); else alert('密碼修改成功！');
+      };
+
+      window.loginWithGitHub = async function() {
+        await supabaseClient.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: window.location.origin + window.location.pathname } });
+      };
+
+      window.logout = async function() { await supabaseClient.auth.signOut(); };
+
+      // ========================================================
+      // 🔄 兩頁式狀態流核心：嚴格控管頁面顯示
+      // ========================================================
+      supabaseClient.auth.onAuthStateChange((event, session) => {
+        const page1 = document.getElementById('page-1-auth');
+        const page2 = document.getElementById('page-2-main');
+
+        if (event === 'PASSWORD_RECOVERY') {
+          page1.classList.remove('hidden');
+          page2.classList.add('hidden');
+          window.switchGateView('reset');
+          return;
+        }
+
+        if (session && session.user) {
+          // 💡 登入或註冊驗證成功：第一頁完全消失，解鎖第二頁官網
+          const user = session.user;
+          if(document.getElementById('user-avatar')) {
+            document.getElementById('user-avatar').src = user.user_metadata.avatar_url || ('https://api.dicebear.com/7.x/identicon/svg?seed=' + user.id);
+          }
+          page1.classList.add('hidden');
+          page2.classList.remove('hidden');
+        } else {
+          // 💡 未登入或已登出：退回第一頁，第二頁絕對不可見
+          page1.classList.remove('hidden');
+          page2.classList.add('hidden');
+          window.switchGateView('main');
+        }
+      });
+
+      window.updateInterfaceText();
+    });
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,
 initial-scale=1.0">
