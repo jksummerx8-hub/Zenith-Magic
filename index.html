@@ -1,975 +1,386 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zenith Magic - 官方網站 | Official Website</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-/* 主頁背景：全沉浸式深色氛圍感 */
-.gradient-bg {
-    background: linear-gradient(135deg, #020205 0%, #0a0a16 50%, #120924 100%); 
-}
-/* 創作理念專屬色調（根據上傳圖片調整的深邃極致氛圍） */
-.philosophy-bg {
-    background: linear-gradient(180deg, #05050d 0%, #0e071e 100%);
-}
-.glass-card {
-    background: rgba(15, 12, 30, 0.65);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(168, 85, 247, 0.25);
-}
-.screenshot-img {
-    height: 480px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 2rem;
-}
-.content-img {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 1.5rem;
-}
-/* 頂級霓虹光暈與置中主標題 */
-.neon-glow {
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.65), 0 0 40px rgba(99, 102, 241, 0.45);
-}
-/* 藍紫霓虹實體自訂捲軸 */
-.custom-scrollbar::-webkit-scrollbar { height: 10px; }
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 9999px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(to right, #a855f7, #6366f1);
-    border-radius: 9999px;
-    border: 2px solid #0a0a16;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to right, #9333ea, #4f46e5);
-}
-/* 帳號系統專屬按鈕漸層 */
-.btn-gradient-primary {
-    background: linear-gradient(90deg, #D946EF 0%, #3B82F6 100%);
-}
-.btn-gradient-secondary {
-    background: linear-gradient(90deg, #3B82F6 0%, #06B6D4 100%);
-}
-</style>
-</head>
-<body class="gradient-bg text-slate-200 font-sans antialiased">
-
-<header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-purple-900/40 sticky top-0 z-50 backdrop-blur-md bg-black/40">
-    <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Zenith Magic</div>
-    <nav class="flex items-center space-x-6">
-        <button onclick="toggleLang()" id="langBtn" class="border border-purple-500 text-purple-400 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-purple-600 hover:text-white transition cursor-pointer">English</button>
-        <button onclick="handleDownload(false)" class="hidden md:block bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-md cursor-pointer">App Store</button>
-    </nav>
-</header>
-
-<section class="max-w-5xl mx-auto text-center px-6 py-24 relative">
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/15 blur-[140px] rounded-full pointer-events-none"></div>
-    
-    <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 text-white leading-tight neon-glow">強大源於呼吸</h1>
-    
-    <p id="hero-desc" class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-        結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完全清空。
-    </p>
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-        <button onclick="handleDownload(false)" id="btn-download" class="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-purple-500/20 transition transform hover:-translate-y-1 cursor-pointer">立即下載 iOS 版</button>
-        <a href="https://raw.githubusercontent.com/jksummerx8-hub/Terms-index.html-/refs/heads/main/Terms" target="_blank" id="btn-terms" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-purple-300 font-semibold px-8 py-4 rounded-2xl border border-purple-500/30 transition shadow-sm text-center">服務條款</a>
-        <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" target="_blank" id="btn-bio" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-purple-300 font-semibold px-8 py-4 rounded-2xl border border-purple-500/30 transition shadow-sm text-center">臉部技術與生物特徵聲明</a>
-    </div>
-</section>
-
-<section class="py-6 px-4 max-w-7xl mx-auto">
-    <div id="gallery-title" class="text-center text-2xl font-bold mb-8 text-purple-400">App 實機介面展示 | Interface Gallery</div>
-    <div class="flex overflow-x-auto gap-6 pb-6 px-4 custom-scrollbar">
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%B5%B1.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="察覺系統">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="察覺系統:映照心靈的濾鏡" data-en="Awareness System: Mirror of the Soul">察覺系統:映照心靈的濾鏡</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Zenith.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Zenith">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="Zenith Magic 核心介面" data-en="Zenith Magic Core Interface">Zenith Magic 核心介面</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.07.31.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="健身計時器" data-en="Fitness Timer">健身計時器</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.06.01.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="引導冥想課程" data-en="Guided Meditation Course">引導冥想課程</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.37.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="ASMR 感官音效控制" data-en="ASMR Sensory Sound Control">ASMR 感官音效控制</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.24.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="健身流倒數計時器" data-en="Fitness Flow Countdown Timer">健身流倒數計時器</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-31%20at%2002.05.00.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="動態呼吸引導" data-en="Dynamic Breathing Guide">動態呼吸引導</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-09%20at%2019.11.40.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="神聖祈禱文顯化" data-en="Sacred Prayer Manifestation">神聖祈禱文顯化</p>
-        </div>
-        <div class="flex-none text-center mb-4">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-04-08%20at%2014.35.19.png" class="screenshot-img shadow-xl border border-purple-900/40" alt="Screenshot">
-            <p class="mt-4 font-semibold text-slate-300 gallery-label" data-zh="7段自訂等化器(EQ)" data-en="7-Band Custom Equalizer (EQ)">7段自訂等化器(EQ)</p>
-        </div>
-    </div>
-</section>
-
-<section class="py-16 px-6 max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-purple-400 mb-2 lang-txt" data-zh="核心特色：科技與美學的結晶" data-en="Core Features: Crystallization of Tech & Aesthetics">核心特色：科技與美學的結晶</h2>
-    <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-cyan-400 mb-12 rounded-full"></div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
-        <div class="space-y-6">
-            <div class="inline-block bg-purple-950 text-purple-300 px-3 py-1 rounded-full text-sm font-bold lang-txt" data-zh="大腦停不下來嗎？" data-en="Racing Non-Stop?">大腦停不下來嗎？</div>
-            <h3 class="text-2xl font-bold text-white lang-txt" data-zh="把放鬆當成一種可以習得的技能" data-en="Treat Relaxation as a Learnable Skill">把放鬆當成一種可以習得的技能</h3>
-            <p class="text-slate-300 leading-relaxed lang-txt" data-zh="每晚躺在床上，閉上眼睛，腦海中卻像放電影一樣不停閃現：未完成的工作、今天遇到的麻煩、甚至剛剛滑過的短影音片段……「Zenith」不只是一個簡單的鬧鐘 or 放鬆軟體。我們知道，睡前放鬆，本身就是一種需要被練習的技能。Zenith 是一個全方位的、個性化的身心重啟引擎，我們將聽覺療癒、呼吸練習、冥想和健身流無縫整合，幫助你重新建立與大腦的連結，掌握放鬆的能力，透過呼吸練習讓腦袋清空。" data-en="Lying in bed each night, closing your eyes, yet your mind replays scenes like a movie: unfinished work, troubles from today, even short videos you just swiped past... Zenith is not just a simple alarm or relaxation app. We know that wind-down relaxation itself is a skill that needs practice. Zenith is a comprehensive, personalized body-mind reboot engine. We seamlessly integrate audio healing, breathing practices, meditation, and fitness flows to help you reconnect with your brain, master the art of letting go, and clear your head through targeted breathwork.">
-                每晚躺在床上，閉上眼睛，腦海中卻像放電影一樣不停閃現：未完成的工作、今天遇到的麻煩、甚至剛剛滑過的短影音片段……「Zenith」不只是一個簡單的鬧鐘 or 放鬆軟體。我們知道，睡前放鬆，本身就是一種需要被練習的技能。Zenith 是一個全方位的、個性化的身心重啟引擎，我們將聽覺療癒、呼吸練習、冥想和健身流無縫整合，幫助你重新建立與大腦的連結，掌握放鬆的能力，透過呼吸練習讓腦袋清空。
-            </p>
-        </div>
-        <div class="flex justify-center">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E8%B6%95%E6%99%82%E9%96%93.jpg" class="content-img shadow-2xl border border-purple-900/40" alt="趕時間">
-        </div>
-    </div>
-
-    <div class="glass-card rounded-3xl p-8 md:p-12 mb-20 shadow-xl">
-        <h3 class="text-xl md:text-2xl font-bold text-white mb-4 lang-txt" data-zh="「碎片時間的心靈聖殿」：通勤與趕時間中的靜心" data-en="&quot;Sanctuary for Fragmented Time&quot;: Meditating Amidst Commuting and Rushing">「碎片時間的心靈聖殿」：通勤與趕時間中的靜心</h3>
-        <p class="text-slate-300 leading-relaxed max-w-4xl lang-txt" data-zh="在捷運的吵雜聲中、在趕路的心跳聲中，你依然可以擁有一座專屬的『感官聖殿』。Zenith 讓你的手機不再只是訊息的干擾源，而是通往內在平靜的入口。在「趕時間」的焦慮中，你能透過呼吸練習強行創造出一個屬於自己的「靜止時空」。" data-en="Amidst the roar of the subway or the thumping heartbeat of rushing, you can still possess an exclusive 'Sensory Sanctuary.' Zenith transforms your phone from a source of constant disruption into a pure gateway for inner peace. In the midst of rushing anxiety, you can use structured breathing exercises to forcefully create a 'still dimension' of your very own.">
-            在捷運的吵雜聲中、在趕路的心跳聲中，你依然可以擁有一座專屬的『感官聖殿』。Zenith 讓你的手機不再只是訊息的干擾源，而是通往內在平靜的入口。在「趕時間」的焦慮中，你能透過呼吸練習強行創造出一個屬於自己的「靜止時空」。
-        </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="1. 動態呼吸引導引擎" data-en="1. Dynamic Breathing Engine">1. 動態呼吸引導引擎</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="根據你的狀態 provide 多種呼吸引導，動態調整節奏。" data-en="Delivers multiple custom breathwork pacing models tailored dynamically to your current energetic state.">根據你的狀態 provide 多種呼吸引導，動態調整節奏。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="2. ASMR 沉浸式播放器" data-en="2. Immersive ASMR Player">2. ASMR 沉浸式播放器</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="選擇你喜歡的環境聲音（飄雪、風聲、復古商店），營造放鬆空間。" data-en="Curate background environments (falling snow, mountain winds, vintage shops) to isolate your relaxing sanctuary.">選擇你喜歡的環境聲音（飄雪、風聲、復古商店），營造放鬆空間。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="3. 7段自訂等化器" data-en="3. 7-Band Custom EQ">3. 7段自訂等化器</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="高精密微調聲音頻率，直到它完美貼合你的大腦波動。" data-en="Finely recalibrate audio hertz and sound frequencies until they lock perfectly with your brainwave patterns.">高精密微調聲音頻率，直到它完美貼合你的大腦波動。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="4. 祈禱文系統" data-en="4. Soul Resonance Prayers">4. 祈禱文系統</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="帶有「玄學」色彩的心靈共振測試。透過20個關於存在、維度與能量的選擇，分析出最適合你當前靈魂頻率的「玄學祈禱語」。" data-en="A soulful cosmic alignment engine. Through 20 structural inquiries of dimensions and energy source, it analyzes your frequency to render tailored spiritual resonance scripts.">帶有「玄學」色彩的心靈共振測試。透過20個關於存在、維度與能量的選擇，分析出最適合你當前靈魂頻率的「玄學祈禱語」。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="5. 21天引導式冥想" data-en="5. 21-Day Guided Meditation">5. 21天引導式冥想</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="由淺入深的漸進式訓練，系統化協助初學者穩健紮根冥想習慣。" data-en="A progressive multi-stage curriculum built to guide beginners step-by-step into structural mindfulness depth.">由淺入深的漸進式訓練，系統化協助初學者穩健紮根冥想習慣。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="6. 健身流倒數計時器" data-en="6. Fitness Flow Timer">6. 健身流倒數計時器</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="能夠高效運動，同時能精確掌握時間，確保身體安全地放鬆。" data-en="Execute efficient dynamic movements while strictly mastering temporal rhythms to securely unleash somatic relaxation.">能夠高效運動，同時能精確掌握時間，確保身體安全地放鬆。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl border-purple-400/40 shadow-inner">
-            <h3 class="font-bold text-cyan-300 text-lg mb-2 lang-txt" data-zh="7. 獨立 Apple Watch 應用支援" data-en="7. Standalone Apple Watch App">7. 獨立 Apple Watch 應用支援</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="無需手機，手腕上直接啟動精密觸覺觸感「吸、屏、呼」震動引導，並完美整合 Apple 核心健康數據，隨時觀測體能恢復。" data-en="No iPhone required. Activate precise haptic 'breathe, hold, exhale' pulse guidance directly on your wrist, fully integrating Apple Health.">無需手機，手腕上直接啟動精密觸覺觸感「吸、屏、呼」震動引導，並完美整合 Apple 核心健康數據，隨時觀測體能恢復。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl border-purple-400/40 shadow-inner">
-            <h3 class="font-bold text-cyan-300 text-lg mb-2 lang-txt" data-zh="8. 靈魂維度與玄學能量面板" data-en="8. Soul Dimension & Meta-Energy Panel">8. 靈魂維度與玄學能量面板</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="視覺化解碼你的心靈波長。將日常的冥想與呼吸數據，轉化為細緻的玄學維度模型，動態映射出您當前的能量磁場狀態。" data-en="Visually decode your inner wavelengths, transforming daily breathing data into refined cosmic energy dimension models.">視覺化解碼你的心靈波長。將日常的冥想與呼吸數據，轉化為細緻的玄學維度模型，動態映射出您當前的能量磁場狀態。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="9. 各國語言翻譯" data-en="9. Seamless Multi-Language">9. 各國語言翻譯</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="打破語言屏障，內建多國語系本土化，讓正念拓展無國界。" data-en="Dissolves borders. Built-in global localizations bring mindfulness to a worldwide scale without frictions.">打破語言屏障，內建多國語系本土化，讓正念拓展無國界。</p>
-        </div>
-        <div class="p-6 glass-card rounded-2xl">
-            <h3 class="font-bold text-purple-300 text-lg mb-2 lang-txt" data-zh="10. 察覺系統" data-en="10. Advanced Awareness System">10. 察覺系統</h3>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="偵測當下疲勞值是否過載，並解碼心情狀態（喜、怒、哀、樂、.....）。" data-en="Senses if fatigue is peaking and decodes instant somatic expressions (joy, sorrow, stress, bliss).">偵測當下疲勞值是否過載，並解碼心情狀態（喜、怒、哀、樂、.....）。</p>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div class="glass-card rounded-2xl p-6 shadow-sm">
-            <h4 class="text-lg font-bold mb-2 text-white lang-txt" data-zh="電影級視覺饗宴" data-en="Cinematic Visual Feast">電影級視覺饗宴</h4>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="捨棄傳統平面的UI,採用霓虹美學與動態深度效果,創造出極具現代感的「數位禪意」。" data-en="Moving away from traditional flat UI, we embrace neon aesthetics and dynamic depth effects to create a highly modern 'Digital Zen'">捨棄傳統平面的UI,採用霓虹美學與動態深度效果,創造出極具現代感的「數位禪意」。</p>
-        </div>
-        <div class="glass-card rounded-2xl p-6 shadow-sm">
-            <h4 class="text-lg font-bold mb-2 text-white lang-txt" data-zh="定製貝茲曲線動畫" data-en="Custom Bézier Animation">定製貝茲曲線動畫</h4>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="視覺動態並非機械運作,而是透過精密的數學曲線模擬肺部擴張的流暢美感,讓視覺引導成為一種美的享受。" data-en="Visual dynamics are not mechanical; they mimic the fluid beauty of lung expansion via precise mathematical curves, making visual guidance a joyful art.">視覺動態並非機械運作,而是透過精密的數學曲線模擬肺部擴張的流暢美感,讓視覺引導成為一種美的享受。</p>
-        </div>
-        <div class="glass-card rounded-2xl p-6 shadow-sm">
-            <h4 class="text-lg font-bold mb-2 text-white lang-txt" data-zh="精確狀態機引擎" data-en="Precise State Machine Engine">精確狀態機引擎</h4>
-            <p class="text-sm text-slate-300 leading-relaxed lang-txt" data-zh="核心計時器精確控制「吸、屏、呼」的每一毫秒,提供高強度練習,助您在壓力下保持巔峰專注。" data-en="The core timer strictly tracks every millisecond of inhaling, holding, and exhaling, delivering precise control to help you lock in peak focus.">核心計時器精確控制「吸、屏、呼」的每一毫秒,提供高強度練習,助您在壓力下保持巔峰專注。</p>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div class="space-y-6">
-            <div class="inline-block bg-indigo-950 text-indigo-300 px-3 py-1 rounded-full text-sm font-bold lang-txt" data-zh="最新功能特色" data-en="Latest Feature Spotlight">最新功能特色</div>
-            <h3 class="text-2xl font-bold text-white lang-txt" data-zh="星塵漂浮呼吸 (Starry Drift Breathing)" data-en="Starry Drift Breathing">星塵漂浮呼吸 (Starry Drift Breathing)</h3>
-            <p class="text-slate-300 leading-relaxed lang-txt" data-zh="這是專為創造「入眠氛圍」設計的最新視覺引導功能。透過星塵般的動態視覺與直觀的按鈕回饋,使用者能在極致的美感中重拾節奏,快速沉澱大腦干擾,滑入平穩舒適的專注或深層睡眠狀態。" data-en="Specially designed to curate an exquisite 'atmosphere for sleep.' Through stardust-like visual flows and intuitive button feedback, users can effortlessly ground their breath rhythm, clear noise, and slide smoothly into deep sleep or absolute focus.">
-                這是專為創造「入眠氛圍」設計的最新視覺引導功能。透過星塵般的動態視覺與直觀的按鈕回饋,使用者能在極致的美感中重拾節奏,快速沉澱大腦干擾,滑入平穩舒適的專注或深層睡眠狀態。
-            </p>
-        </div>
-        <div class="flex justify-center">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E6%98%9F%E8%BE%B0%E6%BC%82%E6%B5%AE%E5%91%BC%E5%90%B8.png" class="content-img shadow-2xl border border-purple-900/40" alt="星塵漂浮呼吸">
-        </div>
-    </div>
-</section>
-
-<section class="py-16 bg-black/40 backdrop-blur-sm border-y border-purple-900/40 px-6">
-    <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-3xl font-bold text-purple-400 mb-2 lang-txt" id="occasions-title" data-zh="呼吸練習能夠運用的時機與各種情緒上" data-en="Applicable Scenarios, Emotions & Life Moments">呼吸練習能夠運用的時機與各種情緒上</h2>
-        <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-400 mx-auto mb-10 rounded-full"></div>
-        
-        <div class="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto mb-12">
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="大腦重啟" data-en="Brain Reboot">大腦重啟</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="會議前" data-en="Before Meetings">會議前</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="考試前" data-en="Before Exams">考試前</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="情緒失控" data-en="Emotional Crisis">情緒失控</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="飲酒後" data-en="Post-Drinking">飲酒後</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="健身後" data-en="Post-Workout">健身後</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="騎單車後" data-en="Post-Cycling">騎單車後</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="慢跑後" data-en="Post-Jogging">慢跑後</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="薄荷的感覺" data-en="Peppermint Sensation">薄荷的感覺</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="入眠氛圍" data-en="Sleep Atmosphere">入眠氛圍</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="伴侶見面時" data-en="Meeting Partners">伴侶見面時</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="深層放鬆" data-en="Deep Relaxation">深層放鬆</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="風暴後的寧靜" data-en="Calm After the Storm">風暴後的寧靜</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="海潮後的節奏" data-en="Rhythm After Tides">海潮後的節奏</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="開會前" data-en="Pre-Conference">開會前</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="面試前" data-en="Before Interviews">面試前</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="休息模式" data-en="Rest Mode">休息模式</span>
-            <span class="bg-purple-950/60 text-purple-300 px-4 py-2 rounded-full text-sm font-medium border border-purple-500/30 lang-txt" data-zh="高強度腦力工作後" data-en="Post-Intense Cognitive Work">高強度腦力工作後</span>
-        </div>
-        <div class="flex justify-center">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%11%BC%E5%90%B8%E5%A0%B4%E6%99%AF%E6%87%89%E7%94%A8%E6%99%82%E6%A9%9F.png" alt="呼吸場景應用時機">
-        </div>
-    </div>
-</section>
-
-<section class="py-16 bg-white/5 border-y border-purple-900/30 px-6">
-    <div class="max-w-5xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <h2 class="text-2xl md:text-3xl font-bold text-white lang-txt" data-zh="【察覺系統：映照心靈的濾鏡】" data-en="[Awareness System: Mirror of the Soul]">[察覺系統：映照心靈的濾鏡]</h2>
-                <p class="text-slate-300 leading-relaxed font-medium lang-txt" data-zh="想知道你現在的「能量顏色」嗎？透過獨家的能量感測技術（*此非醫療檢測，而是一場與自己的趣味對話），Zenith 將透過以下機制協助你回歸正軌：" data-en="Want to decipher your current 'Energy Color'? Powered by our custom bio-sensing concepts (Note: Not for medical diagnostics, but an interactive soul dialogue), Zenith helps you ground yourself:">
-                    想知道你現在的「能量顏色」嗎？ 透過獨家的能量感測技術（*此非醫療檢測，而是一場與自己的趣味對話），Zenith 將透過以下機制協助你回歸正軌：
-                </p>
-                <ul class="space-y-3 text-sm text-slate-300">
-                    <li class="flex items-start gap-2">
-                        <span class="text-purple-400 font-bold">●</span>
-                        <p class="leading-relaxed"><strong class="lang-txt" data-zh="即時掃描：" data-en="Instant Scan: ">即時掃描：</strong><span class="lang-txt" data-zh="透過鏡頭觀察面部細微的波長，捕捉你當下的心情氛圍。" data-en="Observes subtle facial color modulations via lens to extract immediate mood micro-waves.">透過鏡頭觀察面部細微的波長，捕捉你當下的心情氛圍。</span></p>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-purple-400 font-bold">●</span>
-                        <p class="leading-relaxed"><strong class="lang-txt" data-zh="能量特徵：" data-en="Energy Profiling: ">能量特徵：</strong><span class="lang-txt" data-zh="無論是熾熱的「火之氣息」還是平靜的「雲端波動」，系統會將你的表情轉化為直觀的視覺能量條。" data-en="Whether it's a burning 'Breath of Fire' or tranquil 'Cloud Waves', expressions are instantly translated into visual energy metrics.">無論是熾熱的「火之氣息」還是平靜的「雲端波動」，系統會將你的表情轉化為直觀的視覺能量條。</span></p>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-purple-400 font-bold">●</span>
-                        <p class="leading-relaxed"><strong class="lang-txt" data-zh="專屬引導：" data-en="Bespoke Navigation: ">專屬引導：</strong><span class="lang-txt" data-zh="根據察覺到的狀態，自動解鎖最適合你當下頻率的呼吸法，助你快速找回內在平衡。" data-en="Based on detected energy signatures, it dynamically unlocks tailored breath techniques to recalibrate your core balance.">根據察覺到的狀態，自動解鎖最適合你當下頻率的呼吸法，助你快速找回內在平衡。</span></p>
-                    </li>
-                </ul>
-            </div>
-            <div class="flex justify-center">
-                <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E5%AF%9F%E8%A6%BA%E7%B3%BB%E7%BB%A3.png" class="content-img shadow-2xl border border-purple-900/40" alt="察覺系統">
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 px-6 philosophy-bg border-b border-purple-900/40 text-center">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-300 to-cyan-300 mb-6 tracking-wide neon-glow lang-txt" data-zh="「真正的強大，從掌控呼吸開始」" data-en="&quot;True power begins with mastering your breath.&quot;">「真正的強大，從掌控呼吸開始」</h2>
-        
-        <p class="text-slate-300 text-lg md:text-xl font-medium leading-relaxed max-w-4xl mx-auto mb-10 lang-txt" data-zh="「變強」不只是體體能的堆疊，更是對內在節奏的絕對掌控。Zenith 誕生 的使命，是將枯燥的呼吸練習轉化為一場視覺與聽覺的藝術盛宴。我們認為，當練習變成一種享受時，進步將無聲無息地發生。透過如電影般深邃的「彩色鑲嵌玻璃」視覺藝術，我們在數位世界中為您築起一座修煉強大的聖殿。在這裡，每一次吸氣都是能量的累積，每一次吐氣都是對極限的擴張，是一款高品質的舒壓藝術品。" data-en="Becoming stronger is not merely stacking physical volume, but masterfully owning your internal tempo. Zenith’s absolute mission is to transmute standard breathing exercises into a spectacular visual and auditory odyssey. We believe when practice turns into pure enjoyment, optimization occurs silently. Through deep, church-like 'Stained Glass' cinematic visual art, we construct a sanctuary for refining power within the digital cosmos. Every inhalation accumulates power; every exhalation expands limits. A premium stress-relief artwork.">
-            「變強」不只是體能的堆疊，更是對內在節奏的絕對掌控。 Zenith 誕生的使命，是將枯燥的呼吸練習轉化為一場視覺與聽覺的藝術盛宴。我們認為，當練習變成一種享受時，進步將無聲無息地發生。透過如電影般深邃的「彩色鑲嵌玻璃」視覺藝術，我們在數位世界中為您築起一座修煉強大的聖殿。在這裡，每一次吸氣都是能量的累積，每一次吐氣都是對極限的擴張，是一款高品質的舒壓藝術品。
-        </p>
-        <div class="flex justify-center mb-6">
-            <img src="https://raw.githubusercontent.com/jksummerx8-hub/Zenith-Magic/refs/heads/main/%E6%9C%80%E5%BC%B7%E5%91%BC%E5%90%B8.png" alt="最強呼吸">
-        </div>
-    </div>
-</section>
-
-
-<section class="py-16 px-6 max-w-6xl mx-auto flex flex-col items-center relative">
-    <div class="absolute w-[400px] h-[400px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none"></div>
-
-    <h2 class="text-3xl font-bold text-center mb-2 text-[#EAB308] tracking-widest lang-txt" data-zh="星際雲端雲伺服器" data-en="Cosmic Cloud Account Gateway">星際雲端雲伺服器</h2>
-    <div class="w-20 h-1 bg-gradient-to-r from-[#EAB308] to-amber-500 mb-12 rounded-full"></div>
-
-    <div class="w-full max-w-md bg-[#111827]/90 backdrop-blur-2xl rounded-[40px] border border-gray-800/60 p-8 relative shadow-2xl overflow-hidden min-h-[940px] flex flex-col justify-between text-white">
-        
-        <div class="flex items-center justify-between w-full mb-4 relative z-10">
-            <button onclick="toggleLang()" id="lang-btn" class="text-xs text-gray-400 bg-gray-900/60 px-3 py-1.5 rounded-full border border-gray-800 hover:bg-gray-700 transition font-medium cursor-pointer">
-                <i class="fa-solid fa-globe mr-1"></i>EN
-            </button>
-            <div id="top-right-area" class="flex justify-end items-center max-w-[180px]">
-                <button id="close-btn" class="text-gray-300 text-xs bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700/50 hover:bg-gray-700 transition font-medium cursor-pointer">關閉</button>
-            </div>
-        </div>
-
-        <div class="flex flex-col items-center justify-center mb-6">
-            <div class="relative text-[#EAB308] text-5xl mb-2 opacity-90">
-                <i class="fa-solid fa-circle-user"></i>
-                <div class="absolute bottom-0 left-0 text-lg bg-[#111827] rounded-full p-0.5">
-                    <i class="fa-solid fa-circle-check text-[#EAB308]"></i>
-                </div>
-            </div>
-            <p id="sub-title-label" class="text-xs text-gray-400 tracking-wider font-light">帳號系統登入</p>
-            <h1 id="main-title-label" class="text-2xl font-bold text-[#EAB308] tracking-widest mt-1">建立新帳號</h1>
-        </div>
-
-        <div id="register-panel" class="space-y-4 flex-grow flex flex-col justify-start">
-            <div class="space-y-3.5">
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" id="reg-name" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-4 py-3.5 rounded-xl font-medium placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-                </div>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-calendar-days"></i></span>
-                    <select id="reg-age" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-10 py-3.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"></select>
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 pointer-events-none"><i class="fa-solid fa-chevron-down text-sm"></i></span>
-                </div>
-                <button onclick="handleAppleLogin()" class="w-full bg-black hover:bg-gray-900 text-white py-3.5 rounded-xl font-semibold flex items-center justify-center gap-2 border border-gray-800 transition active:scale-[0.99] cursor-pointer">
-                    <i class="fa-brands fa-apple text-xl"></i> <span id="text-apple-login">使用 Apple 登入</span>
-                </button>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" id="reg-email" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-4 py-3.5 rounded-xl font-medium placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-                </div>
-                <div class="space-y-2.5">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" id="reg-password" oninput="validatePasswordLive('reg')" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-12 py-3.5 rounded-xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all tracking-widest">
-                        <button onclick="togglePasswordVisibility('reg-password')" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600 transition-colors z-10 cursor-pointer">
-                            <i class="fa-solid fa-eye text-lg" id="eye-reg-password"></i>
-                        </button>
-                    </div>
-                    <div class="space-y-1.5 pt-1">
-                        <div class="flex justify-between items-center text-xs text-gray-300 px-0.5">
-                            <span>密碼強度</span>
-                            <span id="reg-strength-label" class="font-bold tracking-wide transition-colors duration-200"></span>
-                        </div>
-                        <div class="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
-                            <div id="reg-strength-bar" class="h-full w-0 bg-red-500 transition-all duration-300"></div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-2 text-xs text-gray-500 pt-1.5 pl-0.5">
-                        <div id="reg-req-len" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-req-len">至少8碼</span></div>
-                        <div id="reg-req-up" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-req-up">至少包含一個大寫英文字母 (A-Z)</span></div>
-                        <div id="reg-req-low" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-req-low">至少包含一個小寫英文字母 (a-z)</span></div>
-                        <div id="reg-req-num" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-req-num">至少包含一個數字(0-9)</span></div>
-                        <div id="reg-req-spec" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-req-spec">至少包含一個特殊符號(如@、#、$、%、^、&、*)</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="space-y-3 pt-4">
-                <button onclick="handleEmailRegister()" id="btn-register-now" class="w-full btn-gradient-primary hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-[0.99] tracking-wide cursor-pointer">立即註冊</button>
-                <button onclick="switchPanel('login-panel')" id="btn-back-to-login" class="w-full btn-gradient-secondary hover:opacity-95 text-white py-4 rounded-xl font-bold transition active:scale-[0.99] tracking-wide cursor-pointer">已有帳號?返回登入</button>
-            </div>
-            <div class="flex justify-between items-center pt-4 mt-auto">
-                <span id="footer-or-label" class="text-base font-medium text-white tracking-wider">或者</span>
-                <button onclick="switchPanel('forgot-panel')" id="footer-forgot-btn" class="bg-gray-800/80 border border-gray-700/60 text-gray-300 px-5 py-2.5 rounded-xl text-sm font-medium hover:text-white hover:bg-gray-700 transition shadow-sm cursor-pointer">忘記密碼?</button>
-            </div>
-        </div>
-
-        <div id="login-panel" class="space-y-5 flex-grow flex flex-col justify-start hidden">
-            <div class="space-y-4">
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" id="login-email" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-4 py-3.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-lock"></i></span>
-                    <input type="password" id="login-password" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-12 py-3.5 rounded-xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 tracking-widest">
-                    <button onclick="togglePasswordVisibility('login-password')" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600 z-10 cursor-pointer">
-                        <i class="fa-solid fa-eye text-lg" id="eye-login-password"></i>
-                    </button>
-                </div>
-            </div>
-            <button onclick="handleEmailLogin()" id="btn-login" class="w-full btn-gradient-primary hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg transition tracking-wide mt-2 cursor-pointer">登入</button>
-            <button onclick="switchPanel('register-panel')" id="btn-goto-register" class="w-full btn-gradient-secondary text-white py-4 rounded-xl font-bold transition tracking-wide cursor-pointer">沒有帳號?前往註冊</button>
-        </div>
-
-        <div id="forgot-panel" class="space-y-5 flex-grow flex flex-col justify-start hidden">
-            <div id="otp-step-1" class="space-y-5">
-                <p id="text-otp-step1-hint" class="text-sm text-gray-400 text-center leading-relaxed">請輸入您的電子郵件，我們將發送 6~8位數驗證碼至您的信箱。</p>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" id="forgot-email" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-4 py-3.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <button onclick="sendResetOTP()" id="btn-send-otp" class="w-full btn-gradient-primary hover:opacity-95 text-white font-bold py-4 rounded-xl transition tracking-wide cursor-pointer">發送驗證碼</button>
-            </div>
-            <div id="otp-step-2" class="space-y-4 hidden">
-                <p id="text-otp-step2-hint" class="text-sm text-gray-400 text-center leading-relaxed">驗證碼已發送!請輸入6~8位數驗證碼與高強度新密碼。</p>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-key"></i></span>
-                    <input type="text" id="otp-code" maxlength="8" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-4 py-3.5 rounded-xl tracking-[0.2em] text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="space-y-2.5">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-[#EAB308] text-lg"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" id="otp-password" oninput="validatePasswordLive('otp')" class="w-full bg-[#F3F4F6] text-gray-900 pl-12 pr-12 py-3.5 rounded-xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 tracking-widest">
-                        <button onclick="togglePasswordVisibility('otp-password')" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600 z-10 cursor-pointer">
-                            <i class="fa-solid fa-eye text-lg" id="eye-otp-password"></i>
-                        </button>
-                    </div>
-                    <div class="space-y-1.5 pt-1">
-                        <div class="flex justify-between items-center text-xs text-gray-300 px-0.5">
-                            <span>密碼強度</span>
-                            <span id="otp-strength-label" class="font-bold tracking-wide transition-colors duration-200"></span>
-                        </div>
-                        <div class="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
-                            <div id="otp-strength-bar" class="h-full w-0 bg-red-500 transition-all duration-300"></div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-2 text-xs text-gray-500 pt-1.5 pl-0.5">
-                        <div id="otp-req-len" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-otp-len">至少8碼</span></div>
-                        <div id="otp-req-up" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-otp-up">至少包含一個大寫英文字母 (A-Z)</span></div>
-                        <div id="otp-req-low" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-otp-low">至少包含一個小寫英文字母 (a-z)</span></div>
-                        <div id="otp-req-num" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-otp-num">至少包含一個數字(0-9)</span></div>
-                        <div id="otp-req-spec" class="flex items-center gap-2 transition-colors duration-200"><i class="fa-regular fa-circle text-sm"></i><span id="lbl-otp-spec">至少包含一個特殊符號(如@、#、$、%",^、&、*)</span></div>
-                    </div>
-                </div>
-                <button onclick="verifyOTPAndReset()" id="btn-confirm-reset" class="w-full btn-gradient-primary hover:opacity-95 text-white font-bold py-4 rounded-xl transition tracking-wide mt-2 cursor-pointer">確認重設密碼</button>
-            </div>
-            <button onclick="switchPanel('register-panel')" id="btn-link-back-login" class="text-gray-400 text-sm hover:text-white transition block text-center mt-4 cursor-pointer"><i class="fa-solid fa-arrow-left mr-2"></i>返回註冊面板</button>
-        </div>
-
-        <div id="dashboard-panel" class="space-y-5 flex-grow flex flex-col justify-start hidden">
-            <h1 id="text-member-center" class="text-2xl font-bold text-center text-[#EAB308] tracking-wide mb-2">會員中心</h1>
-            <div class="bg-gray-900/80 p-5 rounded-2xl border border-gray-800 space-y-2">
-                <p id="text-curr-account" class="text-gray-400 text-sm">目前登入帳號:</p>
-                <p id="user-display-email" class="font-mono text-blue-400 break-all"></p>
-                <p id="text-profile" class="text-gray-400 text-sm pt-2">基本資料:</p>
-                <p id="user-display-meta" class="text-sm text-gray-200"></p>
-            </div>
-            <button onclick="handleLogout()" id="btn-logout" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-3.5 rounded-xl transition cursor-pointer">登出帳號</button>
-        </div>
-
-        <div class="mt-6 space-y-4 w-full">
-            <p id="terms-box" class="text-center text-[11px] text-gray-500 leading-relaxed px-4">
-                <span id="text-terms-prefix">註冊即代表您同意我們的 </span>
-                <a href="https://jksummerx8-hub.github.io/terms-of-service/" target="_blank" class="text-[#EAB308] underline hover:text-yellow-500 font-medium">服務條款</a>
-                <span id="text-and">與</span>
-                <a href="https://jksummerx8-hub.github.io/Privacy-Policy-Supabase-/" target="_blank" class="text-[#EAB308] underline hover:text-yellow-500 font-medium">隱私政策</a>
-            </p>
-            <div id="danger-zone" class="border-t border-red-900/30 pt-4 hidden">
-                <button onclick="handleDeleteAccount()" id="btn-delete-acc" class="w-full text-red-500 bg-red-950/20 hover:bg-red-950/40 border border-red-900/40 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition active:scale-[0.99] cursor-pointer">
-                    <i class="fa-solid fa-trash-can mr-1.5"></i> 永久刪除帳號 (Delete Account)
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="py-16 px-6 max-w-7xl mx-auto">
-    <h2 id="pricing-title" class="text-3xl font-bold text-center mb-12 text-purple-400">定價方案 | Pricing Plans</h2>
-    <div class="flex flex-wrap justify-center items-stretch gap-6">
-        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition w-full sm:w-[225px]">
-            <div>
-                <h3 class="text-base font-bold text-white lang-txt" data-zh="週訂閱（自動續訂）" data-en="Weekly Plan (Auto-renewal)">週訂閱（自動續訂）</h3>
-                <div class="text-2xl font-extrabold text-purple-400 mt-4">$5.00 <span class="text-xs font-normal text-slate-400">USD</span></div>
-                <div class="text-xl font-bold text-slate-400 mb-4">NT$ 150</div>
-                <p class="text-xs text-slate-300 leading-relaxed lang-txt" data-zh="自動續訂。靈活無負擔，即時開啟一整週的覺察與身心強化能量場。" data-en="Automatically renews. Flexible access to power up your focus and body-mind optimization for a full week.">自動續訂。靈活無負擔，即時開啟一整週的覺察與身心強化能量場。</p>
-            </div>
-            <button onclick="handleDownload(false)" class="mt-6 block w-full text-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition lang-txt cursor-pointer" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</button>
-        </div>
-        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition w-full sm:w-[225px]">
-            <div>
-                <h3 class="text-base font-bold text-white lang-txt" data-zh="月訂閱（自動續訂）" data-en="Monthly Plan (Auto-renewal)">月訂閱（自動續訂）</h3>
-                <div class="text-2xl font-extrabold text-purple-400 mt-4">$12.99 <span class="text-xs font-normal text-slate-400">USD</span></div>
-                <div class="text-xl font-bold text-slate-400 mb-4">NT$ 390</div>
-                <p class="text-xs text-slate-300 leading-relaxed lang-txt" data-zh="包含 3 天免費試用，隨後自動續訂。深度建立每日呼吸練習與大腦清空習慣。" data-en="Includes 3-day free trial, automatically renews thereafter. Deeply plant daily breathing and mind clearing habits.">包含 3 天免費試用，隨後自動續訂。深度建立每日呼吸練習與大腦清空習慣。</p>
-            </div>
-            <button onclick="handleDownload(false)" class="mt-6 block w-full text-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition lang-txt cursor-pointer" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</button>
-        </div>
-        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition w-full sm:w-[225px]">
-            <div>
-                <h3 class="text-base font-bold text-white lang-txt" data-zh="半年方案（自動續訂）" data-en="Quarterly Plan (Auto-renewal)">半年方案（自動續訂）</h3>
-                <div class="text-2xl font-extrabold text-purple-400 mt-4">$44.99 <span class="text-xs font-normal text-slate-400">USD</span></div>
-                <div class="text-xl font-bold text-slate-400 mb-4">NT$ 1490</div>
-                <p class="text-xs text-slate-300 leading-relaxed lang-txt" data-zh="平衡高效的中期進階方案，穩定維持高強度專注力與內在呼吸律動。" data-en="Balanced mid-term strategy to firmly stabilize high-intensity focus and seamless breath mechanics.">半年方案（自動續訂）</p>
-            </div>
-            <button onclick="handleDownload(false)" class="mt-6 block w-full text-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition lang-txt cursor-pointer" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</button>
-        </div>
-        <div class="glass-card border-2 border-purple-500 rounded-3xl p-6 flex flex-col justify-between shadow-lg relative w-full sm:w-[225px]">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider lang-txt" data-zh="熱銷推薦" data-en="Best Value">熱銷推薦</div>
-            <div>
-                <h3 class="text-base font-bold text-purple-300 lang-txt" data-zh="年訂閱（精選特惠）" data-en="Annual Plan (Best Deal)">年訂閱（精選特惠）</h3>
-                <div class="text-2xl font-extrabold text-purple-400 mt-4">$70 <span class="text-xs font-normal text-slate-400">USD</span></div>
-                <div class="text-xl font-bold text-slate-400 mb-4">NT$ 2290</div>
-                <p class="text-xs text-purple-200 font-medium leading-relaxed lang-txt" data-zh="包含 7 天免費試用，隨後自動續訂。全面開啟呼吸時機應用與神聖祈禱文系統。" data-en="Includes 7-day free trial, automatically renews thereafter. Fully unlock breathing applications and sacred prayer manifestation systems.">包含 7 天免費試用，隨後自動續訂。全面開啟呼吸時機應用與神聖祈禱文系統。</p>
-            </div>
-            <button onclick="handleDownload(false)" class="mt-6 block w-full text-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-lg shadow-purple-500/20 hover:opacity-90 transition transform scale-[1.02] lang-txt cursor-pointer" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</button>
-        </div>
-        <div class="glass-card border-2 border-fuchsia-500/60 rounded-3xl p-6 flex flex-col justify-between shadow-md relative w-full sm:w-[225px]">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-fuchsia-500 text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider lang-txt" data-zh="一次擁有" data-en="Lifetime">一次擁有</div>
-            <div>
-                <h3 class="text-base font-bold text-white lang-txt" data-zh="一次擁有買斷制" data-en="Lifetime Access Pass">一次擁有買斷制</h3>
-                <div class="text-2xl font-extrabold text-fuchsia-400 mt-4">$199.99 <span class="text-xs font-normal text-slate-400">USD</span></div>
-                <div class="text-xl font-bold text-slate-400 mb-4">NT$ 6990</div>
-                <p class="text-xs text-slate-300 leading-relaxed lang-txt" data-zh="一次付費，即刻解鎖。未來所有高級功能更新皆可免費享有。方案保障使用期限為自購買日起算 1 年。期滿後，將以開發者贈送方式，提供無限制延長使用權益，用戶無需再次付費。" data-en="One-time payment. Unlock all current and future premium features. The plan guarantees a service period of 1 year from the date of purchase. After this period, unlimited access will be provided extended as a complimentary gift from the developer, with no additional fees required.">
-                    一次付費，即刻解鎖。未來所有高級功能更新皆可免費享有。方案保障使用期限為自購買日起算 1 年。期滿後，將以開發者贈送方式，提供無限制延長使用權益，用戶無需再次付費。
-                </p>
-            </div>
-            <button onclick="handleDownload(true)" class="mt-6 block w-full text-center bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition lang-txt cursor-pointer" data-zh="一次擁有買斷制" data-en="Unlock Lifetime">一次擁有買斷制</button>
-        </div>
-    </div>
-</section>
-
-<footer class="bg-black/80 text-slate-400 py-12 px-6 border-t border-purple-950/40">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-        <div>
-            <p id="footer-quote" class="mb-2 text-slate-400 italic">「當你讀出 these 文字，你便是在重新建構你的現實。」</p>
-            <p>&copy; 2026 Zenith Magic. All rights reserved. Developers: Hsu, Hao-Lun</p>
-            <p class="mt-2 text-xs text-slate-500 lang-txt" data-zh="* 本技術非醫療診斷，涉及醫療決定請諮詢專業醫師。" data-en="* This technology is not for medical diagnosis. Consult a physician before making medical decisions.">* 本技術非醫療診斷，涉及醫療決定請諮詢專業醫師。</p>
-        </div>
-        <div class="text-sm">
-            <div><span class="lang-txt" data-zh="聯絡支援：" data-en="Contact: ">聯絡支援：</span><a href="mailto:xrknight7@yahoo.com" class="text-purple-400 hover:underline">xrknight7@yahoo.com</a></div>
-            <div class="mt-2 flex flex-col md:flex-row md:space-x-4">
-                <a href="https://jksummerx8-hub.github.io/Privacy-Policy-.md/" class="text-purple-400 hover:underline lang-txt" data-zh="隱私權政策" data-en="Privacy Policy">隱私權政策</a>
-                <a href="https://jksummerx8-hub.github.io/Facial-Scan-and-Biometric-Data-Privacy-Statement/" class="text-purple-400 hover:underline lang-txt" data-zh="臉部掃描與生物辨識隱私聲明" data-en="Facial Scanning and Biometrics Privacy Statement">臉部掃描與生物辨識隱私聲明</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script>
-// 全域狀態管理與多國語系核心字典庫
-let currentLang = 'zh';
-let isRegPasswordSecure = false;
-let isOtpPasswordSecure = false;
-
-// 1. 官網部分字典檔
-const trans = {
-    zh: {
-        title: "強大源於呼吸",
-        desc: "結合極致工藝與動態美學，開啟身心強化的「感官聖殿」。呼吸練習能在幾秒鐘內「暴力」中斷負面情緒、壓力與疲勞的連鎖反應，讓腦袋完全清空。",
-        download: "立即下載 iOS 版",
-        quote: "「當你讀出 these 文字，你便是在重新建構你的現實。」",
-        disclaimer: "* 本技術非醫療診斷，涉及醫療決定請諮詢專業醫師。",
-        contact: "聯絡支援：",
-        langBtn: "English"
-    },
-    en: {
-        title: "Power Stems from Breath",
-        desc: "Fusing ultimate craftsmanship with dynamic aesthetics, unlock your somatic 'Sensory Sanctuary'. Breathwork violently disrupts negative loops, stress, and fatigue within seconds, absolutely clearing your mind.",
-        download: "Download for iOS",
-        quote: "\"When you speak these words, you are reconstructing your reality.\"",
-        disclaimer: "* This technology is not for medical diagnosis. Consult a physician before making medical decisions.",
-        contact: "Support: ",
-        langBtn: "繁體中文"
-    }
-};
-
-// 2. 帳號系統部分字典檔
-const i18n = {
-    zh: {
-        langBtn: '<i class="fa-solid fa-globe mr-1"></i>EN',
-        closeBtn: "關閉",
-        titleRegister: "建立新帳號",
-        titleLogin: "密碼系統登入",
-        titleReset: "重設密碼",
-        appleLogin: "使用 Apple 登入",
-        emailPlaceholder: "電子郵件",
-        passwordPlaceholder: "密碼",
-        namePlaceholder: "姓名或暱稱",
-        ageSuffix: "歲",
-        registerNow: "立即註冊",
-        backToLogin: "已有帳號?返回登入",
-        otpStep1Hint: "請輸入您的電子郵件，我們將發送 6~8 位數驗證碼至您的信箱。",
-        sendOtp: "發送驗證碼",
-        otpStep2Hint: "驗證碼已發送!請輸入6~8位數驗證碼與高強度新密碼。",
-        otpPlaceholder: "6~8 位數驗證碼 (OTP)",
-        confirmReset: "確認重設密碼",
-        lblLen: "至少8碼",
-        lblUp: "至少包含一個大寫英文字母 (A-Z)",
-        lblLow: "至少包含一個小寫英文字母 (a-z)",
-        lblNum: "至少包含一個數字(0-9)",
-        lblSpec: "至少包含一個特殊符號(如@、#、$、%、^、&、*)"
-    },
-    en: {
-        langBtn: '<i class="fa-solid fa-globe mr-1"></i>繁中',
-        closeBtn: "Close",
-        titleRegister: "Create Account",
-        titleLogin: "Account Login",
-        titleReset: "Reset Password",
-        appleLogin: "Sign in with Apple",
-        emailPlaceholder: "Email Address",
-        passwordPlaceholder: "Password",
-        namePlaceholder: "Name or Nickname",
-        ageSuffix: "years old",
-        registerNow: "Register Now",
-        backToLogin: "Already have an account? Log In",
-        otpStep1Hint: "Please enter your email, we will send a 6-8 digit verification code.",
-        sendOtp: "Send Verification Code",
-        otpStep2Hint: "Verification code sent! Please enter the code and a strong password.",
-        otpPlaceholder: "6-8 Digit Code (OTP)",
-        confirmReset: "Confirm Reset Password",
-        lblLen: "At least 8 characters",
-        lblUp: "At least one uppercase letter (A-Z)",
-        lblLow: "At least one lowercase letter (a-z)",
-        lblNum: "At least one number (0-9)",
-        lblSpec: "At least one special symbol (@, #, $, %, etc.)"
-    }
-};
-
-// 串聯一體化雙語切換處理器
-function toggleLang() {
-    currentLang = currentLang === 'zh' ? 'en' : 'zh';
-    applyAllTranslations();
-}
-
-// 相容帳號模組內建點擊呼叫
-function toggleLanguage() {
-    toggleLang();
-}
-
-function applyAllTranslations() {
-    // ---- 1. 刷新官網文字結構 ----
-    const l = trans[currentLang];
-    if (document.getElementById('hero-title')) document.getElementById('hero-title').innerText = l.title;
-    if (document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = l.desc;
-    if (document.getElementById('btn-download')) document.getElementById('btn-download').innerText = l.download;
-    if (document.getElementById('footer-quote')) document.getElementById('footer-quote').innerText = l.quote;
-    if (document.getElementById('langBtn')) document.getElementById('langBtn').innerText = l.langBtn;
-    
-    document.querySelectorAll('.lang-txt').forEach(el => {
-        const targetText = el.getAttribute(`data-${currentLang}`);
-        if (targetText) el.innerText = targetText;
-    });
-    
-    document.querySelectorAll('.gallery-label').forEach(el => {
-        const targetText = el.getAttribute(`data-${currentLang}`);
-        if (targetText) el.innerText = targetText;
-    });
-
-    // ---- 2. 刷新帳號系統面板內嵌文字 ----
-    const t = i18n[currentLang];
-    if (document.getElementById('lang-btn')) document.getElementById('lang-btn').innerHTML = t.langBtn;
-    if (document.getElementById('close-btn')) document.getElementById('close-btn').innerText = t.closeBtn;
-    if (document.getElementById('reg-name')) document.getElementById('reg-name').placeholder = t.namePlaceholder;
-    if (document.getElementById('reg-email')) document.getElementById('reg-email').placeholder = t.emailPlaceholder;
-    if (document.getElementById('login-email')) document.getElementById('login-email').placeholder = t.emailPlaceholder;
-    if (document.getElementById('login-password')) document.getElementById('login-password').placeholder = t.passwordPlaceholder;
-    if (document.getElementById('forgot-email')) document.getElementById('forgot-email').placeholder = t.emailPlaceholder;
-    if (document.getElementById('otp-code')) document.getElementById('otp-code').placeholder = t.otpPlaceholder;
-
-    if (document.getElementById('lbl-req-len')) document.getElementById('lbl-req-len').innerText = t.lblLen;
-    if (document.getElementById('lbl-req-up')) document.getElementById('lbl-req-up').innerText = t.lblUp;
-    if (document.getElementById('lbl-req-low')) document.getElementById('lbl-req-low').innerText = t.lblLow;
-    if (document.getElementById('lbl-req-num')) document.getElementById('lbl-req-num').innerText = t.lblNum;
-    if (document.getElementById('lbl-req-spec')) document.getElementById('lbl-req-spec').innerText = t.lblSpec;
-
-    if (document.getElementById('lbl-otp-len')) document.getElementById('lbl-otp-len').innerText = t.lblLen;
-    if (document.getElementById('lbl-otp-up')) document.getElementById('lbl-otp-up').innerText = t.lblUp;
-    if (document.getElementById('lbl-otp-low')) document.getElementById('lbl-otp-low').innerText = t.lblLow;
-    if (document.getElementById('lbl-otp-num')) document.getElementById('lbl-otp-num').innerText = t.lblNum;
-    if (document.getElementById('lbl-otp-spec')) document.getElementById('lbl-otp-spec').innerText = t.lblSpec;
-
-    renderAgeOptions();
-    updatePanelTitles();
-}
-
-function renderAgeOptions() {
-    const ageSelect = document.getElementById('reg-age');
-    if (!ageSelect) return;
-    const currentAgeVal = ageSelect.value || "25";
-    ageSelect.innerHTML = "";
-    const suffix = i18n[currentLang].ageSuffix;
-    for (let i = 1; i <= 99; i++) {
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.innerText = `${i} ${suffix}`;
-        if (i == currentAgeVal) opt.selected = true;
-        ageSelect.appendChild(opt);
-    }
-}
-
-// 帳號內部面板子路由切換
-function switchPanel(panelId) {
-    const panels = ['login-panel', 'register-panel', 'forgot-panel', 'dashboard-panel'];
-    panels.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.classList.add('hidden');
-    });
-    const target = document.getElementById(panelId);
-    if(target) target.classList.remove('hidden');
-
-    const termsBox = document.getElementById('terms-box');
-    if (termsBox) {
-        if (panelId === 'login-panel' || panelId === 'register-panel') {
-            termsBox.classList.remove('hidden');
-        } else {
-            termsBox.classList.add('hidden');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Magic - 官方網站 | Official Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 承襲「氛圍感.jpg」的深邃暗夜與冷調霓虹色彩 */
+        .gradient-bg {
+            background: linear-gradient(135deg, #020205 0%, #060b19 50%, #010103 100%);
         }
-    }
-    updatePanelTitles();
-}
+        
+        /* 電影感高級毛玻璃微光質感 */
+        .glass-card {
+            background: rgba(5, 10, 25, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
 
-function updatePanelTitles() {
-    const t = i18n[currentLang];
-    const regPanel = document.getElementById('register-panel');
-    const loginPanel = document.getElementById('login-panel');
-    const forgotPanel = document.getElementById('forgot-panel');
-    if (!regPanel || !loginPanel || !forgotPanel) return;
+        /* 自訂冷色調霓虹滾動條 */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.25);
+            border-radius: 999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 182, 212, 0.55);
+        }
 
-    const regHidden = regPanel.classList.contains('hidden');
-    const loginHidden = loginPanel.classList.contains('hidden');
-    const forgotHidden = forgotPanel.classList.contains('hidden');
+        /* 圖片沉浸響應樣式 */
+        .screenshot-img {
+            height: 460px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.15);
+        }
+        .content-img {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 1.5rem;
+        }
+    </style>
+</head>
+<body class="gradient-bg text-gray-100 min-h-screen font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-200 custom-scrollbar">
 
-    if (!regHidden) {
-        if (document.getElementById('sub-title-label')) document.getElementById('sub-title-label').innerText = "帳號系統登入";
-        if (document.getElementById('main-title-label')) document.getElementById('main-title-label').innerText = t.titleRegister;
-    } else if (!loginHidden) {
-        if (document.getElementById('sub-title-label')) document.getElementById('sub-title-label').innerText = "Zenith Magic";
-        if (document.getElementById('main-title-label')) document.getElementById('main-title-label').innerText = "會員登入";
-    } else if (!forgotHidden) {
-        if (document.getElementById('sub-title-label')) document.getElementById('sub-title-label').innerText = "安全密碼重置";
-        if (document.getElementById('main-title-label')) document.getElementById('main-title-label').innerText = t.titleReset;
-    }
-}
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-xl border-b border-white/5 px-6 py-4 flex items-center justify-between">
+        
+        <button id="hamburger-btn" class="text-white/90 hover:text-cyan-400 active:scale-95 transition-all duration-300 focus:outline-none z-10 block">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
 
-// 密碼安全層級動態檢測演算法
-function validatePasswordLive(prefix) {
-    const input = document.getElementById(`${prefix}-password`);
-    if (!input) return;
-    const val = input.value;
-    const checks = {
-        len: val.length >= 8,
-        up: /[A-Z]/.test(val),
-        low: /[a-z]/.test(val),
-        num: /[0-9]/.test(val),
-        spec: /[^a-zA-Z0-9\s]/.test(val)
-    };
+        <div class="absolute left-1/2 transform -translate-x-1/2 text-2xl font-black tracking-widest bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent select-none drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+            Zenith Magic
+        </div>
 
-    let passedCount = 0;
-    for (const key in checks) {
-        const row = document.getElementById(`${prefix}-req-${key}`);
-        if(row) {
-            const icon = row.querySelector('i');
-            if (checks[key]) {
-                passedCount++;
-                row.className = "flex items-center gap-2 text-green-500 transition-colors duration-200";
-                if(icon) icon.className = "fa-solid fa-circle-check text-green-500 text-sm";
+        <div class="z-10">
+            <button id="langBtn" onclick="toggleLang()" class="text-xs font-bold text-white/70 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md transition duration-300">
+                English
+            </button>
+        </div>
+    </nav>
+
+    <div id="sidebar-menu" class="fixed top-0 left-0 h-full w-72 bg-[#040712]/95 backdrop-blur-2xl border-r border-white/10 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl shadow-cyan-950/40">
+        <div class="p-6 flex flex-col h-full">
+            <div class="flex justify-end mb-8">
+                <button id="sidebar-close-btn" class="text-white/40 hover:text-cyan-400 transition-colors">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <nav class="flex flex-col space-y-6 text-lg font-medium tracking-wide">
+                <a href="#hero" class="hover:text-cyan-400 transition-colors py-2 border-b border-white/5">
+                    <span class="lang-txt" data-zh="首頁介紹" data-en="Home">首頁介紹</span>
+                </a>
+                <a href="#features" class="hover:text-cyan-400 transition-colors py-2 border-b border-white/5">
+                    <span class="lang-txt" data-zh="功能特點" data-en="Features">功能特點</span>
+                </a>
+                <a href="#gallery" class="hover:text-cyan-400 transition-colors py-2 border-b border-white/5">
+                    <span class="lang-txt" data-zh="視覺藝廊" data-en="Gallery">視覺藝廊</span>
+                </a>
+                <a href="#pricing" class="hover:text-cyan-400 transition-colors py-2 border-b border-white/5">
+                    <span class="lang-txt" data-zh="訂閱方案" data-en="Pricing">訂閱方案</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto pt-6 text-xs text-white/30 border-t border-white/5 tracking-widest">
+                © 2026 ZENITH MAGIC.
+            </div>
+        </div>
+    </div>
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+
+
+    <main class="pt-24 overflow-hidden">
+        
+        <section id="hero" class="py-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div class="max-w-2xl text-center lg:text-left">
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-black tracking-wider mb-6 bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
+                    開啟您的極致氛圍美學
+                </h1>
+                <p id="hero-subtitle" class="text-white/60 text-lg mb-8 leading-relaxed">
+                    Zenith Magic 專為追求頂級視聽感官的您打造。融合逼真的電影級光影粒子、陀螺儀立體景深與客製化 7 段等化器，讓心靈沉浸在最純淨的冥想音感世界。
+                </p>
+                <button id="btn-download" onclick="handleDownload(false)" class="bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold py-4 px-8 rounded-2xl shadow-xl shadow-cyan-500/10 transition duration-300 active:scale-98">
+                    立即下載體驗
+                </button>
+            </div>
+            <div class="flex justify-center w-full lg:w-auto">
+                <div class="bg-gradient-to-b from-cyan-500/10 to-transparent p-4 rounded-[2.5rem] border border-white/10">
+                    <div class="w-64 h-[480px] bg-neutral-900 rounded-[2rem] border-4 border-neutral-800 flex items-center justify-center text-white/20 text-sm">
+                        [ App UI Overlay ]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 bg-black/20 border-y border-white/5 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-wide lang-txt" data-zh="沉浸式功能核心" data-en="Core Features">沉浸式功能核心</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="text-cyan-400 text-3xl mb-4">✦</div>
+                        <h3 class="text-xl font-bold text-white mb-2 lang-txt" data-zh="電影感主題視覺" data-en="Cinematic Themes">電影感主題視覺</h3>
+                        <p class="text-white/60 text-sm leading-relaxed lang-txt" data-zh="收錄霓虹都市、萬丈深海與 technicalTechnical  टेक्निकल Technical 雪山 technical 季等極致氛圍，支援動態粒子渲染。" data-en="Includes neon hotels, deep seas, and technical snow seasons with real-time particle rendering.">收錄霓虹都市、萬丈深海與高山雪季等極致氛圍，支援動態粒子渲染。</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="text-blue-400 text-3xl mb-4">♬</div>
+                        <h3 class="text-xl font-bold text-white mb-2 lang-txt" data-zh="ASMR 音效與 7段等化器" data-en="ASMR & 7-Band EQ">ASMR 音效與 7段等化器</h3>
+                        <p class="text-white/60 text-sm leading-relaxed lang-txt" data-zh="細膩的立體聲白噪音，搭配專業 7-band 耳機等化器調校，打造無可比擬的音場舒壓體驗。" data-en="Delicate stereo white noise with a professional 7-band EQ adjustment for an unmatched soundscape.">細膩的立體聲白噪音，搭配專業 7-band 耳機等化器調校，打造無可比擬的音場舒壓體驗。</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="text-purple-400 text-3xl mb-4">⎔</div>
+                        <h3 class="text-xl font-bold text-white mb-2 lang-txt" data-zh="陀螺儀動態景深" data-en="Gyroscope Depth">陀螺儀動態景深</h3>
+                        <p class="text-white/60 text-sm leading-relaxed lang-txt" data-zh="精密感應您的 iPhone 握持視角，介面元素隨之進行 3D 層次位移，營造完美全景沉浸。" data-en="Precise detection of your iPhone movement, shifting UI elements in 3D layers for parallax immersion.">精密感應您的 iPhone 握持視角，介面元素隨之進行 3D 層次位移，營造完美全景沉浸。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl font-extrabold text-white tracking-wide lang-txt" data-zh="環境意境快照" data-en="Atmospheric Gallery">環境意境快照</h2>
+                <p class="text-white/50 text-sm mt-2 lang-txt" data-zh="橫向滑動檢視內建頂級美術主題" data-en="Scroll horizontally to explore premium UI soundscapes">橫向滑動檢視內建頂級美術主題</p>
+            </div>
+            <div class="flex space-x-6 overflow-x-auto pb-6 custom-scrollbar">
+                <div class="flex-none w-80 bg-neutral-900 h-48 rounded-2xl flex items-end p-4 border border-white/10 bg-[linear-gradient(to_top,rgba(0,0,0,0.8),transparent)]">
+                    <span class="gallery-label font-bold text-sm" data-zh="賽博霓虹旅店" data-en="Cyberpunk Neon Hotel">賽博霓虹旅店</span>
+                </div>
+                <div class="flex-none w-80 bg-neutral-900 h-48 rounded-2xl flex items-end p-4 border border-white/10 bg-[linear-gradient(to_top,rgba(0,0,0,0.8),transparent)]">
+                    <span class="gallery-label font-bold text-sm" data-zh="深海幽閉鯨落" data-en="Abyssal Deep Sea">深海幽閉鯨落</span>
+                </div>
+                <div class="flex-none w-80 bg-neutral-900 h-48 rounded-2xl flex items-end p-4 border border-white/10 bg-[linear-gradient(to_top,rgba(0,0,0,0.8),transparent)]">
+                    <span class="gallery-label font-bold text-sm" data-zh="南湖雪季 technical 聖境" data-en="Alpine Snow Peak">南湖雪季 technical 聖境</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-black text-white tracking-wider mb-4 lang-txt" data-zh="選擇您的魔法旅程" data-en="Choose Your Magical Plan">選擇您的魔法旅程</h2>
+                <p class="text-white/50 max-w-md mx-auto text-sm lang-txt" data-zh="解鎖全功能權益，與全球獨立開發社群共同前進。" data-en="Unlock all premium access and step into the pure aesthetic space.">解鎖全功能權益，與全球獨立開發社群共同前進。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 items-stretch">
+                
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-xl hover:border-cyan-500/30 transition-all duration-300 hover:-translate-y-1">
+                    <div>
+                        <h3 class="text-lg font-bold text-white/90 mb-1 lang-txt" data-zh="週訂閱" data-en="Weekly Access">週訂閱</h3>
+                        <div class="text-2xl font-black text-cyan-400 mb-6 tracking-wide lang-txt" data-zh="體驗首選" data-en="Starter Pack">體驗首選</div>
+                        <ul class="text-xs text-white/60 space-y-3 mb-8 tracking-wide">
+                            <li>✓ <span class="lang-txt" data-zh="完整解鎖大禮包所有功能" data-en="Full premium feature unlock">完整解鎖大禮包所有功能</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="沉浸式 ASMR 音效庫" data-en="Immersive ASMR catalog">沉浸式 ASMR 音效庫</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="陀螺儀動態視覺響應" data-en="Gyroscope dynamic response">陀螺儀動態視覺響應</span></li>
+                        </ul>
+                    </div>
+                    <a href="https://core.newebpay.com/Period/MS1833131245/X5GpPF" target="_blank" onclick="setTimeout(() => handleDownload(false), 1000)" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 active:scale-98">
+                        <span class="lang-txt" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</span>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-xl hover:border-cyan-500/30 transition-all duration-300 hover:-translate-y-1">
+                    <div>
+                        <h3 class="text-lg font-bold text-white/90 mb-1 lang-txt" data-zh="月訂閱" data-en="Monthly Access">月訂閱</h3>
+                        <div class="text-2xl font-black text-cyan-400 mb-6 tracking-wide lang-txt" data-zh="熱門推薦" data-en="Most Popular">熱門推薦</div>
+                        <ul class="text-xs text-white/60 space-y-3 mb-8 tracking-wide">
+                            <li>✓ <span class="lang-txt" data-zh="完整解鎖大禮包所有功能" data-en="Full premium feature unlock">完整解鎖大禮包所有功能</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="高階 7 段等化器自訂" data-en="Advanced 7-Band EQ adjustment">高階 7 段等化器自訂</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="獨家電影感極致主題" data-en="Exclusive cinematic visual sets">獨家電影感極致主題</span></li>
+                        </ul>
+                    </div>
+                    <a href="https://core.newebpay.com/Period/MS1833131245/UpZEea" target="_blank" onclick="setTimeout(() => handleDownload(false), 1000)" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 active:scale-98">
+                        <span class="lang-txt" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</span>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-xl hover:border-cyan-500/30 transition-all duration-300 hover:-translate-y-1">
+                    <div>
+                        <h3 class="text-lg font-bold text-white/90 mb-1 lang-txt" data-zh="半年訂閱" data-en="6-Month Plan">半年訂閱</h3>
+                        <div class="text-2xl font-black text-cyan-400 mb-6 tracking-wide lang-txt" data-zh="高性價比" data-en="Great Value">高性價比</div>
+                        <ul class="text-xs text-white/60 space-y-3 mb-8 tracking-wide">
+                            <li>✓ <span class="lang-txt" data-zh="完整解鎖大禮包所有功能" data-en="Full premium feature unlock">完整解鎖大禮包所有功能</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="享有高階完整更新權益" data-en="Full priority updates access">享有高階完整更新權益</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="優先體驗高山與深海主視覺" data-en="Early access to new environments">優先體驗高山與深海主視覺</span></li>
+                        </ul>
+                    </div>
+                    <a href="https://core.newebpay.com/Period/MS1833131245/Szb2Vm" target="_blank" onclick="setTimeout(() => handleDownload(false), 1000)" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 active:scale-98">
+                        <span class="lang-txt" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</span>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-2xl border-cyan-500/40 bg-gradient-to-b from-blue-950/20 to-black/40 scale-105 relative transition-all duration-300 hover:border-cyan-400">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-black text-[10px] px-3 py-1 rounded-full tracking-widest uppercase shadow-md shadow-cyan-500/20">
+                        Best Value
+                    </div>
+                    <div class="mt-2">
+                        <h3 class="text-lg font-bold text-white mb-1 lang-txt" data-zh="年訂閱" data-en="Annual Pass">年訂閱</h3>
+                        <div class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 mb-6 tracking-wide lang-txt" data-zh="深度玩家" data-en="Ultimate Pack">深度玩家</div>
+                        <ul class="text-xs text-white/80 space-y-3 mb-8 tracking-wide">
+                            <li>✓ <span class="lang-txt" data-zh="完整解鎖大禮包所有功能" data-en="Full premium feature unlock">完整解鎖大禮包所有功能</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="跨裝置設定進度自動同步" data-en="Cloud cross-device synchronization">跨裝置設定進度自動同步</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="專屬極致沉浸氛圍定期更新" data-en="Exclusive dynamic content additions">專屬極致沉浸氛圍定期更新</span></li>
+                        </ul>
+                    </div>
+                    <a href="https://core.newebpay.com/Period/MS1833131245/sUJgZH" target="_blank" onclick="setTimeout(() => handleDownload(false), 1000)" class="block w-full text-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/30 active:scale-98">
+                        <span class="lang-txt" data-zh="立即訂閱" data-en="Subscribe Now">立即訂閱</span>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between shadow-xl hover:border-purple-500/30 transition-all duration-300 hover:-translate-y-1">
+                    <div>
+                        <h3 class="text-lg font-bold text-white/90 mb-1 lang-txt" data-zh="一次擁有" data-en="Lifetime Buyout">一次擁有</h3>
+                        <div class="text-2xl font-black text-purple-400 mb-6 tracking-wide lang-txt" data-zh="終身買斷" data-en="Forever Ownership">終身買斷</div>
+                        <ul class="text-xs text-white/60 space-y-3 mb-8 tracking-wide">
+                            <li>✓ <span class="lang-txt" data-zh="終身無限制使用所有未來功能" data-en="Lifetime unrestricted access">終身無限制使用所有未來功能</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="包含後續所有重大版本更新" data-en="All major version updates included">包含後續所有重大版本更新</span></li>
+                            <li>✓ <span class="lang-txt" data-zh="享有首年保固與免費用戶延長" data-en="First-year premium customer care">享有首年保固與免費用戶延長</span></li>
+                        </ul>
+                    </div>
+                    <a href="https://core.newebpay.com/EPG/zenith_magic/FCSfi7" target="_blank" class="block w-full text-center bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-purple-600/20 active:scale-98">
+                        <span class="lang-txt" data-zh="立即擁有" data-en="Buy Once, Own Forever">立即擁有</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/5 py-12 px-6 text-center text-sm text-white/40">
+        <p id="footer-quote" class="italic mb-4">"徜徉在純淨、深邃的感知邊界。—— Zenith Magic"</p>
+        <p>© 2026 Zenith Magic. Built for iOS and Indie hackers layout.</p>
+    </footer>
+
+
+    <script>
+        // --- 語系切換字典數據庫 ---
+        let currentLang = 'zh';
+        const langData = {
+            zh: {
+                title: "開啟您的極致氛圍美學",
+                subtitle: "Zenith Magic 專為追求頂級視聽感官的您打造。融合逼真的電影級光影粒子、陀螺儀立體景深與客製化 7 段等化器，讓心靈沉浸在最純淨的冥想音感世界。",
+                download: "立即下載體驗",
+                quote: "「徜徉在純淨、深邃的感知邊界。—— Zenith Magic」",
+                langBtn: "English"
+            },
+            en: {
+                title: "Unlock Your Ultimate Cinematic Aesthetic",
+                subtitle: "Zenith Magic is crafted for those seeking premium audio-visual sensory immersion. Combining real-time particle effects, gyroscopic depth, and a 7-band EQ to settle your mind into absolute purity.",
+                download: "Download Now",
+                quote: "\"Wandering through pure and profound boundaries of sensory magic.\" — Zenith Magic",
+                langBtn: "繁體中文"
+            }
+        };
+
+        // 執行語言包核心重繪
+        function updateLanguageDOM() {
+            const l = langData[currentLang];
+            document.getElementById('hero-title').innerText = l.title;
+            document.getElementById('hero-subtitle').innerText = l.subtitle;
+            document.getElementById('btn-download').innerText = l.download;
+            
+            if (document.getElementById('footer-quote')) {
+                document.getElementById('footer-quote').innerText = l.quote;
+            }
+            if (document.getElementById('langBtn')) {
+                document.getElementById('langBtn').innerText = l.langBtn;
+            }
+
+            // 批量通用翻譯標籤替換 (.lang-txt)
+            document.querySelectorAll('.lang-txt').forEach(el => {
+                const targetText = el.getAttribute(`data-${currentLang}`);
+                if (targetText) el.innerText = targetText;
+            });
+
+            // 批量圖庫標籤替換 (.gallery-label)
+            document.querySelectorAll('.gallery-label').forEach(el => {
+                const targetText = el.getAttribute(`data-${currentLang}`);
+                if (targetText) el.innerText = targetText;
+            });
+        }
+
+        function toggleLang() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            updateLanguageDOM();
+        }
+
+        // --- 藍新跳轉後下載彈窗控制流 ---
+        function handleDownload(isLifetime = false) {
+            if (currentLang === 'zh') {
+                let msg = "感謝您的支持！\n\n" +
+                          "Zenith Magic 目前全面支援 iOS 系統。\n" +
+                          "請至 iPhone 的 App Store 搜尋「Zenith Magic」下載並訂閱此方案。\n";
+                if (isLifetime) {
+                    msg += "\n（提醒：一次擁有買斷制大禮包同樣可於 App 內直接解鎖，享有首年保固及後續免費用戶權益延長服務！）";
+                }
+                alert(msg);
             } else {
-                row.className = "flex items-center gap-2 text-gray-500 transition-colors duration-200";
-                if(icon) icon.className = "fa-regular fa-circle text-gray-400 text-sm";
+                let msg = "Thank you for your support!\n\n" +
+                          "Zenith Magic fully supports iOS systems currently.\n" +
+                          "Please search 'Zenith Magic' in the App Store on your iPhone to install and subscribe.\n";
+                if (isLifetime) {
+                    msg += "\n(Note: Lifetime buyout pack can also be unlocked inside the App directly with full benefits extended!)";
+                }
+                alert(msg);
             }
         }
-    }
 
-    const bar = document.getElementById(`${prefix}-strength-bar`);
-    const label = document.getElementById(`${prefix}-strength-label`);
+        // --- 漢堡選單 Drawer 動態控制器 ---
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-    if (!bar || !label) return;
-
-    if (val.length === 0) {
-        bar.style.width = '0%';
-        label.innerText = "";
-    } else if (passedCount <= 2) {
-        bar.style.width = '35%';
-        bar.style.backgroundColor = '#EF4444';
-        label.innerText = currentLang === 'zh' ? '弱' : 'Weak';
-        label.style.color = '#EF4444';
-    } else if (passedCount <= 4) {
-        bar.style.width = '70%';
-        bar.style.backgroundColor = '#F97316';
-        label.innerText = currentLang === 'zh' ? '中' : 'Medium';
-        label.style.color = '#F97316';
-    } else {
-        bar.style.width = '100%';
-        bar.style.backgroundColor = '#22C55E';
-        label.innerText = currentLang === 'zh' ? '強' : 'Strong';
-        label.style.color = '#22C55E';
-    }
-
-    if (prefix === 'reg') isRegPasswordSecure = (passedCount === 5);
-    if (prefix === 'otp') isOtpPasswordSecure = (passedCount === 5);
-}
-
-function togglePasswordVisibility(inputId) {
-    const input = document.getElementById(inputId);
-    const eye = document.getElementById(`eye-${inputId}`);
-    if (!input || !eye) return;
-    if (input.type === 'password') {
-        input.type = 'text';
-        eye.className = 'fa-solid fa-eye-slash text-blue-500';
-    } else {
-        input.type = 'password';
-        eye.className = 'fa-solid fa-eye text-gray-400';
-    }
-}
-
-function handleAppleLogin() {
-    alert(currentLang === 'zh' ? "Apple 登入模組目前正在進行本地端安全性模擬中。" : "Apple Sign-In simulator active.");
-}
-
-// ==========================================
-// ==========================================
-const SUPABASE_URL = "https://jyghcpwnrsisdqjoxvfu.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5Z2hjcHducnNpc2Rxam94dmZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTE4MjYsImV4cCI6MjA5NzE4NzgyNn0.8TmCWCX0X-fxp9Ur1r06l8opRlKI8Xf7ZOiBY7bohuU";
-let supabaseClient = null;
-
-function verifyAndInitSupabase() {
-    if (typeof supabase === 'undefined') {
-        console.warn("Supabase SDK 未能載入。");
-        return false;
-    }
-    try {
-        if (!supabaseClient) {
-            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        function openSidebar() {
+            if(sidebarMenu && sidebarOverlay) {
+                sidebarMenu.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    sidebarOverlay.classList.add('opacity-100');
+                }, 10);
+            }
         }
-        return true;
-    } catch (e) {
-        console.error("Supabase 初始化異常:", e);
-        return false;
-    }
-}
 
-function updateUiBasedOnSession(session) {
-    const dangerZone = document.getElementById('danger-zone');
-    if (session) {
-        if(document.getElementById('user-display-email')) document.getElementById('user-display-email').innerText = session.user.email;
-        const metadata = session.user.user_metadata || {};
-        if(document.getElementById('user-display-meta')) document.getElementById('user-display-meta').innerText = `暱稱: ${metadata.name || 'N/A'} | 年齡: ${metadata.age || 'N/A'} 歲`;
-        switchPanel('dashboard-panel');
-        if(dangerZone) dangerZone.classList.remove('hidden');
-    } else {
-        if(dangerZone) dangerZone.classList.add('hidden');
-        const dash = document.getElementById('dashboard-panel');
-        if (dash && !dash.classList.contains('hidden')) {
-            switchPanel('login-panel');
+        function closeSidebar() {
+            if(sidebarMenu && sidebarOverlay) {
+                sidebarMenu.classList.add('-translate-x-full');
+                sidebarOverlay.classList.remove('opacity-100');
+                setTimeout(() => {
+                    sidebarOverlay.classList.add('hidden');
+                }, 300);
+            }
         }
-    }
-}
 
-async function handleEmailRegister() {
-    if (!verifyAndInitSupabase()) return alert("! 雲端基礎架構未準備就緒。");
-    const name = document.getElementById('reg-name').value.trim();
-    const age = document.getElementById('reg-age').value;
-    const email = document.getElementById('reg-email').value.trim();
-    const password = document.getElementById('reg-password').value;
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebar);
+        if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
 
-    if (!email || !password || !name) return alert('請完整填寫所有註冊欄位!');
-    if (!isRegPasswordSecure) return alert('您的密碼強度不符!請確保下方的5個條件清單皆成功轉為綠色打勾。');
+        // 點擊側邊選單內任一連結，導覽完畢後自動縮回
+        document.querySelectorAll('#sidebar-menu a').forEach(link => {
+            link.addEventListener('click', closeSidebar);
+        });
 
-    const { data, error } = await supabaseClient.auth.signUp({
-        email, 
-        password, 
-        options: { data: { name, age: parseInt(age) } }
-    });
-
-    if (error) return alert(`註冊失敗: ${error.message}`);
-    alert('註冊成功!驗證郵件已發送，請至信箱點擊啟用連結。');
-    switchPanel('login-panel');
-}
-
-async function handleEmailLogin() {
-    if (!verifyAndInitSupabase()) return alert("! 雲端基礎架構未準備就緒。");
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-
-    if (!email || !password) return alert('請輸入電子郵件與密碼');
-    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-    if (error) return alert(`登入失敗: ${error.message}`);
-}
-
-async function sendResetOTP() {
-    if (!verifyAndInitSupabase()) return alert("! 雲端基礎架構未準備就緒。");
-    const email = document.getElementById('forgot-email').value.trim();
-    if (!email) return alert('請輸入電子郵件');
-
-    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + window.location.pathname
-    });
-
-    if (error) return alert(`發送失敗: ${error.message}`);
-    document.getElementById('otp-step-1').classList.add('hidden');
-    document.getElementById('otp-step-2').classList.remove('hidden');
-    alert('驗證金鑰已成功發送至您的信箱!');
-}
-
-async function verifyOTPAndReset() {
-    if (!verifyAndInitSupabase()) return alert("! 雲端基礎架構未準備就緒。");
-    const email = document.getElementById('forgot-email').value.trim();
-    const token = document.getElementById('otp-code').value.trim();
-    const newPassword = document.getElementById('otp-password').value;
-
-    if (token.length < 6 || token.length > 8) return alert('請輸入正確的6~8位數驗證碼');
-    if (!isOtpPasswordSecure) return alert('新密碼強度不足，請確保檢核清單全部合格!');
-
-    const { error: verifyError } = await supabaseClient.auth.verifyOtp({ email, token, type: 'recovery' });
-    if (verifyError) return alert(`驗證碼錯誤: ${verifyError.message}`);
-
-    const { error: updateError } = await supabaseClient.auth.updateUser({ password: newPassword });
-    if (updateError) return alert(`更新密碼失敗: ${updateError.message}`);
-
-    alert('密碼重設成功，已為您自動登入會員中心!');
-    document.getElementById('otp-step-1').classList.remove('hidden');
-    document.getElementById('otp-step-2').classList.add('hidden');
-}
-
-async function handleLogout() {
-    if (supabaseClient) await supabaseClient.auth.signOut();
-}
-
-async function handleDeleteAccount() {
-    if (!verifyAndInitSupabase()) return alert("! 雲端基礎架構未準備就緒。");
-    if (!confirm("! 警告:此操作將會永久刪除您的帳號且無法復原，確定要繼續嗎?")) return;
-
-    const { error } = await supabaseClient.rpc('delete_user_securely');
-    if (error) return alert(`刪除失敗: ${error.message}`);
-    alert('您的帳號已成功被永久刪除。');
-    await supabaseClient.auth.signOut();
-    location.reload();
-}
-
-// 下載彈窗分流控制邏輯
-function handleDownload(isLifetime = false) {
-    if (currentLang === 'zh') {
-        let msg = "感謝您的支持！\n\nZenith Magic 目前全面支援 iOS 系統。\n請至 iPhone 的 App Store 搜尋「Zenith Magic」下載並訂閱此方案。";
-        if (isLifetime) {
-            msg += "\n\n（提醒：一次擁有買斷制大禮包同樣可於 App 內直接解鎖，享有首年保固及後續免費用戶權益延長服務！）";
-        }
-        alert(msg);
-    } else {
-        let msg = "Thank you for your support!\n\nZenith Magic is fully optimized for iOS devices.\nPlease open the App Store on your iPhone and search for 'Zenith Magic' to download and unlock this plan.";
-        if (isLifetime) {
-            msg += "\n\n(Note: The Lifetime Access Pass can be directly activated inside the app, securing your 1-year service period with complimentary unlimited extensions thereafter!)";
-        }
-        alert(msg);
-    }
-}
-
-// 頁面加載初始化監聽器
-document.addEventListener("DOMContentLoaded", async () => {
-    applyAllTranslations();
-    if (verifyAndInitSupabase()) {
-        try {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            updateUiBasedOnSession(session);
-            supabaseClient.auth.onAuthStateChange((event, session) => {
-                updateUiBasedOnSession(session);
-            });
-        } catch (err) {
-            console.error("Session 讀取失敗:", err);
-            switchPanel('register-panel');
-        }
-    } else {
-        switchPanel('register-panel');
-    }
-});
-</script>
+        // 初始化語系
+        window.onload = function() {
+            updateLanguageDOM();
+        };
+    </script>
 </body>
 </html>
