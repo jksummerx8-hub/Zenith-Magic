@@ -522,6 +522,19 @@
                     一次付費，即刻解鎖。未來所有高級功能更新皆可免費享有。方案保障使用期限為自購買日起算 1 年。期滿後，將以開發者贈送方式，提供無限制延長使用權益，用戶無需再次付費。
                 </p>
             </div>
+            function handleSubscription(planType) {
+    const urls = {
+        'weekly': 'https://core.newebpay.com/Period/MS1833131245/X5GpPF',
+        'monthly': 'https://core.newebpay.com/Period/MS1833131245/UpZEea',
+        'yearly': 'https://core.newebpay.com/Period/MS1833131245/sUJgZH',
+        'halfYearly': 'https://core.newebpay.com/Period/MS1833131245/Szb2Vm',
+        'lifetime': 'https://core.newebpay.com/EPG/zenith_magic/FCSfi7'
+    };
+    
+    if (urls[planType]) {
+        window.location.href = urls[planType];
+    }
+}
             <button onclick="handleDownload(true)" class="mt-6 block w-full text-center bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:opacity-90 transition lang-txt cursor-pointer" data-zh="一次擁有買斷制" data-en="Unlock Lifetime">一次擁有買斷制</button>
         </div>
     </div>
