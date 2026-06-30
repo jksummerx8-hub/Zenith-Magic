@@ -866,20 +866,19 @@ const translations = {
     }
 };
 
-// 串聯一體化雙語切換處理器
-function toggleLang() {
-    currentLang = currentLang === 'zh' ? 'en' : 'zh';
-    applyAllTranslations();
-}
-
-// 相容帳號模組內建點擊呼叫
-function toggleLanguage() {
-    toggleLang();
-}
-
 // 唯一整合的翻譯核心引擎(包含官網、會員系統、定價方案)
 function applyAllTranslations() {
     const lang = currentLang;
+    
+    // ==== 新增：控制 lang-zh 與 lang-en 類別的顯示與隱藏 ====
+    if (lang === 'zh') {
+        document.querySelectorAll('.lang-zh').forEach(el => el.classList.remove('hidden'));
+        document.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
+    } else {
+        document.querySelectorAll('.lang-zh').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.lang-en').forEach(el => el.classList.remove('hidden'));
+    }
+    // ====================================================
     
     // 1. 刷新官網及通用區塊文字結構
     const l = trans[lang];
@@ -902,7 +901,7 @@ function applyAllTranslations() {
         const targetText = el.getAttribute(`data-${lang}`);
         if (targetText) el.innerText = targetText;
     });
-
+}
     // 2. 刷新帳號登入系統介面
     const i = i18n[lang];
     if (i) {
