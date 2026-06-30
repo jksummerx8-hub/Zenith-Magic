@@ -1350,58 +1350,58 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 <script>
-// 1. 定義當前語系狀態（預設為中文 zh）
-let currentLang = 'zh';
+    // 1. 初始化語系狀態（預設為中文 'zh'）
+    let currentLang = 'zh';
 
-// 2. 實作快速中英文切換功能
-function toggleLang() {
-    // 切換語系狀態
-    currentLang = (currentLang === 'zh') ? 'en' : 'zh';
-    
-    // 更新按鈕本身的文字與狀態
-    const langBtn = document.getElementById('langBtn');
-    const langBtnAlternative = document.getElementById('lang-btn');
-    
-    if (langBtn) langBtn.innerText = (currentLang === 'zh') ? 'English' : '中文';
-    if (langBtnAlternative) langBtnAlternative.innerHTML = (currentLang === 'zh') ? '<i class="fa-solid fa-globe mr-1"></i>EN' : '<i class="fa-solid fa-globe mr-1"></i>繁中';
-
-    // 尋找所有帶有 data-zh 和 data-en 的一般標籤進行翻譯更新
-    document.querySelectorAll('.lang-txt, .gallery-label').forEach(el => {
-        const zhText = el.getAttribute('data-zh');
-        const enText = el.getAttribute('data-en');
-        if (currentLang === 'zh' && zhText) {
-            el.innerText = zhText;
-        } else if (currentLang === 'en' && enText) {
-            el.innerText = enText;
+    // 2. 超強效自動語系切換功能（自動通吃全網頁 74 頁的所有翻譯標籤）
+    function toggleLang() {
+        // 切換語系狀態
+        currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+        
+        // 自動更新導覽列語系切換按鈕的文字與圖示
+        const langBtn = document.getElementById('lang-btn');
+        if (langBtn) {
+            langBtn.innerHTML = (currentLang === 'zh') ? '<i class="fa-solid fa-globe mr-1"></i>EN' : '<i class="fa-solid fa-globe mr-1"></i>繁中';
         }
-    });
 
-    // 針對個別有特定 ID 的特殊按鈕或欄位進行語系轉換
-    const downloadBtn = document.getElementById('btn-download');
-    if (downloadBtn) {
-        downloadBtn.innerText = (currentLang === 'zh') ? '立即下載 iOS 版' : 'Download on the App Store';
-    }
-}
+        // 全自動核心：自動抓取整份網頁中不論藏在何處、只要有寫 data-zh 和 data-en 的所有元件
+        document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+            const targetText = (currentLang === 'zh') ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            
+            // 判斷是否為輸入框，若是則改 placeholder，其餘改 innerText
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = targetText;
+            } else {
+                el.innerText = targetText;
+            }
+        });
 
-// 3. 修正並整合彈出視窗的 handleDownload 函式 (解決變數衝突與多語系對應)
-function handleDownload(isLifetime = false) {
-    let msg = "";
-
-    if (currentLang === 'zh') {
-        msg = "感謝您的支持！\n\nZenith Magic 目前全面支援 iOS 系統。\n請至 iPhone 的 App Store 搜尋「Zenith Magic」下載並訂閱此方案。";
-        if (isLifetime) {
-            msg += "\n\n（提醒：一次擁有買斷制大禮包同樣可於 App 內直接解鎖，享有首年保固及後續免費用戶權益延長服務！）";
-        }
-    } else {
-        msg = "Thank you for your support!\n\nZenith Magic is fully optimized for iOS devices.\nPlease open the App Store on your iPhone and search for 'Zenith Magic' to download and unlock this plan.";
-        if (isLifetime) {
-            msg += "\n\n(Note: The Lifetime Access Pass can be directly activated inside the app, securing your 1-year service period with complimentary unlimited extensions thereafter!)";
+        // 針對有特定 ID 的特殊按鈕（如主視覺下載按鈕）做特別同步優化
+        const downloadBtn = document.getElementById('btn-download');
+        if (downloadBtn) {
+            downloadBtn.innerText = (currentLang === 'zh') ? '立即下載 iOS 版' : 'Download on the App Store';
         }
     }
-    
-    // 觸發彈出視窗
-    alert(msg);
-}
+
+    // 3. 徹底修復變數衝突、完美支援雙語系的彈出視窗功能
+    function handleDownload(isLifetime = false) {
+        let msg = "";
+
+        if (currentLang === 'zh') {
+            msg = "感謝您的支持！\n\nZenith Magic 目前全面支援 iOS 系統。\n請至 iPhone 的 App Store 搜尋「Zenith Magic」下載並訂閱此方案。";
+            if (isLifetime) {
+                msg += "\n\n（提醒：一次擁有買斷制大禮包同樣可於 App 內直接解鎖，享有首年保固及後續免費用戶權益延長服務！）";
+            }
+        } else {
+            msg = "Thank you for your support!\n\nZenith Magic is fully optimized for iOS devices.\nPlease open the App Store on your iPhone and search for 'Zenith Magic' to download and unlock this plan.";
+            if (isLifetime) {
+                msg += "\n\n(Note: The Lifetime Access Pass can be directly activated inside the app, securing your 1-year service period with complimentary unlimited extensions thereafter!)";
+            }
+        }
+        
+        // 觸發標準系統彈出視窗
+        alert(msg);
+    }
 </script>
 </body>
 </html>
