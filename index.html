@@ -1300,6 +1300,21 @@ function handleDownload(isLifetime = false) {
     }
 }
 
+// 請確保您的語系切換執行函式內有包含這幾行，以便點擊 EN/ZH 按鈕時文字能同步切換：
+document.getElementById('flowTitle').innerHTML = translations[currentLang].flowTitle;
+document.getElementById('flowSubtitle').textContent = translations[currentLang].flowSubtitle;
+document.getElementById('flow_t1').textContent = translations[currentLang].flow_t1;
+document.getElementById('flow_desc1').textContent = translations[currentLang].flow_desc1;
+document.getElementById('flow_t2').textContent = translations[currentLang].flow_t2;
+document.getElementById('flow_desc2').textContent = translations[currentLang].flow_desc2;
+document.getElementById('flow_t3').textContent = translations[currentLang].flow_t3;
+document.getElementById('flow_desc3').textContent = translations[currentLang].flow_desc3;
+document.getElementById('flow_t4').textContent = translations[currentLang].flow_t4;
+document.getElementById('flow_desc4').innerHTML = translations[currentLang].flow_desc4; // 有強標籤改用 innerHTML
+document.getElementById('flow_t5').textContent = translations[currentLang].flow_t5;
+document.getElementById('flow_desc5').innerHTML = translations[currentLang].flow_desc5; // 內含紅色樣式 span，使用 innerHTML
+document.getElementById('flowHint').innerHTML = translations[currentLang].flowHint;   // 內含紅色樣式 span，使用 innerHTML  
+    
 // 頁面加載初始化監聽器
 document.addEventListener("DOMContentLoaded", async () => {
     applyAllTranslations();
