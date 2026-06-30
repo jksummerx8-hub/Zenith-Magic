@@ -81,34 +81,42 @@ background: linear-gradient(90deg, #3B82F6 0%, #06B6D4 100%);
              class="w-full h-full object-cover object-right">
     </div>
 </div>
+<!-- 位於圖片與強大源於呼吸之間的【城市夜雨微觀】文案區塊 -->
 <div class="max-w-4xl mx-auto px-6 mb-16 space-y-10">
     
+    <!-- 1. 標題切換：支援 data-zh 和 data-en -->
     <div class="text-center">
-        <h3 class="lang-zh text-2xl md:text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 mb-2"
-            style="text-shadow: 0 0 12px rgba(34, 211, 238, 0.4), 0 0 25px rgba(14, 165, 233, 0.2);">
+        <h3 class="lang-txt text-2xl md:text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 mb-2"
+            style="text-shadow: 0 0 12px rgba(34, 211, 238, 0.4), 0 0 25px rgba(14, 165, 233, 0.2);"
+            data-zh="【城市夜雨微觀】"
+            data-en="Microscopic Urban Night Rain">
             【城市夜雨微觀】
-        </h3>
-        <h3 class="lang-en hidden text-2xl md:text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 mb-2"
-            style="text-shadow: 0 0 12px rgba(34, 211, 238, 0.4), 0 0 25px rgba(14, 165, 233, 0.2);">
-            Microscopic Urban Night Rain
         </h3>
     </div>
     
+    <!-- 2. 內文切換：中文與英文長文都寫在下面這個標籤的屬性裡 -->
     <div class="max-w-2xl mx-auto text-justify md:text-center">
-        <div class="lang-zh text-slate-200 text-base md:text-lg leading-loose font-normal space-y-4">
+        <div class="lang-txt text-slate-200 text-base md:text-lg leading-loose font-normal space-y-4"
+             data-zh="<p>「聽見窗外細密的雨聲，那是世界在為你降噪。現在，將注意力收束到呼吸的微觀摩擦。</p><p>輕緩吸氣，覺察空氣在鼻腔深處帶來的微細溫度變化——那是略帶涼意、帶著微小波動的粒子，正溫柔地錨定你游離的神經。</p><p>吐氣時，主動放鬆眉心與下顎。隨著氣流綿延地釋出，大腦釋放副交感訊號，刺激迷走神經。</p><p>窗外的城市霓虹在退後、在模糊，而你在這個由氣息築起的微觀結界裡，徹底歸位。」</p>"
+             data-en="<p>&quot;Listen to the fine sound of rain outside the window; it is the world reducing its noise for you. Now, pull your focus back to the microscopic friction of your breath.</p><p>Inhale gently, sensing the subtle temperature shift deep within your nasal cavity—cool, undulating particles gently anchoring your wandering nerves.</p><p>As you exhale, consciously release your brow and jaw. With the continuous release of airflow, the brain signals the parasympathetic nervous system, stimulating the vagus nerve.</p><p>The city neons fade and blur into the background, while you return entirely to yourself within this microscopic sanctuary built by your own breath.&quot;</p>">
+            
+            <!-- 網頁第一次打開時（預設中文）會顯示的內容 -->
             <p>「聽見窗外細密的雨聲，那是世界在為你降噪。現在，將注意力收束到呼吸的微觀摩擦。</p>
             <p>輕緩吸氣，覺察空氣在鼻腔深處帶來的微細溫度變化——那是略帶涼意、帶著微小波動的粒子，正溫柔地錨定你游離的神經。</p>
             <p>吐氣時，主動放鬆眉心與下顎。隨著氣流綿延地釋出，大腦釋放副交感訊號，刺激迷走神經。</p>
             <p>窗外的城市霓虹在退後、在模糊，而你在這個由氣息築起的微觀結界裡，徹底歸位。」</p>
         </div>
-        
-        <div class="lang-en hidden text-slate-300 text-sm md:text-base leading-relaxed font-normal space-y-4 italic font-sans">
-            <p>"Listen to the fine sound of rain outside the window; it is the world reducing its noise for you. Now, pull your focus back to the microscopic friction of your breath.</p>
-            <p>Inhale gently, sensing the subtle temperature shift deep within your nasal cavity—cool, undulating particles gently anchoring your wandering nerves.</p>
-            <p>As you exhale, consciously release your brow and jaw. With the continuous release of airflow, the brain signals the parasympathetic nervous system, stimulating the vagus nerve.</p>
-            <p>The city neons fade and blur into the background, while you return entirely to yourself within this microscopic sanctuary built by your own breath."</p>
+    </div>
+    
+    <!-- 3. 底部科學效應切換：支援 data-zh 和 data-en -->
+    <div class="text-center">
+        <div class="lang-txt text-xs md:text-sm font-medium bg-cyan-950/20 border border-cyan-900/40 rounded-xl py-3 px-5 inline-block text-left max-w-2xl backdrop-blur-sm shadow-inner text-cyan-300/90"
+             data-zh="💡 呼吸練習完促使大腦釋放多巴胺與內啡肽，帶給人亢奮與成就感。多巴胺受體運作效率提升。"
+             data-en="💡 Breathing exercises prompt the brain to release dopamine and endorphins, fostering a sense of invigoration and achievement, thereby enhancing receptor efficiency.">
+            💡 呼吸練習完促使大腦釋放多巴胺與內啡肽，帶給人亢奮與成就感。多巴胺受體運作效率提升。
         </div>
     </div>
+</div>
     
     <div class="text-center">
         <div class="text-xs md:text-sm font-medium bg-cyan-950/20 border border-cyan-900/40 rounded-xl py-3 px-5 inline-block text-left max-w-2xl backdrop-blur-sm shadow-inner">
@@ -902,6 +910,7 @@ function applyAllTranslations() {
         const targetText = el.getAttribute(`data-${lang}`);
         if (targetText) el.innerText = targetText;
     });
+}
 
     // 2. 刷新帳號登入系統介面
     const i = i18n[lang];
