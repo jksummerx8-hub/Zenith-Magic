@@ -1046,24 +1046,7 @@ function applyAllTranslations() {
         }
     }
 }
-// ✨ 新增：將開通流程程式碼安全地整合在這邊
-        // 這裡加上了 if 檢查，確保即便在沒這元件的子頁面也不會報錯死機
-        if (document.getElementById('flowTitle')) document.getElementById('flowTitle').innerHTML = data.flowTitle;
-        if (document.getElementById('flowSubtitle')) document.getElementById('flowSubtitle').textContent = data.flowSubtitle;
-        if (document.getElementById('flow_t1')) document.getElementById('flow_t1').textContent = data.flow_t1;
-        if (document.getElementById('flow_desc1')) document.getElementById('flow_desc1').textContent = data.flow_desc1;
-        if (document.getElementById('flow_t2')) document.getElementById('flow_t2').textContent = data.flow_t2;
-        if (document.getElementById('flow_desc2')) document.getElementById('flow_desc2').textContent = data.flow_desc2;
-        if (document.getElementById('flow_t3')) document.getElementById('flow_t3').textContent = data.flow_t3;
-        if (document.getElementById('flow_desc3')) document.getElementById('flow_desc3').textContent = data.flow_desc3;
-        if (document.getElementById('flow_t4')) document.getElementById('flow_t4').textContent = data.flow_t4;
-        if (document.getElementById('flow_desc4')) document.getElementById('flow_desc4').innerHTML = data.flow_desc4; 
-        if (document.getElementById('flow_t5')) document.getElementById('flow_t5').textContent = data.flow_t5;
-        if (document.getElementById('flow_desc5')) document.getElementById('flow_desc5').innerHTML = data.flow_desc5; 
-        if (document.getElementById('flowHint')) document.getElementById('flowHint').innerHTML = data.flowHint;   
-    }
-}
-    
+   
 function renderAgeOptions() {
     const ageSelect = document.getElementById('reg-age');
     if (!ageSelect) return;
