@@ -95,7 +95,7 @@ background: linear-gradient(90deg, #3B82F6 0%, #06B6D4 100%);
     </div>
     
     <div class="max-w-2xl mx-auto text-justify md:text-center">
-        <div class="lang-zh text-slate-200 text-base md:text-lg leading-loose font-normal from-cyan-400 via-sky-400 to-blue-500">
+        <div class="lang-zh text-slate-200 text-base md:text-lg leading-loose font-normal space-y-4">
             <p>「聽見窗外細密的雨聲，那是世界在為你降噪。現在，將注意力收束到呼吸的微觀摩擦。</p>
             <p>輕緩吸氣，覺察空氣在鼻腔深處帶來的微細溫度變化——那是略帶涼意、帶著微小波動的粒子，正溫柔地錨定你游離的神經。</p>
             <p>吐氣時，主動放鬆眉心與下顎。隨著氣流綿延地釋出，大腦釋放副交感訊號，刺激迷走神經。</p>
@@ -866,19 +866,20 @@ const translations = {
     }
 };
 
+// 串聯一體化雙語切換處理器
+function toggleLang() {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    applyAllTranslations();
+}
+
+// 相容帳號模組內建點擊呼叫
+function toggleLanguage() {
+    toggleLang();
+}
+
 // 唯一整合的翻譯核心引擎(包含官網、會員系統、定價方案)
 function applyAllTranslations() {
     const lang = currentLang;
-    
-    // ==== 新增：控制 lang-zh 與 lang-en 類別的顯示與隱藏 ====
-    if (lang === 'zh') {
-        document.querySelectorAll('.lang-zh').forEach(el => el.classList.remove('hidden'));
-        document.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
-    } else {
-        document.querySelectorAll('.lang-zh').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.lang-en').forEach(el => el.classList.remove('hidden'));
-    }
-    // ====================================================
     
     // 1. 刷新官網及通用區塊文字結構
     const l = trans[lang];
@@ -901,7 +902,7 @@ function applyAllTranslations() {
         const targetText = el.getAttribute(`data-${lang}`);
         if (targetText) el.innerText = targetText;
     });
-}
+
     // 2. 刷新帳號登入系統介面
     const i = i18n[lang];
     if (i) {
